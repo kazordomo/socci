@@ -1,0 +1,56 @@
+/* RESETS */
+
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+button, 
+input {
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+section {
+    min-height: 100vh;
+}
+
+hr {
+    border: none;
+    border-bottom: 1px dashed var(--aquamarine);
+    margin: 30px 0px;
+}
+
+/* COLORS */
+
+main {
+    --aquamarine: #6FFFE9;
+    --sea-serpent: #5BC0BE;
+    --independence: #3A506B;
+    --yankees-blue: #1C2541;
+    --dark-blue: #0B132B;
+    --alert: #EB283F;
+}
+
+/* GLOBALS */
+
+.wrapper {
+    width: 1024px;
+}
+
+.wrapper_small {
+    width: 500px;
+}
+
+.wrapper,
+.wrapper_small {
+    margin: 0 auto;
+    max-width: 90%;
+}
