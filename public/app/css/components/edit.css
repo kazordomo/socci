@@ -1,3 +1,19 @@
+section#edit {
+    background-color: var(--yankees-blue);
+}
+
 section#edit input {
+    margin-bottom: 30px;
     width: 100%;
+}
+
+section#edit a.button {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+section#edit a.button i {
+    color: black;
+    font-size: 40px;
 }

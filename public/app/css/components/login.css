@@ -5,12 +5,10 @@ section#login {
 .form_group input,
 .form_group button {
     border-radius: 2px;
-    box-sizing: border-box;
     cursor: pointer;
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 20px;
-    padding: 20px 30px;
     width: 100%;
 }
 

@@ -4,9 +4,50 @@ section#home {
 
 section#home .row {
     background-color: var(--sea-serpent);
+    border-radius: 2px;
     box-sizing: border-box;
+    height: 50px;
+    line-height: 50px;
     margin-bottom: 30px;
+    overflow: hidden;
+    padding: 0px 30px;
+    position: relative;
+    transition: opacity 300ms ease-out, height 150ms ease-out;
+}
+
+section#home .row.active {
+    height: 250px;
+}
+
+section#home .row .container div {
+    background-color: #FFFFFF;
+    box-sizing: border-box;
     padding: 30px;
+    width: 100%;
+}
+
+section#home .row .container span {
+    float: none;
+    margin-right: 10px;
+}
+
+section#home .row .container span:last-child {
+    margin-right: 0;
+}
+
+section#home .row .container button {
+}
+
+section#home .row h2 {
+    display: inline-block;
+}
+
+section#home .row span {
+    float: right;
+}
+
+section#home .row.out {
+    opacity: 0;
 }
 
 section#home .row :last-child {
