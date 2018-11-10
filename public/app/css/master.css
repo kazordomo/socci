@@ -20,6 +20,7 @@ a {
 
 section {
     min-height: 100vh;
+    padding: 50px 0px;
 }
 
 hr {
@@ -53,4 +54,8 @@ main {
 .wrapper_small {
     margin: 0 auto;
     max-width: 90%;
+}
+
+.row {
+    width: 100%;
 }
