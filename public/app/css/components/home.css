@@ -6,6 +6,7 @@ section#home .row {
     background-color: var(--sea-serpent);
     border-radius: 2px;
     box-sizing: border-box;
+    cursor: pointer;
     height: 50px;
     line-height: 50px;
     margin-bottom: 30px;
@@ -17,6 +18,10 @@ section#home .row {
 
 section#home .row.active {
     height: 250px;
+}
+
+section#home .row.attending {
+    background-color: pink;
 }
 
 section#home .row .container div {

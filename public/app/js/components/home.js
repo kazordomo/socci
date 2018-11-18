@@ -38,24 +38,24 @@ class Home {
         let containerEl = document.createElement('div');
         let titleEl = document.createElement('h2');
         let timeEl = document.createElement('span');
-        let attendEl = document.createElement('button');
+        let attendEl = this.createAttendButton(rowEl);
 
         rowEl.className = 'row out';
         containerEl.className = 'container';
-        attendEl.className = 'button';
 
         titleEl.innerHTML = data.title;
         timeEl.innerHTML = data.time;
-        attendEl.innerHTML = 'Attend';
 
         headerEl.appendChild(titleEl);
         headerEl.appendChild(timeEl);
 
         // Wrap each attendee in a span and append to div
         for (let attendee of data.attendees) {
+
             let span = document.createElement('span');
             span.innerHTML = attendee;
             attendeesEl.appendChild(span);
+            
         }
 
         containerEl.appendChild(attendeesEl);
@@ -68,6 +68,27 @@ class Home {
         this.DOMElement.querySelector('.wrapper').appendChild(rowEl);
         
         return true;
+    }
+
+    createAttendButton (rowEl) {
+        let element = document.createElement('button');
+
+        element.className = 'button';
+        element.innerHTML = 'Attend';
+
+        element.addEventListener('click', () => {
+
+            rowEl.classList.toggle('attending');
+
+            if(!rowEl.classList.contains('attending')) {
+                element.innerHTML = 'Attend';
+            } else {
+                element.innerHTML = 'Do Not Attend';
+            }
+
+        });
+
+        return element;
     }
 
 }
