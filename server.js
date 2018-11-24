@@ -1,5 +1,14 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const app = express();
+
+const keys = require('./config/keys');
+
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error'));
 
 app.use(express.static(__dirname + '/public'));
 
