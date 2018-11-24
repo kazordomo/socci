@@ -5,10 +5,14 @@ const app = express();
 
 const keys = require('./config/keys');
 
+
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
+
+require('./models/Activity');
+require('./routes/api')(app);
 
 app.use(express.static(__dirname + '/public'));
 

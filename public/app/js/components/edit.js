@@ -10,7 +10,15 @@ class Edit {
     }
 
     init () {
+
         this.addAttendee();
+
+        this.DOMElement.querySelector('button[type="submit"]').addEventListener('click', event => {
+            event.preventDefault();
+
+            this.createEvent();
+        })
+        
     }
 
     addAttendee () {
@@ -30,6 +38,14 @@ class Edit {
         });
 
         return true;
+    }
+
+    async createEvent () {
+
+        let response = await fetch('/api/activity');
+        let json = await response.json();
+        console.log(json);
+        
     }
 
 }
