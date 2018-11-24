@@ -5,6 +5,10 @@ class Edit {
     constructor() {
         this.DOMElement = document.querySelector('section#edit');
 
+        this.attendees = [];
+        // Used to give an id to the attendee elements
+        this.attendeeId = 1;
+
         this.init();
         
     }
@@ -14,10 +18,18 @@ class Edit {
         this.addAttendee();
 
         this.DOMElement.querySelector('button[type="submit"]').addEventListener('click', event => {
+
             event.preventDefault();
 
             this.createEvent();
+
         })
+
+        // if (!this.attendees.length) {
+
+        //     this.DOMElement.querySelector('.attendees').innerHTML += 'No attendees added.';
+
+        // }
         
     }
 
@@ -31,20 +43,73 @@ class Edit {
 
             event.preventDefault();
 
-            attendeesEl.innerHTML += `, ${newAttendeeEl.value}`;
+            this.attendees.push({id: this.attendeeId, name: newAttendeeEl.value});
+            attendeesEl.appendChild(this.createAttendeeEl(this.attendeeId, newAttendeeEl.value));
+            this.attendeeId++;
             
             newAttendeeEl.value = '';
 
         });
 
+
         return true;
+    }
+
+    createAttendeeEl (id, attendee) {
+
+        let spanEl = document.createElement('span');
+
+        spanEl.innerHTML = attendee;
+        spanEl.addEventListener('click', () => {
+
+            // Remove from dom
+            this.DOMElement.querySelector('.attendees').removeChild(spanEl);
+
+            // Get the elements index in the attendee list
+            let targetIndex = 
+                this.attendees.indexOf(this.attendees.find(attendee => attendee.id === id));
+
+            // Remove from list
+            this.attendees.splice(targetIndex, 1);
+
+            if (!this.attendees.length) {
+
+                this.DOMElement.querySelector('.attendees').innerHTML += 'No attendees added.';
+    
+            }
+
+            return true;
+
+        });
+
+        return spanEl;
+
     }
 
     async createEvent () {
 
-        let response = await fetch('/api/activity');
-        let json = await response.json();
-        console.log(json);
+        let activityData = {
+            title: this.DOMElement.querySelector('input[name="title"]').value,
+            information: this.DOMElement.querySelector('input[name="information"]').value,
+            time: this.DOMElement.querySelector('input[name="time"]').value,
+            attendees: this.attendees.map(attendee => attendee.name),
+        };
+
+        console.log(JSON.stringify(activityData));
+
+        try {
+
+            const response = await fetch('/api/activity', { 
+                method: 'POST', 
+                body: JSON.stringify(activityData),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+        } catch(err) {
+
+            console.log(err);
+
+        }
         
     }
 

@@ -11,6 +11,9 @@ mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 require('./models/Activity');
 require('./routes/api')(app);
 

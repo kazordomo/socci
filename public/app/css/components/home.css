@@ -40,7 +40,9 @@ section#home .row .container span:last-child {
     margin-right: 0;
 }
 
-section#home .row .container button {
+section#home .row button {
+    margin-top: 20px;
+    padding: 10px 20px;
 }
 
 section#home .row h2 {

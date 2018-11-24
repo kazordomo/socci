@@ -13,7 +13,33 @@ section#edit a.button {
     left: 30px;
 }
 
-section#edit a.button i {
-    color: black;
-    font-size: 40px;
+section#edit button {
+    padding: 20px 30px;
+}
+
+section#edit button:not([type="submit"]) {
+    margin-bottom: 30px;
+}
+
+section#edit button[type="submit"] {
+    width: 100%;
+}
+
+section#edit .attendees {
+    color: #FFFFFF;
+}
+
+section#edit .attendees h1 {
+    margin: 30px 0 10px 0;
+}
+
+section#edit .attendees span {
+    background-color: rgba(0,0,0,0.35);
+    border-radius: 2px;
+    margin-right: 10px;
+    padding: 4px 8px;
+}
+
+section#edit .attendees span:last-child {
+    margin-right: 0;
 }
