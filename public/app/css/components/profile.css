@@ -1,0 +1,20 @@
+section#profile {
+    background-color: var(--yankees-blue);
+}
+
+section#profile input {
+    width: 100%;
+}
+
+section#profile .col_a {
+    margin-right: 30px;
+    width: calc(60% - 30px);
+}
+
+section#profile .col_b {
+    width: 40%;
+}
+
+section#profile .col_b button {
+    width: 100%;
+}

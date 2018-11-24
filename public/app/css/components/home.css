@@ -3,7 +3,7 @@ section#home {
 }
 
 section#home .row {
-    background-color: var(--sea-serpent);
+    background-color: var(--independence);
     border-radius: 2px;
     box-sizing: border-box;
     cursor: pointer;
@@ -66,7 +66,7 @@ section#home .row :last-child {
 }
 
 section#home a {
-    background-color: green;
+    background-color: var(--sea-serpent);
     bottom: 80px;
     color: #FFFFFF;
     display: block;
@@ -83,15 +83,9 @@ section#home a {
 @media screen and (max-width: 1024px) {
 
     section#home a {
-        background-color: green;
         bottom: 0;
-        color: #FFFFFF;
-        display: block;
         height: 100px;
         line-height: 100px;
-        position: fixed;
-        text-align: center;
-        width: 1024px;
     }
 
  }

@@ -7,12 +7,6 @@ section#edit input {
     width: 100%;
 }
 
-section#edit a.button {
-    position: absolute;
-    top: 30px;
-    left: 30px;
-}
-
 section#edit button {
     padding: 20px 30px;
 }

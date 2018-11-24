@@ -1,6 +1,7 @@
 import Login from '../components/login';
 import Home from '../components/home';
 import Edit from '../components/edit';
+import Profile from '../components/profile';
 
 class Page {
 
@@ -26,6 +27,9 @@ class Page {
                 break;
             case 'edit':
                 new Edit();
+                break;
+            case 'profile':
+                new Profile();
                 break;
             default:
                 return false;

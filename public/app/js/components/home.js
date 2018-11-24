@@ -77,7 +77,7 @@ class Home {
     createAttendButton (rowEl) {
         let element = document.createElement('button');
 
-        element.className = 'button neutral';
+        element.className = 'button success';
         element.innerHTML = 'Attend';
 
         element.addEventListener('click', () => {
