@@ -1,0 +1,24 @@
+nav {
+    height: 80px;
+    line-height: 80px;
+}
+
+nav h2 {
+    float: left;
+}
+
+nav .icons {
+    float: right;
+}
+
+nav .icons a {
+    margin-right: 30px;
+}
+
+nav .icons a:last-child {
+    margin-right: 0;
+}
+
+nav .icons a i {
+    font-size: 20px;
+}
