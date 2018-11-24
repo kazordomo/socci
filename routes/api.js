@@ -3,8 +3,11 @@ const Activity = mongoose.model('activity');
 
 module.exports = app => {
 
-    app.get('/api/activity', (req, res) => {
-        res.send({'GET': 'api/activity'});
+    app.get('/api/activity', async (req, res) => {
+
+        const activities = await Activity.find();
+        res.send(activities);
+        
     });
 
     app.post('/api/activity', async (req, res) => {
@@ -25,17 +28,24 @@ module.exports = app => {
 
         } catch(err) {
 
-            res.status(400).json({ 
-                success: false,
-                status: 400, 
-                message: 'There was a problem creating the activity.' 
-            });
+            res.status(400).json(err);
         }
         
     });
 
-    app.delete('/api/activity', (req, res) => {
-        res.send({'DELETE': 'api/activity'});
+    app.delete('/api/activity', async (req, res) => {
+
+        try {
+
+            await Activity.deleteOne({ _id: req.body.id });
+            res.status(200).end();
+            
+        } catch(err) {
+            
+            res.status(400).json(err);
+            
+        }
+        
     });
 
 }

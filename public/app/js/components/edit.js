@@ -1,4 +1,5 @@
 // This class will both be used to add new and edit existing event.
+import ActivityCtrl from '../controllers/activity';
 
 class Edit {
 
@@ -10,7 +11,7 @@ class Edit {
         this.attendeeId = 1;
 
         this.init();
-        
+
     }
 
     init () {
@@ -21,7 +22,14 @@ class Edit {
 
             event.preventDefault();
 
-            this.createEvent();
+            let activityData = {
+                title: this.DOMElement.querySelector('input[name="title"]').value,
+                information: this.DOMElement.querySelector('input[name="information"]').value,
+                time: this.DOMElement.querySelector('input[name="time"]').value,
+                attendees: this.attendees.map(attendee => attendee.name),
+            };
+
+            ActivityCtrl.createActivity(activityData);
 
         })
 
@@ -84,33 +92,6 @@ class Edit {
 
         return spanEl;
 
-    }
-
-    async createEvent () {
-
-        let activityData = {
-            title: this.DOMElement.querySelector('input[name="title"]').value,
-            information: this.DOMElement.querySelector('input[name="information"]').value,
-            time: this.DOMElement.querySelector('input[name="time"]').value,
-            attendees: this.attendees.map(attendee => attendee.name),
-        };
-
-        console.log(JSON.stringify(activityData));
-
-        try {
-
-            const response = await fetch('/api/activity', { 
-                method: 'POST', 
-                body: JSON.stringify(activityData),
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-        } catch(err) {
-
-            console.log(err);
-
-        }
-        
     }
 
 }

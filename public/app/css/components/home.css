@@ -45,6 +45,10 @@ section#home .row button {
     padding: 10px 20px;
 }
 
+section#home .row button.danger {
+    float: right;
+}
+
 section#home .row h2 {
     display: inline-block;
 }

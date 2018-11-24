@@ -20,12 +20,16 @@ button {
     font-weight: 700;
 }
 
-.button.green {
+.button.success {
     background-color: var(--sea-serpent);
 }
 
 .button.neutral {
     background-color: var(--independence);
+}
+
+.button.danger {
+    background-color: red;
 }
 
 .button.back i {

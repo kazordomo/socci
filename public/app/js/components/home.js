@@ -1,21 +1,23 @@
-import events from '../../dummy/events';
+import ActivityCtrl from '../controllers/activity';
 
 class Home {
 
     constructor() {
 
         this.DOMElement = document.querySelector('section#home');
-        this.events = events;
+        this.activities = [];
 
         this.init();
 
     }
 
-    init () {
+    async init () {
 
-        for (let event of events) {
+        this.activities = await ActivityCtrl.getActivities();
 
-            this.createEventEl(event);
+        for (let activity of this.activities) {
+
+            this.createActivityEl(activity);
 
         }
 
@@ -30,7 +32,7 @@ class Home {
         
     }
 
-    createEventEl (data) {
+    createActivityEl (data) {
 
         let rowEl = document.createElement('div');
         let attendeesEl = document.createElement('div');
@@ -39,6 +41,7 @@ class Home {
         let titleEl = document.createElement('h2');
         let timeEl = document.createElement('span');
         let attendEl = this.createAttendButton(rowEl);
+        let deleteEl = this.createDeleteButton(data._id, rowEl);
 
         rowEl.className = 'row out';
         containerEl.className = 'container';
@@ -60,6 +63,7 @@ class Home {
 
         containerEl.appendChild(attendeesEl);
         containerEl.appendChild(attendEl);
+        containerEl.appendChild(deleteEl);
         rowEl.appendChild(headerEl);
         rowEl.appendChild(containerEl);
 
@@ -85,6 +89,22 @@ class Home {
             } else {
                 element.innerHTML = 'Do Not Attend';
             }
+
+        });
+
+        return element;
+    }
+
+    createDeleteButton (id, rowEl) {
+        let element = document.createElement('button');
+
+        element.className = 'button danger';
+        element.innerHTML = 'Delete';
+
+        element.addEventListener('click', () => {
+
+            this.DOMElement.querySelector('.wrapper').removeChild(rowEl);
+            ActivityCtrl.deleteActivity(id);
 
         });
 
