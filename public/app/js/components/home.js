@@ -40,7 +40,7 @@ class Home {
         let containerEl = document.createElement('div');
         let titleEl = document.createElement('h2');
         let timeEl = document.createElement('span');
-        let attendEl = this.createAttendButton(rowEl);
+        let attendEl = this.createAttendButton(data._id, rowEl);
         let deleteEl = this.createDeleteButton(data._id, rowEl);
 
         rowEl.className = 'row out';
@@ -56,7 +56,7 @@ class Home {
         for (let attendee of data.attendees) {
 
             let span = document.createElement('span');
-            span.innerHTML = attendee;
+            span.innerHTML = attendee.name;
             attendeesEl.appendChild(span);
             
         }
@@ -74,21 +74,23 @@ class Home {
         return true;
     }
 
-    createAttendButton (rowEl) {
+    createAttendButton (id, rowEl) {
         let element = document.createElement('button');
 
         element.className = 'button success';
         element.innerHTML = 'Attend';
 
-        element.addEventListener('click', () => {
-
-            rowEl.classList.toggle('attending');
+        element.addEventListener('click', async () => {
 
             if(!rowEl.classList.contains('attending')) {
+                await ActivityCtrl.attendActivity({id: 999, name: 'Dummyname'}, id);
                 element.innerHTML = 'Attend';
             } else {
+                await ActivityCtrl.declineActivity({id: 999, name: 'Dummyname'}, id);
                 element.innerHTML = 'Do Not Attend';
             }
+
+            rowEl.classList.toggle('attending');
 
         });
 

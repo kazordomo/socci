@@ -52,6 +52,44 @@ class ActivityCtrl {
         }
     }
 
+    static async attendActivity (attendee, activityId) {
+
+        try {
+
+            let response = await fetch(`/api/activity/attend/${activityId}`, { 
+                method: 'POST', 
+                body: JSON.stringify(attendee),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+        } catch (err) {
+
+            console.log(err);
+
+        }
+
+    }
+
+    static async declineActivity (attendee, activityId) {
+
+        console.log(attendee);
+
+        try {
+
+            let response = await fetch(`/api/activity/decline/${activityId}`, { 
+                method: 'POST', 
+                body: JSON.stringify(attendee),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+        } catch (err) {
+
+            console.log(err);
+
+        }
+
+    }
+
 }
 
 export default ActivityCtrl;
