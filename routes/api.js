@@ -27,7 +27,6 @@ module.exports = app => {
             res.status(200).end();
 
         } catch(err) {
-
             res.status(400).json(err);
         }
         
@@ -41,9 +40,7 @@ module.exports = app => {
             res.status(200).end();
             
         } catch(err) {
-            
             res.status(400).json(err);
-            
         }
         
     });

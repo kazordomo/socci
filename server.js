@@ -6,7 +6,7 @@ const app = express();
 const keys = require('./config/keys');
 
 
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true , useCreateIndex: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 require('./models/Activity');
+require('./routes/auth')(app);
 require('./routes/api')(app);
 
 app.use(express.static(__dirname + '/public'));

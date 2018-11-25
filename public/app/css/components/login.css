@@ -40,6 +40,10 @@ section#login .wrapper_small {
     -moz-box-shadow: -1px 2px 5px -2px rgba(0,0,0,0.75);
 }
 
+section#login .inactive {
+    display: none;
+}
+
 section#login .social_media {
     text-align: center;
 }
