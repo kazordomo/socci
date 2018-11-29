@@ -32,6 +32,7 @@ class Home {
         
     }
 
+    // TODO: REFACTOR!! Use elements/activityRow?
     createActivityEl (data) {
 
         let rowEl = document.createElement('div');
@@ -44,6 +45,7 @@ class Home {
         let deleteEl = this.createDeleteButton(data._id, rowEl);
 
         rowEl.className = 'row out';
+        headerEl.className = 'top';
         containerEl.className = 'container';
 
         titleEl.innerHTML = data.title;
@@ -67,7 +69,7 @@ class Home {
         rowEl.appendChild(headerEl);
         rowEl.appendChild(containerEl);
 
-        rowEl.addEventListener('click', () => rowEl.classList.toggle('active'));
+        headerEl.addEventListener('click', () => rowEl.classList.toggle('active'));
 
         this.DOMElement.querySelector('.wrapper').appendChild(rowEl);
         
@@ -82,6 +84,8 @@ class Home {
 
         element.addEventListener('click', async () => {
 
+            rowEl.classList.toggle('attending');
+
             if(!rowEl.classList.contains('attending')) {
                 await ActivityCtrl.attendActivity({id: 999, name: 'Dummyname'}, id);
                 element.innerHTML = 'Attend';
@@ -89,8 +93,6 @@ class Home {
                 await ActivityCtrl.declineActivity({id: 999, name: 'Dummyname'}, id);
                 element.innerHTML = 'Do Not Attend';
             }
-
-            rowEl.classList.toggle('attending');
 
         });
 

@@ -11,13 +11,17 @@ section#home .row {
     line-height: 50px;
     margin-bottom: 30px;
     overflow: hidden;
-    padding: 0px 30px;
     position: relative;
     transition: opacity 300ms ease-out, height 150ms ease-out;
 }
 
 section#home .row.active {
     height: 250px;
+}
+
+section#home .row .top,
+section#home .row .container {
+    padding: 0 30px;
 }
 
 section#home .row.attending {
