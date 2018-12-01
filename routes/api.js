@@ -3,11 +3,20 @@ const Activity = mongoose.model('activity');
 
 module.exports = app => {
 
-    app.get('/api/activity', async (req, res) => {
+    app.get('/api/activity/:id', async (req, res) => {
 
+        try {
+            const activity = await Activity.find({ _id: req.params.id });
+            res.send(activity[0]);
+        } catch (err) {
+            res.status(400).json(err);
+        }
+        
+    });
+
+    app.get('/api/activites', async (req, res) => {
         const activities = await Activity.find();
         res.send(activities);
-        
     });
 
     app.post('/api/activity', async (req, res) => {
@@ -22,23 +31,19 @@ module.exports = app => {
         });
 
         try {
-
             await newActivity.save();
             res.status(200).end();
-
         } catch(err) {
             res.status(400).json(err);
         }
-        
+
     });
 
     app.delete('/api/activity', async (req, res) => {
 
         try {
-
             await Activity.deleteOne({ _id: req.body.id });
             res.status(200).end();
-            
         } catch(err) {
             res.status(400).json(err);
         }

@@ -16,12 +16,17 @@ section#home .row {
 }
 
 section#home .row.active {
-    height: 250px;
+    height: 300px;
 }
 
 section#home .row .top,
 section#home .row .container {
     padding: 0 30px;
+}
+
+section#home .button_group {
+    bottom: 0;
+    position: absolute;
 }
 
 section#home .row.attending {
@@ -68,7 +73,7 @@ section#home .row :last-child {
     margin-bottom: 0;
 }
 
-section#home a {
+section#home a[href="#edit"] {
     background-color: var(--sea-serpent);
     bottom: 80px;
     color: #FFFFFF;

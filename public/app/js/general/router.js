@@ -10,8 +10,15 @@ class Router {
 
     async hashChanged (event) {
         if (window.location.hash.length) {
+
             // Get the new page and render it.
-            const pageName = window.location.hash.substr(1);
+            let pageName = window.location.hash.substr(1);
+
+            // If the url contains a parameter, remove it from pageName.
+            if(pageName.indexOf('/') !== -1) {
+                pageName = pageName.split('/')[0];
+            }
+
             this.render(pageName);
         } else {
             // If no path - render default

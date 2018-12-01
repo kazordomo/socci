@@ -1,10 +1,27 @@
 class ActivityCtrl {
 
+    static async getActivity (id) {
+
+        try {
+
+            let response = await fetch(`/api/activity/${id}`);
+            let json = await response.json();
+
+            return json;
+
+        } catch (err) {
+
+            console.log(err);
+
+        }
+
+    }
+
     static async getActivities () {
 
         try {
 
-            let response = await fetch('/api/activity');
+            let response = await fetch('/api/activites');
             let json = await response.json();
 
             return json;
@@ -71,8 +88,6 @@ class ActivityCtrl {
     }
 
     static async declineActivity (attendee, activityId) {
-
-        console.log(attendee);
 
         try {
 
