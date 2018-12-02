@@ -1,4 +1,5 @@
 import ActivityCtrl from '../controllers/activity';
+import Utils from '../utils';
 
 class Home {
 
@@ -20,13 +21,8 @@ class Home {
             this.createActivityEl(activity);
         }
 
-        let delay = 75;
-
-        // Animate in
-        for (let row of this.DOMElement.querySelectorAll('.row')) {
-            setTimeout(() => row.classList.remove('out'), delay);
-            delay += 75;
-        }
+        // Animate in.
+        Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
     }
 
     createActivityEl (data) {
@@ -52,7 +48,7 @@ class Home {
 
         // Row element (most parent of the activity element).
         let rowEl = document.createElement('div');
-            rowEl.classList.add('row');
+            rowEl.className = 'row out';
             rowEl.innerHTML = htmlString;
 
         rowEl.querySelector('.top')
