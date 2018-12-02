@@ -82,9 +82,7 @@ class Home {
             }
 
         } catch (err) {
-
             console.log(err);
-
         }
 
         rowEl.classList.toggle('attending');

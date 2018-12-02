@@ -107,3 +107,9 @@ main {
 .col {
     float: left;
 }
+
+/* Animations */
+
+.out {
+    opacity: 0;
+}

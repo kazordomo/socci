@@ -2,11 +2,6 @@ section#activity {
     background-color: var(--yankees-blue);
 }
 
-/* TODO: this could be global */
-section#activity .out {
-    opacity: 0;
-}
-
 section#activity .wrapper h1,
 section#activity .wrapper div {
     transition: opacity 150ms ease-out;

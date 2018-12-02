@@ -18,6 +18,8 @@ class Utils {
                 match = match + '}}';
                 // Replace the match with the correct propert from data.
                 html = html.replace(match, data[prop]);
+            } else {
+                html = html.replace(match, '');
             }
         }
 
@@ -33,6 +35,10 @@ class Utils {
         }
 
         return true;
+    }
+
+    static getInputValue (DOMElement, name) {
+        return DOMElement.querySelector(`input[name="${name}"]`).value;
     }
 
 }
