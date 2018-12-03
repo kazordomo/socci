@@ -4,7 +4,6 @@ class Utils {
 
         // Get the DOM as a tring.
         let html = DOMElement.innerHTML;
-
         // Regex rule.
         let regExp = /\{{([^}}]+)/g;
         // Get all values surrounded by {{ }}.

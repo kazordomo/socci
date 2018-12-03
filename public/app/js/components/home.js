@@ -9,7 +9,6 @@ class Home {
         this.activities = [];
 
         this.init();
-
     }
 
     async init () {
@@ -67,7 +66,6 @@ class Home {
 
         // Dummy obj.
         const user = {id: 999, name: 'Dummyname'};
-
         let attendeesEl = this.DOMElement.querySelector('.container div')
 
         try {
