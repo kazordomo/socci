@@ -28,41 +28,35 @@ class Home {
 
         // The dom tree for the activity element.
         let htmlString = `
-            <div class="top">
-                <h2>${data.title}</h2>
-                <span>${data.time}</span>
+            <h2>${data.title}</h2>
+            <span>${data.time}</span>
+            <div class="attendees">
+                ${data.attendees.length ? 
+                    data.attendees.map(attendee => `<span>${attendee.name}</span>`) : 
+                    'No attendees at the moment.'
+                }
             </div>
-            <div class="container">
-                <div>
-                    ${data.attendees.length ? 
-                        data.attendees.map(attendee => `<span>${attendee.name}</span>`) : 
-                        'No attendees at the moment.'
-                    }
-                </div>
-                <button class="button success">Attend</button>
-                <button class="button danger">Delete</button>
-                <div><a href="#activity/${data._id}">Info</div>
-            </div>
+            <button class="button success">Attend</button>
+            <button class="button danger">Delete</button>
         `;
 
         // Row element (most parent of the activity element).
-        let rowEl = document.createElement('div');
-            rowEl.className = 'row out';
-            rowEl.innerHTML = htmlString;
+        let activityEl = document.createElement('div');
+            activityEl.className = 'activity out';
+            activityEl.innerHTML = htmlString;
 
-        rowEl.querySelector('.top')
-             .addEventListener('click', () => rowEl.classList.toggle('active'));
-        rowEl.querySelector('button.success')
-             .addEventListener('click', () => this.onAttend(data._id, rowEl));
-        rowEl.querySelector('button.danger')
-             .addEventListener('click', () => this.onDelete(data._id, rowEl));
+        activityEl.addEventListener('click', () => window.location.href = `#activity/${data._id}"`);
+        activityEl.querySelector('button.success')
+             .addEventListener('click', () => this.onAttend(data._id, activityEl));
+        activityEl.querySelector('button.danger')
+             .addEventListener('click', () => this.onDelete(data._id, activityEl));
 
-        this.DOMElement.querySelector('.wrapper').appendChild(rowEl);
+        this.DOMElement.querySelector('.wrapper').appendChild(activityEl);
         
         return true;
     }
 
-    async onAttend (id, rowEl) {
+    async onAttend (id, activityEl) {
 
         // Dummy obj.
         const user = {id: 999, name: 'Dummyname'};
@@ -70,7 +64,7 @@ class Home {
 
         try {
 
-            if(!rowEl.classList.contains('attending')) {
+            if(!activityEl.classList.contains('attending')) {
                 await ActivityCtrl.attendActivity(user, id);
                 // TODO: It's the user that should be added to the attendee list.
                 attendeesEl.innerHTML += `, ${user.name}`
@@ -83,17 +77,17 @@ class Home {
             console.log(err);
         }
 
-        rowEl.classList.toggle('attending');
+        activityEl.classList.toggle('attending');
 
         return true;
     }
 
-    onDelete (id, rowEl) {
+    onDelete (id, activityEl) {
 
         try {
             ActivityCtrl.deleteActivity(id);
             // Remove from the dom. No need to await server when in try/catch.
-            this.DOMElement.querySelector('.wrapper').removeChild(rowEl);
+            this.DOMElement.querySelector('.wrapper').removeChild(activityEl);
         } catch (err) {
             console.log(err);
         }

@@ -18,19 +18,20 @@ input {
 
 .button {
     color: #FFFFFF;
+    cursor: pointer;
     font-weight: 700;
 }
 
 .button.success {
-    background-color: var(--sea-serpent);
+    background-color: var(--greenish);
 }
 
 .button.neutral {
-    background-color: var(--dark-blue);
+    background-color: var(--yellowish);
 }
 
 .button.danger {
-    background-color: red;
+    background-color: var(--redish);
 }
 
 .button.back {
@@ -45,6 +46,7 @@ input {
 }
 
 a {
+    color: #FFFFFF;
     text-decoration: none;
 }
 
@@ -72,13 +74,11 @@ h1, h2, h3 {
 /* COLORS */
 
 main {
-    --aquamarine: #6FFFE9;
-    --sea-serpent: #5BC0BE;
-    --independence: #3A506B;
-    --yankees-blue: #1C2541;
-    --dark-blue: #0B132B;
-    --alert: #EB283F;
-    --orange: #F34213;
+    --dark: #2D3047;
+    --greenish: #1B998B;
+    --yellowish: #FFFD82;
+    --orangeish: #FF9B71;
+    --redish: #E84855;
     --google: #ea4335;
     --facebook: #3b5998;
 }
@@ -101,10 +101,6 @@ main {
 
 .row {
     width: 100%;
-}
-
-.button {
-    cursor: pointer;
 }
 
 .col {
