@@ -55,7 +55,7 @@ section {
 
 hr {
     border: none;
-    border-bottom: 1px dashed var(--aquamarine);
+    border-bottom: 1px dashed #FFFFFF;
     margin: 30px 0px;
 }
 
@@ -78,6 +78,9 @@ main {
     --yankees-blue: #1C2541;
     --dark-blue: #0B132B;
     --alert: #EB283F;
+    --orange: #F34213;
+    --google: #ea4335;
+    --facebook: #3b5998;
 }
 
 /* GLOBALS */
