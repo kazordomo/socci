@@ -45,7 +45,7 @@ class Home {
             activityEl.className = 'activity out';
             activityEl.innerHTML = htmlString;
 
-        activityEl.addEventListener('click', () => window.location.href = `#activity/${data._id}"`);
+        activityEl.addEventListener('click', () => window.location.href = `#activity/${data._id}`);
         activityEl.querySelector('button.success')
              .addEventListener('click', () => this.onAttend(data._id, activityEl));
         activityEl.querySelector('button.danger')

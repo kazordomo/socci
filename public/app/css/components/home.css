@@ -91,4 +91,9 @@ section#home a[href="#edit"] {
         width: 150px;
     }
 
+    section#home .activity {
+        float: none;
+        width: 100%;
+    }
+
  }

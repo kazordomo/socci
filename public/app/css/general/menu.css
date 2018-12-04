@@ -1,11 +1,11 @@
 nav {
-    background-color: var(--orangeish);
+    background-color: var(--dark);
     height: 80px;
     line-height: 80px;
 }
 
 nav a {
-    color: #000000;
+    color: #FFFFFF;
 }
 
 nav h2 {

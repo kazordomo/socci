@@ -20,6 +20,9 @@ class Activity {
         this.DOMElement.innerHTML = Utils.domWithData(this.DOMElement, this.activity);
         Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
 
+        this.DOMElement.querySelector('button').addEventListener('click', () => 
+            ActivityCtrl.postComment(Utils.getInputValue(this.DOMElement, 'comment'), id));
+
         return true;
     }
 

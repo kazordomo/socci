@@ -10,9 +10,7 @@ class ActivityCtrl {
             return json;
 
         } catch (err) {
-
             console.log(err);
-
         }
 
     }
@@ -27,9 +25,7 @@ class ActivityCtrl {
             return json;
 
         } catch (err) {
-
             console.log(err);
-
         }
 
     }
@@ -45,9 +41,7 @@ class ActivityCtrl {
             });
 
         } catch(err) {
-
             console.log(err);
-
         }
         
     }
@@ -63,9 +57,7 @@ class ActivityCtrl {
             });
 
         } catch(err) {
-
             console.log(err);
-
         }
     }
 
@@ -80,9 +72,7 @@ class ActivityCtrl {
             });
 
         } catch (err) {
-
             console.log(err);
-
         }
 
     }
@@ -98,9 +88,23 @@ class ActivityCtrl {
             });
 
         } catch (err) {
-
             console.log(err);
+        }
 
+    }
+
+    static async postComment (comment, activityId) {
+
+        try {
+
+            let response = await fetch(`/api/activity/comment/${activityId}`, { 
+                method: 'POST', 
+                body: JSON.stringify({id: activityId, comment}),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+        } catch (err) {
+            console.log(err);
         }
 
     }
