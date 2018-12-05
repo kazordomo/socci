@@ -10,15 +10,39 @@ class Utils {
         let matches = html.match(regExp);
 
         for(let match of matches) {
-            // Get the property. {{ data.test }} -> test
+
+            if(match.includes('array')) {
+                // array:values:element:prop
+                let splitted = match.split(':').map(split => split.trim());
+                let values = [];
+
+                // If length === 4 we know that we have specified a prop in the obj in the arr.
+                if(splitted.length === 4) {
+
+                    values = data[splitted[2].split('.')[1]].map(value => {
+                        return `<${splitted[1]}>${value[splitted[3]]}</${splitted[1]}>`;
+                    }).join('');
+
+                } else {
+
+                    values = data[splitted[2].split('.')[1]].map(value => {
+                        return `<${splitted[1]}>${value}</${splitted[1]}>`;
+                    }).join('');
+
+                }
+
+                match = match + '}}';
+                html = html.replace(match, values);
+            }
+
+            // Get the property. {{ data.test }} -> test.
             let prop = match.split('.')[1].trim();
+
             if (data[prop]) {
                 // Add back the }} to be able to match in the html.
                 match = match + '}}';
                 // Replace the match with the correct propert from data.
                 html = html.replace(match, data[prop]);
-            } else {
-                html = html.replace(match, '');
             }
         }
 

@@ -5,9 +5,11 @@
     <div class="wrapper">
         <div class="time out">{{ data.time }}</div>
         <h1 class="out">{{ data.title }}</h1>
+        <h2>Information</h2>
         <p class="out">{{ data.information }}</p>
-        <div class="attendees out"></div>
-        <div class="comments out"></div>
+        <h2>Attendees</h2>
+        <div class="attendees out">{{ array:span:data.attendees:name }}</div>
+        <div class="comments out">{{ array:div:data.comments:comment }}</div>
         <input type="text" name="comment" placeholder="Comment" />
         <button class="button success">Add</button>
     </div>
