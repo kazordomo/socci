@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _controllers_activity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/activity */ \"./app/js/controllers/activity.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ \"./app/js/utils.js\");\n\r\n\r\n\r\nclass Activity {\r\n\r\n    constructor () {\r\n\r\n        this.DOMElement = document.querySelector('section#activity');\r\n        // TODO: This needs to be cached. We have already fetched this data once.\r\n        this.activity = {};\r\n\r\n        this.init();\r\n    }\r\n\r\n    async init () {\r\n        let id = window.location.hash.substr(1);\r\n            id = id.split('/')[1];\r\n\r\n        this.activity = await _controllers_activity__WEBPACK_IMPORTED_MODULE_0__[\"default\"].getActivity(id);\r\n        this.DOMElement.innerHTML = _utils__WEBPACK_IMPORTED_MODULE_1__[\"default\"].domWithData(this.DOMElement, this.activity);\r\n        _utils__WEBPACK_IMPORTED_MODULE_1__[\"default\"].animateIn(this.DOMElement.querySelectorAll('.out'));\r\n\r\n        this.DOMElement.querySelector('button').addEventListener('click', () => {\r\n            _controllers_activity__WEBPACK_IMPORTED_MODULE_0__[\"default\"].postComment(_utils__WEBPACK_IMPORTED_MODULE_1__[\"default\"].getInputValue(this.DOMElement, 'comment'), id);\r\n            this.DOMElement.querySelector('input[name=\"comment\"').value = '';\r\n        });\r\n\r\n        return true;\r\n    }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Activity);\n\n//# sourceURL=webpack:///./app/js/components/activity.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _controllers_activity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/activity */ \"./app/js/controllers/activity.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ \"./app/js/utils.js\");\n/* harmony import */ var _general_loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../general/loader */ \"./app/js/general/loader.js\");\n\r\n\r\n\r\n\r\nclass Activity {\r\n\r\n    constructor () {\r\n\r\n        this.DOMElement = document.querySelector('section#activity');\r\n        // TODO: This needs to be cached. We have already fetched this data once.\r\n        this.activity = {};\r\n\r\n        this.init();\r\n    }\r\n\r\n    async init () {\r\n        let id = window.location.hash.substr(1);\r\n            id = id.split('/')[1];\r\n\r\n        // TODO: the loader should be baked in to the router.\r\n        _general_loader__WEBPACK_IMPORTED_MODULE_2__[\"default\"].in();\r\n        this.activity = await _controllers_activity__WEBPACK_IMPORTED_MODULE_0__[\"default\"].getActivity(id);\r\n        this.DOMElement.innerHTML = _utils__WEBPACK_IMPORTED_MODULE_1__[\"default\"].domWithData(this.DOMElement, this.activity);\r\n        _general_loader__WEBPACK_IMPORTED_MODULE_2__[\"default\"].out();\r\n        // END LOADER HERE\r\n        \r\n        this.DOMElement.querySelector('button').addEventListener('click', () => {\r\n            _controllers_activity__WEBPACK_IMPORTED_MODULE_0__[\"default\"].postComment(_utils__WEBPACK_IMPORTED_MODULE_1__[\"default\"].getInputValue(this.DOMElement, 'comment'), id);\r\n            this.DOMElement.querySelector('input[name=\"comment\"').value = '';\r\n        });\r\n\r\n        return true;\r\n    }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Activity);\n\n//# sourceURL=webpack:///./app/js/components/activity.js?");
 
 /***/ }),
 
@@ -179,6 +179,18 @@ eval("__webpack_require__.r(__webpack_exports__);\nclass AuthCtrl {\r\n\r\n    s
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\nclass Layout {\r\n\r\n    constructor (...pages) {\r\n        // Layout takes multiple pages and calls their load method.\r\n        this.pages = pages;\r\n    }\r\n\r\n    load () {\r\n        // Call each page load method and return when all are resolved.\r\n        return Promise.all(this.pages.map(page => page.load()));\r\n    }\r\n\r\n    render (element) {\r\n        for (let page of this.pages) {\r\n            const div = document.createElement('div');\r\n            page.render(div);\r\n            element.appendChild(div);\r\n        }\r\n    }\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Layout);\n\n//# sourceURL=webpack:///./app/js/general/layout.js?");
+
+/***/ }),
+
+/***/ "./app/js/general/loader.js":
+/*!**********************************!*\
+  !*** ./app/js/general/loader.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// TODO: the loader should be baked in to the router and called BEFORE the initial html is rendered out.\r\n\r\nclass Loader {\r\n\r\n    static in () {\r\n        document.querySelector('#loader').classList.add('active');\r\n    }\r\n\r\n    static out () {\r\n        document.querySelector('#loader').classList.remove('active');\r\n    }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Loader);\n\n//# sourceURL=webpack:///./app/js/general/loader.js?");
 
 /***/ }),
 

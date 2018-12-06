@@ -1,5 +1,6 @@
 import ActivityCtrl from '../controllers/activity';
 import Utils from '../utils';
+import Loader from '../general/loader';
 
 class Activity {
 
@@ -16,10 +17,13 @@ class Activity {
         let id = window.location.hash.substr(1);
             id = id.split('/')[1];
 
+        // TODO: the loader should be baked in to the router.
+        Loader.in();
         this.activity = await ActivityCtrl.getActivity(id);
         this.DOMElement.innerHTML = Utils.domWithData(this.DOMElement, this.activity);
-        Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
-
+        Loader.out();
+        // END LOADER HERE
+        
         this.DOMElement.querySelector('button').addEventListener('click', () => {
             ActivityCtrl.postComment(Utils.getInputValue(this.DOMElement, 'comment'), id);
             this.DOMElement.querySelector('input[name="comment"').value = '';

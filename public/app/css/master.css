@@ -89,6 +89,43 @@ main {
 
 /* GLOBALS */
 
+#loader {
+    background-color: #2D3047;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}
+
+#loader.active {
+    opacity: 1;
+    z-index: 999;
+}
+
+#loader i {
+    animation-name: spin;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    font-size: 120px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
 .wrapper {
     width: 1024px;
 }

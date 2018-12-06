@@ -3,13 +3,13 @@
         <i class="fas fa-chevron-left"></i>
     </a>
     <div class="wrapper">
-        <div class="time out">{{ data.time }}</div>
-        <h1 class="out">{{ data.title }}</h1>
+        <div class="time ">{{ data.time }}</div>
+        <h1>{{ data.title }}</h1>
         <h2>Information</h2>
-        <p class="out">{{ data.information }}</p>
+        <p>{{ data.information }}</p>
         <h2>Attendees</h2>
-        <div class="attendees out">{{ array:span:data.attendees:name }}</div>
-        <div class="comments out">{{ array:div:data.comments:comment }}</div>
+        <div class="attendees">{{ array:span:data.attendees:name }}</div>
+        <div class="comments">{{ array:div:data.comments:comment }}</div>
         <input type="text" name="comment" placeholder="Comment" />
         <button class="button success">Add</button>
     </div>
