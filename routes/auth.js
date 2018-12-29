@@ -27,6 +27,7 @@ module.exports = app => {
                 });
             }
 
+            req.session.userId = user._id;
             res.send(user);
 
         } catch (err) {
@@ -37,6 +38,22 @@ module.exports = app => {
             });
         }
         
+    });
+
+    app.get('/auth/logout', (req, res) => {
+        if (req.session) {
+            req.session.destroy(err => {
+                if(err) {
+                    resstatus(404).json({ 
+                        success: false, 
+                        status: 404, 
+                        message: 'Could not logout'
+                    });
+                } else {
+                    res.status(200);
+                }
+            });
+        }
     });
 
     app.post('/auth/register', async (req, res) => {
@@ -67,6 +84,7 @@ module.exports = app => {
 
             await newUser.save();
 
+            req.session.userId = user._id;
             res.send(newUser);
 
         } catch (err) {

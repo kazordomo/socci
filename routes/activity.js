@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const Activity = mongoose.model('activity');
+const { requiresLogin } = require('../middlewares/auth');
 
 module.exports = app => {
 
-    app.get('/api/activity/:id', async (req, res) => {
+    app.get('/api/activity/:id', requiresLogin, async (req, res) => {
     
         try {
             const activity = await Activity.find({ _id: req.params.id });
@@ -14,7 +15,7 @@ module.exports = app => {
         
     });
     
-    app.get('/api/activites', async (req, res) => {
+    app.get('/api/activites', requiresLogin, async (req, res) => {
         const activities = await Activity.find();
         res.send(activities);
     });
