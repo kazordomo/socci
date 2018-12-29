@@ -27,7 +27,7 @@ module.exports = app => {
                 });
             }
 
-            req.session.userId = user._id;
+            req.session.user = user;
             res.send(user);
 
         } catch (err) {
@@ -84,7 +84,7 @@ module.exports = app => {
 
             await newUser.save();
 
-            req.session.userId = user._id;
+            req.session.user = user;
             res.send(newUser);
 
         } catch (err) {

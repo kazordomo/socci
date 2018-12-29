@@ -32,7 +32,7 @@ class Home {
             <span>${data.time}</span>
             <div class="attendees">
                 ${data.attendees.length ? 
-                    data.attendees.map(attendee => `<span>${attendee.name}</span>`) : 
+                    data.attendees.map(attendee => `<span>${attendee.email}</span>`) : 
                     'No attendees at the moment.'
                 }
             </div>
@@ -65,9 +65,8 @@ class Home {
         try {
 
             if(!activityEl.classList.contains('attending')) {
-                await ActivityCtrl.attendActivity(user, id);
-                // TODO: It's the user that should be added to the attendee list.
-                attendeesEl.innerHTML += `, ${user.name}`
+                let user = await ActivityCtrl.attendActivity(id);
+                attendeesEl.innerHTML += `, ${user}`
             } else {
                 await ActivityCtrl.declineActivity(user, id);
                 // TODO: Remove the attendee from the DOM.

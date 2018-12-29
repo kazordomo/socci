@@ -61,15 +61,19 @@ class ActivityCtrl {
         }
     }
 
-    static async attendActivity (attendee, activityId) {
+    static async attendActivity (activityId) {
 
         try {
 
             let response = await fetch(`/api/activity/attend/${activityId}`, { 
                 method: 'POST', 
-                body: JSON.stringify(attendee),
                 headers: { 'Content-Type': 'application/json' }
             });
+            let json = await response.json();
+
+            console.log(json);
+
+            return json;
 
         } catch (err) {
             console.log(err);

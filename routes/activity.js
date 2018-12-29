@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Activity = mongoose.model('activity');
+const User = mongoose.model('user');
 const { requiresLogin } = require('../middlewares/auth');
 
 module.exports = app => {
@@ -53,14 +54,13 @@ module.exports = app => {
     
     app.post('/api/activity/attend/:id', async (req, res) => {
     
-        const { id, name } = req.body;
-        
         try {
     
             let activity = await Activity.findOne({ _id: req.params.id });
-            activity.attendees.push({ id, name });
+            activity.attendees.push(req.session.user);
             await activity.save();
-            res.send(activity);
+            // TODO: We should send back the nickname
+            res.send({ user: req.session.user.email});
     
         } catch (err) {
             res.status(400).json(err);
