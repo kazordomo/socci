@@ -90,7 +90,7 @@ main {
 
 /* GLOBALS */
 
-#loader {
+loader {
     background-color: #2D3047;
     bottom: 0;
     left: 0;
@@ -101,12 +101,12 @@ main {
     z-index: -1;
 }
 
-#loader.active {
+loader.active {
     opacity: 1;
     z-index: 999;
 }
 
-#loader i {
+loader i {
     animation-name: spin;
     animation-duration: 2000ms;
     animation-iteration-count: infinite;

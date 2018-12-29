@@ -3,12 +3,15 @@ import Home from '../components/home';
 import Edit from '../components/edit';
 import Profile from '../components/profile';
 import Activity from '../components/activity';
+import Utils from '../utils';
+import Loader from './loader';
 
 class Page {
 
     constructor (url, script = null) {
         this.url = `app/views/${url}`;
         this.script = script;
+        this.interval = null;
     }
 
     load () {
@@ -41,7 +44,21 @@ class Page {
     }
 
     render (element) {
-        element.innerHTML = this.html;
+        // If async element is present, we will start the loader. When the data is rdy, remove loader.
+        if (this.html.includes('<async></async>')) {
+            element.innerHTML = this.html;
+            Loader.in();
+            
+            this.interval = setInterval(() => {
+                if (element.querySelector('async')) return;
+                Loader.out();
+                // Reset interval when finished.
+                this.interval = null;
+            }, 100);
+        } else {
+            element.innerHTML = this.html;
+        }
+        
         // Be sure that we render the html before the script
         setTimeout(() => this.loadScript(this.script), 0);
     }

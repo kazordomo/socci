@@ -46,6 +46,9 @@ class Utils {
             }
         }
 
+        // Tell the loader we're done fetching the data.
+        document.querySelector('async').remove();
+
         return html;
     }
 

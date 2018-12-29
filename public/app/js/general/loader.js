@@ -3,11 +3,11 @@
 class Loader {
 
     static in () {
-        document.querySelector('#loader').classList.add('active');
+        document.querySelector('loader').classList.add('active');
     }
 
     static out () {
-        document.querySelector('#loader').classList.remove('active');
+        document.querySelector('loader').classList.remove('active');
     }
 
 }
