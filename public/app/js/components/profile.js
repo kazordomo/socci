@@ -22,12 +22,12 @@ class Profile {
         let emailInput = this.DOMElement.querySelector('input');
         let friend = await SocialCtrl.add(emailInput.value);
 
-        //TODO: we get back an error message with status 404 if no user found
-        if (friend.status !== 404) {
-            friendsContainer.innerHTML += friend.email;
+        if (friend.status === 404) {
+            friendsContainer.innerHTML += friend.message;
+            return;
         }
-
-        return friend;
+        
+        friendsContainer.innerHTML += friend.email;
     }
 
 }

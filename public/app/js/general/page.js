@@ -3,7 +3,6 @@ import Home from '../components/home';
 import Edit from '../components/edit';
 import Profile from '../components/profile';
 import Activity from '../components/activity';
-import Utils from '../utils';
 import Loader from './loader';
 
 class Page {
