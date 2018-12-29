@@ -16,7 +16,8 @@ app.use(bodyParser.json());
 
 require('./models/Activity');
 require('./routes/auth')(app);
-require('./routes/api')(app);
+require('./routes/activity')(app);
+require('./routes/social')(app);
 
 app.use(express.static(__dirname + '/public'));
 

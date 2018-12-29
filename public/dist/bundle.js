@@ -142,7 +142,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _con
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nclass Profile {\r\n\r\n    constructor () {\r\n\r\n        this.DOMElement = document.querySelector('section#profile');\r\n\r\n    }\r\n\r\n    init () {\r\n\r\n    }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Profile);\n\n//# sourceURL=webpack:///./app/js/components/profile.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _controllers_social__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../controllers/social */ \"./app/js/controllers/social.js\");\n\r\n\r\nclass Profile {\r\n\r\n    constructor () {\r\n\r\n        this.DOMElement = document.querySelector('section#profile');\r\n        this.init();\r\n\r\n    }\r\n\r\n    init () {\r\n\r\n        let addButton = this.DOMElement.querySelector('button');\r\n        addButton.addEventListener('click', this.onAddFriend.bind(this));\r\n\r\n    }\r\n\r\n    async onAddFriend () {\r\n\r\n        let friendsContainer = this.DOMElement.querySelector('.friends');\r\n        let emailInput = this.DOMElement.querySelector('input');\r\n        let friend = await _controllers_social__WEBPACK_IMPORTED_MODULE_0__[\"default\"].add(emailInput.value);\r\n\r\n        //TODO: we get back an error message with status 404 if no user found\r\n        if (friend.status !== 404) {\r\n            friendsContainer.innerHTML += friend.email;\r\n        }\r\n\r\n        return friend;\r\n    }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (Profile);\n\n//# sourceURL=webpack:///./app/js/components/profile.js?");
 
 /***/ }),
 
@@ -167,6 +167,18 @@ eval("__webpack_require__.r(__webpack_exports__);\nclass ActivityCtrl {\r\n\r\n 
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\nclass AuthCtrl {\r\n\r\n    static async getUser () {\r\n\r\n        try {\r\n\r\n            let response = await fetch('/auth/user');\r\n            let json = await response.json();\r\n\r\n            return json;\r\n\r\n        } catch (err) {\r\n\r\n            console.log(err);\r\n\r\n        }\r\n\r\n    }\r\n\r\n    static async login (user) {\r\n\r\n        try {\r\n\r\n            let response = await fetch('/auth/login', { \r\n                method: 'POST', \r\n                body: JSON.stringify(user),\r\n                headers: { 'Content-Type': 'application/json' }\r\n            });\r\n\r\n            if(response.status === 200) {\r\n                window.location.href = 'http://localhost:3000/#home';\r\n            }\r\n\r\n        } catch(err) {\r\n\r\n            console.log(err);\r\n\r\n        }\r\n        \r\n    }\r\n\r\n    static async register (user) {\r\n\r\n        try {\r\n\r\n            let response = fetch('/auth/register', { \r\n                method: 'POST',\r\n                body: JSON.stringify(user),\r\n                headers: { 'Content-Type': 'application/json' }\r\n            });\r\n\r\n            if(response.status === 200) {\r\n                window.location.href = 'http://localhost:3000/#home';\r\n            }\r\n\r\n        } catch(err) {\r\n\r\n            console.log(err);\r\n\r\n        }\r\n    }\r\n\r\n    static async delete (id) {\r\n\r\n        try {\r\n\r\n            let response = fetch('/auth/user', { \r\n                method: 'DELETE',\r\n                body: JSON.stringify({ id }),\r\n                headers: { 'Content-Type': 'application/json' }\r\n            });\r\n\r\n        } catch(err) {\r\n\r\n            console.log(err);\r\n\r\n        }\r\n    }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (AuthCtrl);\n\n//# sourceURL=webpack:///./app/js/controllers/auth.js?");
+
+/***/ }),
+
+/***/ "./app/js/controllers/social.js":
+/*!**************************************!*\
+  !*** ./app/js/controllers/social.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nclass SocialCtrl {\r\n\r\n    static async add (email) {\r\n        try {\r\n\r\n            let response = await fetch(`/api/social/add/${email}`);\r\n            let json = await response.json();\r\n\r\n            return json;\r\n\r\n        } catch (err) {\r\n            console.log(err);\r\n        }\r\n\r\n    }\r\n\r\n}\r\n\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (SocialCtrl);\n\n//# sourceURL=webpack:///./app/js/controllers/social.js?");
 
 /***/ }),
 

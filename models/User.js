@@ -31,5 +31,5 @@ userSchema.methods.validPassword = (password, storedPassword) => {
     return bcrypt.compareSync(password, storedPassword);
 };
 
-let User = mongoose.model('users', userSchema);
+let User = mongoose.model('user', userSchema);
 module.exports = User;

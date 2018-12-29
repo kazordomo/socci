@@ -28,6 +28,7 @@ input {
 
 .button.neutral {
     background-color: var(--yellowish);
+    color: #000000;
 }
 
 .button.danger {
