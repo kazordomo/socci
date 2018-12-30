@@ -1,5 +1,6 @@
 import ActivityCtrl from '../controllers/activity';
 import Utils from '../utils';
+import RenderData from '../renderData';
 
 class Activity {
 
@@ -17,7 +18,7 @@ class Activity {
             id = id.split('/')[1];
 
         this.activity = await ActivityCtrl.getActivity(id);
-        this.DOMElement.innerHTML = Utils.domWithData(this.DOMElement, this.activity);
+        new RenderData(this.DOMElement, this.activity);
         
         
         this.DOMElement.querySelector('button').addEventListener('click', () => {

@@ -1,5 +1,6 @@
 import ActivityCtrl from '../controllers/activity';
 import Utils from '../utils';
+import RenderData from '../renderData';
 
 class Home {
 
@@ -14,6 +15,7 @@ class Home {
     async init () {
 
         this.activities = await ActivityCtrl.getActivities();
+        new RenderData(this.DOMElement, this.activities[0]);
 
         // Get the activites from the server and put them on the dom.
         for (let activity of this.activities) {
