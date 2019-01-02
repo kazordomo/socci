@@ -15,47 +15,28 @@ class Home {
     async init () {
 
         this.activities = await ActivityCtrl.getActivities();
-        new RenderData(this.DOMElement, this.activities[0]);
-
-        // Get the activites from the server and put them on the dom.
-        for (let activity of this.activities) {
-            this.createActivityEl(activity);
-        }
+        new RenderData(this.DOMElement, this.activities);
+        // When the dom is render we can connect the buttons with functions.
+        this.eventListenerInit();
 
         // Animate in.
         Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
     }
 
-    createActivityEl (data) {
+    eventListenerInit () {
 
-        // The dom tree for the activity element.
-        let htmlString = `
-            <h2>${data.title}</h2>
-            <span>${data.time}</span>
-            <div class="attendees">
-                ${data.attendees.length ? 
-                    data.attendees.map(attendee => `<span>${attendee.email}</span>`) : 
-                    'No attendees at the moment.'
-                }
-            </div>
-            <button class="button success">Attend</button>
-            <button class="button danger">Delete</button>
-        `;
+        for (let activityEl of this.DOMElement.querySelectorAll('.activity')) {
+            let dataId = activityEl.getAttribute('data-id');
 
-        // Row element (most parent of the activity element).
-        let activityEl = document.createElement('div');
-            activityEl.className = 'activity out';
-            activityEl.innerHTML = htmlString;
+            activityEl.addEventListener('click', () => window.location.href = `#activity/${dataId}`);
+            activityEl
+                .querySelector('button.success')
+                .addEventListener('click', () => this.onAttend(dataId, activityEl));
+            activityEl
+                .querySelector('button.danger')
+                .addEventListener('click', () => this.onDelete(dataId, activityEl));
+        }
 
-        activityEl.addEventListener('click', () => window.location.href = `#activity/${data._id}`);
-        activityEl.querySelector('button.success')
-             .addEventListener('click', () => this.onAttend(data._id, activityEl));
-        activityEl.querySelector('button.danger')
-             .addEventListener('click', () => this.onDelete(data._id, activityEl));
-
-        this.DOMElement.querySelector('.wrapper').appendChild(activityEl);
-        
-        return true;
     }
 
     async onAttend (id, activityEl) {

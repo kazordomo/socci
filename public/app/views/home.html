@@ -1,13 +1,15 @@
 <async></async>
 <section id="home">
     <div class="wrapper">
-        <div class="activity out">
+        @for
+        <div class="activity out" data-id="{{ data._id }}">
             <h2>{{ data.title}}</h2>
             <span>{{ data.time}}</span>
             <div class="attendees">{{ array:span:data.attendees:email }}</div>
             <button class="button success">Attend</button>
             <button class="button danger">Delete</button>
         </div>
+        @endfor
     </div>
 
     <a class="button" href="#edit"><i class="fas fa-plus"></i></a>

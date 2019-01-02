@@ -4,40 +4,76 @@ class RenderData {
 
         this.html = DOMElement.innerHTML;
         this.data = data;
+        // Regex rule.
+        this.regExp = /\{{([^}}]+)/g;
+        // Get all values surrounded by {{ }}.
+        this.matches = this.html.match(this.regExp);
         this.domWithData(DOMElement, this.data);
 
     }
 
     domWithData (DOMElement) {
-        // Regex rule.
-        let regExp = /\{{([^}}]+)/g;
-        // Get all values surrounded by {{ }}.
-        let matches = this.html.match(regExp);
 
-        for(let match of matches) {
+        if (this.html.includes('@for') && Array.isArray(this.data)) {
 
-            // TODO: if the html contains {{ @for }} we should loop out them and remove the first.
+            const start = '@for';
+            const end = '@endfor'
+    
+            // Get the html we will apply in the loop.
+            let loopString = this.html.substring(
+                this.html.lastIndexOf(start) + start.length, 
+                this.html.lastIndexOf(end)
+            );
 
-            this.renderArray(match, this.data);
+            for (let data of this.data) {
 
-            // Get the property. {{ this.data.test }} -> test.
-            let prop = match.split('.')[1].trim();
+                for(let match of this.matches) {
+                    this.renderArray(match, data);
+                    this.convertWithData(match, data);
+                }
+                
+                if (data !== this.data[this.data.length - 1]) {
+                    // If there are still data to output we will append the loopString as an element to the html.
+                    let position = this.html.lastIndexOf(end);
+                    let appendedHtml = [this.html.slice(0, position), loopString, this.html.slice(position)].join('');
 
-            if (this.data[prop]) {
-                // Add back the }} to be able to match in the html.
-                match = match + '}}';
-                // Replace the match with the correct propert from this.data.
-                this.html = this.html.replace(match, this.data[prop]);
+                    this.html = appendedHtml;
+                }
             }
+
+            this.html = this.html.replace(start, '');
+            this.html = this.html.replace(end, '');
+
+        } else {
+
+            for(let match of this.matches) {
+                this.renderArray(match);
+                this.convertWithData(match,);
+            }
+
         }
 
-        // Tell the loader we're done fetching the this.data.
+        // Tell the loader we're done fetching the data.
         document.querySelector('async').remove();
 
         DOMElement.innerHTML = this.html;
     }
 
-    renderArray (match) {
+    convertWithData (match, data = this.data) {
+
+        // Get the property. {{ this.data.test }} -> test.
+        let prop = match.split('.')[1].trim();
+
+        if (data[prop]) {
+            // Add back the }} to be able to match in the html.
+            match = match + '}}';
+            // Replace the match with the correct propert from this.data.
+            this.html = this.html.replace(match, data[prop]);
+        }
+
+    }
+
+    renderArray (match, data = this.data) {
 
         if (!match.includes('array')) return;
 
@@ -48,13 +84,13 @@ class RenderData {
         // If length === 4 we know that we have specified a prop in the obj in the arr.
         if(splitted.length === 4) {
 
-            values = this.data[splitted[2].split('.')[1]].map(value => {
+            values = data[splitted[2].split('.')[1]].map(value => {
                 return `<${splitted[1]}>${value[splitted[3]]}</${splitted[1]}>`;
             }).join('');
 
         } else {
 
-            values = this.data[splitted[2].split('.')[1]].map(value => {
+            values = data[splitted[2].split('.')[1]].map(value => {
                 return `<${splitted[1]}>${value}</${splitted[1]}>`;
             }).join('');
 
@@ -64,9 +100,6 @@ class RenderData {
         this.html = this.html.replace(match, values);
     }
 
-    renderMultiple () {
-
-    }
 }
 
 export default RenderData;
