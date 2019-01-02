@@ -52,6 +52,7 @@ class Page {
                 if (element.querySelector('async')) return;
                 Loader.out();
                 // Reset interval when finished.
+                clearInterval(this.interval);
                 this.interval = null;
             }, 100);
         } else {

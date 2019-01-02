@@ -1,7 +1,6 @@
 class ActivityCtrl {
 
     static async getActivity (id) {
-
         try {
 
             let response = await fetch(`/api/activity/${id}`);
@@ -12,11 +11,9 @@ class ActivityCtrl {
         } catch (err) {
             console.log(err);
         }
-
     }
 
     static async getActivities () {
-
         try {
 
             let response = await fetch('/api/activites');
@@ -27,11 +24,9 @@ class ActivityCtrl {
         } catch (err) {
             console.log(err);
         }
-
     }
 
     static async createActivity (activity) {
-
         try {
 
             let response = await fetch('/api/activity', { 
@@ -43,7 +38,6 @@ class ActivityCtrl {
         } catch(err) {
             console.log(err);
         }
-        
     }
 
     static async deleteActivity (id) {
@@ -62,27 +56,21 @@ class ActivityCtrl {
     }
 
     static async attendActivity (activityId) {
-
         try {
-
             let response = await fetch(`/api/activity/attend/${activityId}`, { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }
             });
             let json = await response.json();
 
-            console.log(json);
-
             return json;
 
         } catch (err) {
             console.log(err);
         }
-
     }
 
     static async declineActivity (attendee, activityId) {
-
         try {
 
             let response = await fetch(`/api/activity/decline/${activityId}`, { 
@@ -94,11 +82,9 @@ class ActivityCtrl {
         } catch (err) {
             console.log(err);
         }
-
     }
 
     static async postComment (comment, activityId) {
-
         try {
 
             let response = await fetch(`/api/activity/comment/${activityId}`, { 
@@ -110,7 +96,6 @@ class ActivityCtrl {
         } catch (err) {
             console.log(err);
         }
-
     }
 
 }
