@@ -78,16 +78,7 @@ section#login .col_b {
     background: rgb(36,42,66);
     background: linear-gradient(180deg, rgba(36,42,66,1) 0%, rgba(36,42,66,1) 44%, rgba(25,29,46,1) 100%);
     box-shadow: -4px 0px 12px -4px rgba(0,0,0,0.75);
-    left: 50%;
-    position: absolute;
     transition: margin 300ms ease-out;
-    width: 100%;
-}
-
-section#login .col_b .content {
-    height: 100%;
-    position: relative;
-    width: 50%;
 }
 
 ::placeholder {

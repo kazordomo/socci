@@ -7,9 +7,7 @@ module.exports = app => {
     });
 
     app.post('/auth/login', async (req, res) => {
-
         try {
-
             let user = await User.findOne({ 'email': req.body.email });
 
             if(!user) {
@@ -37,23 +35,6 @@ module.exports = app => {
                 message: 'Incorrect email or password.'
             });
         }
-        
-    });
-
-    app.get('/auth/logout', (req, res) => {
-        if (req.session) {
-            req.session.destroy(err => {
-                if(err) {
-                    resstatus(404).json({ 
-                        success: false, 
-                        status: 404, 
-                        message: 'Could not logout'
-                    });
-                } else {
-                    res.status(200);
-                }
-            });
-        }
     });
 
     app.post('/auth/register', async (req, res) => {
@@ -66,7 +47,6 @@ module.exports = app => {
                 message: 'The email provided is already in use.'
             });
         }
-        
         if(req.body.password !== req.body.retype_password) {
             res.status(404).json({
                 success: false,
@@ -86,6 +66,22 @@ module.exports = app => {
             res.send(newUser);
         } catch (err) {
             res.status(400).json(err);
+        }
+    });
+
+    app.get('/auth/logout', (req, res) => {
+        if (req.session) {
+            req.session.destroy(err => {
+                if(err) {
+                    resstatus(404).json({ 
+                        success: false, 
+                        status: 404, 
+                        message: 'Could not logout'
+                    });
+                } else {
+                    res.status(200);
+                }
+            });
         }
     });
 

@@ -34,41 +34,56 @@ class Login {
         return true;
     }
 
-    onLogin () {
+    successAnimation (cb) {
+        let elements = [
+            this.DOMElement.querySelector('.col_b .corner'),
+            ...this.DOMElement.querySelectorAll('input'),
+            ...this.DOMElement.querySelectorAll('button'),
+            ...this.DOMElement.querySelectorAll('a')
+        ];
 
-        let colB = this.DOMElement.querySelector('.col_b');
-        colB.style.marginLeft = '-50%'
+        this.DOMElement.querySelector('.col_b').style.marginLeft = '-50%';
 
-        setTimeout(() =>{
-            let elements = [
-                this.DOMElement.querySelector('.col_b .corner'),
-                ...this.DOMElement.querySelectorAll('input'),
-                ...this.DOMElement.querySelectorAll('button'),
-                ...this.DOMElement.querySelectorAll('a')
-            ];
-    
-            Utils.animateOut(elements);
-
-            setTimeout(() => {
-                let userData = {
-                    email: this.DOMElement.querySelector('input[name="email"]').value,
-                    password: this.DOMElement.querySelector('input[name="password"]').value,
-                }
-    
-                AuthCtrl.login(userData);
-                return true;
-            }, elements.length * 75);
-        }, 300);
+        setTimeout(() => {
+             Utils.animateOut(elements);
+             setTimeout(() => cb(), elements.length * 75);
+        }, 300)
+        
 
     }
 
-    onRegister () {
+    onLogin () {
+        let email = this.DOMElement.querySelector('input[name="email"]').value;;
+        let password = this.DOMElement.querySelector('input[name="password"]').value;
+
+        if(!email || !password) {
+            return;
+        }
+
         let userData = {
             email: this.DOMElement.querySelector('input[name="email"]').value,
             password: this.DOMElement.querySelector('input[name="password"]').value,
-            retype_password: this.DOMElement.querySelector('input[name="retype_password"]').value,
         }
-        AuthCtrl.register(userData);
+
+        this.successAnimation(() => AuthCtrl.login(userData));
+    }
+
+    onRegister () {
+        let email = this.DOMElement.querySelector('input[name="email"]').value;;
+        let password = this.DOMElement.querySelector('input[name="password"]').value;
+        let retypePassword = this.DOMElement.querySelector('input[name="retype_password"]').value;
+
+        if (!email || !password || !retypePassword) {
+            return;
+        }
+
+        let userData = {
+            email,
+            password,
+            retypePassword
+        }
+
+        this.successAnimation(() => AuthCtrl.register(userData));
         return true;
     }
 

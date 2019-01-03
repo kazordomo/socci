@@ -32,7 +32,7 @@ class AuthCtrl {
 
     static async register (user) {
         try {
-            let response = fetch('/auth/register', { 
+            let response = await fetch('/auth/register', { 
                 method: 'POST',
                 body: JSON.stringify(user),
                 headers: { 'Content-Type': 'application/json' }
