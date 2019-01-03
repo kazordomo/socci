@@ -9,25 +9,35 @@ body {
 
 button, 
 input {
+    background-color: transparent;
     border: none;
-    border-radius: 2px;
-    font-family: 'Roboto Slab', serif;
+    color: #FFFFFF;
     font-size: 18px;
     outline: none;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+input {
+    border-bottom: 1px solid var(--greyish);
+    margin-bottom: 20px;
 }
 
 .button {
+    border-radius: 2px;
     color: #FFFFFF;
     cursor: pointer;
+    height: 50px;
+    /* line-height: 50px; */
 }
 
 .button.success {
-    background-color: var(--greenish);
+    background-color: var(--mint);
 }
 
 .button.neutral {
-    background-color: var(--yellowish);
-    color: #000000;
+    background-color: var(--orangeish);
+    color: #FFFFFF;
 }
 
 .button.danger {
@@ -43,6 +53,16 @@ input {
 .button.back i {
     color: #FFFFFF;
     font-size: 30px;
+}
+
+.button.short {
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.button.round {
+    border-radius: 30px;
 }
 
 a {
@@ -87,7 +107,8 @@ main {
     --mint: #35d0c8;
     --greenish: #1B998B;
     --yellowish: #FFFD82;
-    --orangeish: #FF9B71;
+    --greyish: #a3a3a3;
+    --orangeish: #e85b20;
     --redish: #E84855;
     --google: #ea4335;
     --facebook: #3b5998;

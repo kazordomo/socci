@@ -57,7 +57,7 @@ class Edit {
 
             if (!this.attendees.length) {
                 // Remove pre-default text.
-                this.DOMElement.querySelector('.attendees').innerHTML = '<h1>Attendees</h1>';
+                this.DOMElement.querySelector('.attendees').innerHTML = '<h2>Attendees</h2>';
             }
 
             this.attendees.push({id: this.attendeeId, name: newAttendeeEl.value});

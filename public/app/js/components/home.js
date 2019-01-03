@@ -30,6 +30,10 @@ class Home {
             activityEl
                 .querySelector('button.neutral')
                 .addEventListener('click', () => window.location.href = `#activity/${dataId}`);
+
+            if (!activityEl.querySelector('.attendees').innerHTML) {
+                activityEl.querySelector('.attendees').innerHTML = 'No attendees yet.'
+            }
                 
             // activityEl
             //     .querySelector('button.danger')

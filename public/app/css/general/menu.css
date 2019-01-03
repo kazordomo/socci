@@ -8,6 +8,11 @@ nav a {
     color: #FFFFFF;
 }
 
+nav .icons a:last-child {
+    border-bottom: 1px solid var(--mint);
+    padding: 0 2px 2px 2px;
+}
+
 nav h2 {
     float: left;
 }
