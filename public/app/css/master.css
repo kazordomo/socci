@@ -101,6 +101,14 @@ h1 {
     font-size: 46px;
 }
 
+h2 {
+    font-size: 34px;
+}
+
+ p {
+     font-weight: 300;
+ }
+
 /* COLORS */
 
 main {

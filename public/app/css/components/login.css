@@ -22,6 +22,14 @@ section#login .col .corner {
     top: 30px;
 }
 
+section#login .slider {
+    background-image: url(../../img/city_br2.png);
+    background-size: cover;
+    margin-left: -280px;
+    width: 1000px;
+    height: 500px;
+}
+
 
 section#login .col_a .wrapper_small img {
     width: 100%;

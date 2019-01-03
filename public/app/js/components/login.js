@@ -53,6 +53,7 @@ class Login {
     }
 
     onLogin () {
+        // TODO: proper error handling
         let email = this.DOMElement.querySelector('input[name="email"]').value;;
         let password = this.DOMElement.querySelector('input[name="password"]').value;
 
