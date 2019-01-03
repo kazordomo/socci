@@ -1,4 +1,5 @@
 import AuthCtrl from '../controllers/auth';
+import Utils from '../utils';
 
 class Login {
 
@@ -34,12 +35,31 @@ class Login {
     }
 
     onLogin () {
-        let userData = {
-            email: this.DOMElement.querySelector('input[name="email"]').value,
-            password: this.DOMElement.querySelector('input[name="password"]').value,
-        }
-        AuthCtrl.login(userData);
-        return true;
+
+        let colB = this.DOMElement.querySelector('.col_b');
+        colB.style.marginLeft = '-50%'
+
+        setTimeout(() =>{
+            let elements = [
+                this.DOMElement.querySelector('.col_b .corner'),
+                ...this.DOMElement.querySelectorAll('input'),
+                ...this.DOMElement.querySelectorAll('button'),
+                ...this.DOMElement.querySelectorAll('a')
+            ];
+    
+            Utils.animateOut(elements);
+
+            setTimeout(() => {
+                let userData = {
+                    email: this.DOMElement.querySelector('input[name="email"]').value,
+                    password: this.DOMElement.querySelector('input[name="password"]').value,
+                }
+    
+                AuthCtrl.login(userData);
+                return true;
+            }, elements.length * 75);
+        }, 300);
+
     }
 
     onRegister () {
