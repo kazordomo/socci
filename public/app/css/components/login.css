@@ -1,8 +1,98 @@
 section#login {
-    background: url(../../img/city_br.jpg);
-    background-size: cover;
-    /* background-position: bottom; */
+    padding: 0;
 }
+
+section#login h2 {
+    font-weight: 500;
+}
+
+section#login .col {
+    box-sizing: border-box;
+    height: 100vh;
+    padding: 80px;
+    position: relative;
+}
+
+section#login .col_a .wrapper_small h2 {
+    font-weight: 400;
+    margin: 10px 0 20px 0;
+}
+
+section#login .col .corner { 
+    position: absolute;
+    top: 30px;
+}
+
+
+section#login .col_a .wrapper_small img {
+    width: 100%;
+}
+
+section#login .col_a .corner {
+    left: 30px;
+}
+
+section#login .col_b .corner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+    border-radius: 50px;
+    right: 30px;
+    width: 200px;
+}
+
+section#login .col_b .corner div {
+    background-color: #363c53;
+    display: inline-block;
+    height: 100%;
+    opacity: 0.65;
+    width: 100px;
+}
+
+section#login .col_b .corner div:not(.inactive) {
+    background-color: var(--mint);
+    box-shadow: -1px 4px 53px -4px rgba(0,0,0,1);
+    margin-top: -3px;
+    opacity: 1;
+    z-index: 2;
+}
+
+section#login .col_b .corner div:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+section#login .col_b .corner div:nth-child(2) {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+section#login .col_a {
+    background: rgb(53,208,200);
+    background: linear-gradient(180deg, rgba(53,208,200,1) 0%, rgba(53,208,200,1) 44%, rgba(34,145,139,1) 100%);
+}
+
+section#login .col_b { 
+    background: rgb(36,42,66);
+    background: linear-gradient(180deg, rgba(36,42,66,1) 0%, rgba(36,42,66,1) 44%, rgba(25,29,46,1) 100%);
+    box-shadow: -4px 0px 12px -4px rgba(0,0,0,0.75);
+}
+
+::placeholder {
+    color: #a3a3a3;
+    opacity: 1;
+  }
+  
+  :-ms-input-placeholder {
+    color: #a3a3a3;
+  }
+  
+  ::-ms-input-placeholder {
+    color: #a3a3a3;
+  }
 
 .form_group input,
 .form_group button {
@@ -15,15 +105,31 @@ section#login {
 
 .form_group input {
     background-color: transparent;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid #a3a3a3;
     color: #FFFFFF;
 }
 
 .form_group button {
-    background-color: var(--orange);
-    color: #FFFFFF;
+    background-color: var(--mint);
+    border-radius: 30px;
+    box-shadow: -1px 3px 28px 0px rgba(0,0,0,0.41);
     cursor: pointer;
-    padding: 20px 0;
+    color: #FFFFFF;
+    height: 50px;
+    line-height: 50px;
+    margin: 30px 30px 0 0;
+    transition: box-shadow 300ms;
+    width: 150px;
+}
+
+.form_group a {
+    border-bottom: 1px solid var(--mint);
+    color: #a3a3a3;
+    padding: 0 2px 2px 2px;
+}
+
+.form_group button:hover {
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
 }
 
 .form_group span {
@@ -32,10 +138,7 @@ section#login {
 }
 
 section#login .wrapper_small {
-    background-color: rgba(0,0,0,0.3);
-    border-radius: 10px;
     left: 0;
-    padding: 50px;
     position: absolute;
     right: 0;
     top: 50%;
