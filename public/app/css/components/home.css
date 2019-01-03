@@ -45,10 +45,16 @@ section#home .activity .attendees span:last-child {
 }
 
 section#home .activity button {
-    padding: 10px 20px;
+    height: 50px;
+    line-height: 50px;
+    width: 100px;
 }
 
-section#home .activity button.danger {
+section#home .activity button i {
+    font-size: 20px;
+}
+
+section#home .activity button.neutral {
     float: right;
 }
 

@@ -24,13 +24,16 @@ class Home {
         for (let activityEl of this.DOMElement.querySelectorAll('.activity')) {
             let dataId = activityEl.getAttribute('data-id');
 
-            activityEl.addEventListener('click', () => window.location.href = `#activity/${dataId}`);
             activityEl
                 .querySelector('button.success')
                 .addEventListener('click', () => this.onAttend(dataId, activityEl));
             activityEl
-                .querySelector('button.danger')
-                .addEventListener('click', () => this.onDelete(dataId, activityEl));
+                .querySelector('button.neutral')
+                .addEventListener('click', () => window.location.href = `#activity/${dataId}`);
+                
+            // activityEl
+            //     .querySelector('button.danger')
+            //     .addEventListener('click', () => this.onDelete(dataId, activityEl));
         }
     }
 

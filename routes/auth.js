@@ -57,7 +57,6 @@ module.exports = app => {
     });
 
     app.post('/auth/register', async (req, res) => {
-
         let user = await User.findOne({ email: req.body.email });
 
         if(user) {
@@ -77,7 +76,6 @@ module.exports = app => {
         }
 
         try {
-
             let newUser = new User();
             newUser.email = req.body.email;
             newUser.password = newUser.generateHash(req.body.password);
@@ -86,11 +84,9 @@ module.exports = app => {
 
             req.session.user = user;
             res.send(newUser);
-
         } catch (err) {
             res.status(400).json(err);
         }
-
     });
 
     app.delete('/auth/user', (req, res) => {
