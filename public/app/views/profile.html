@@ -1,9 +1,8 @@
+<async></async>
 <section id="profile">
-
     <a href="#home" class="button back">
         <i class="fas fa-chevron-left"></i>
     </a>
-
     <div class="wrapper">
         <div class="cols cols_two">
             <div class="col col_a">
@@ -14,11 +13,15 @@
             <div class="col col_b">
                 <div>
                     <h2>Friends</h2>
+                    <input type="text" name="user" placeholder="Name or email" />
                     <button class="button success">Add Friend</button>
                 </div>
             </div>
         </div>
-        <dv class="friends"></dv>
+        <dv class="friends">
+            @for
+            <div>{{ data.email }}</div>
+            @endfor
+        </dv>
     </div>
-    
 </section>

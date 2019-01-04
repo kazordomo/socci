@@ -16,9 +16,14 @@ const userSchema = new Schema({
     },
     nickname: {
         type: String,
+        unique: true,
         trim: true,
         maxlength: 15
     },
+    friends: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    }],
     createdAt: { type: Date, default: Date.now }
 });
 

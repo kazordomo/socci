@@ -89,19 +89,6 @@ section#login .col_b {
     transition: margin 300ms ease-out;
 }
 
-::placeholder {
-    color: var(--greyish);
-    opacity: 1;
-  }
-  
-  :-ms-input-placeholder {
-    color: var(--greyish);
-  }
-  
-  ::-ms-input-placeholder {
-    color: var(--greyish);
-  }
-
 .form_group input,
 .form_group button {
     border-radius: 2px;

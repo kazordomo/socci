@@ -7,8 +7,10 @@ let ActivitySchema = new mongoose.Schema({
     attendees: Array,
     // TODO: comments should be its own model
     comments: Array,
-    // TODO: Implement _user when login/register is finnished
-    // _user: { type: Schema.Types.ObjectId, ref: 'User' }
+    _user: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    }
 });
 
 let Activity = mongoose.model('activity', ActivitySchema);

@@ -1,33 +1,34 @@
 import SocialCtrl from '../controllers/social';
+import RenderData from '../renderData';
 
 class Profile {
 
     constructor () {
-
         this.DOMElement = document.querySelector('section#profile');
-        this.init();
+        this.friends = [];
 
+        this.init();
     }
 
-    init () {
+    async init () {
+        this.friends = await SocialCtrl.getFriends();
+        new RenderData(this.DOMElement, this.friends);
 
         let addButton = this.DOMElement.querySelector('button');
         addButton.addEventListener('click', this.onAddFriend.bind(this));
-
     }
 
     async onAddFriend () {
-
         let friendsContainer = this.DOMElement.querySelector('.friends');
-        let emailInput = this.DOMElement.querySelector('input');
-        let friend = await SocialCtrl.add(emailInput.value);
+        let addUserInput = this.DOMElement.querySelector('input[name="user"]');
+        let addUser = await SocialCtrl.add(addUserInput.value);
 
-        if (friend.status === 404) {
-            friendsContainer.innerHTML += friend.message;
+        if (!addUser.email) {
+            friendsContainer.innerHTML += addUser.message;
             return;
         }
         
-        friendsContainer.innerHTML += friend.email;
+        friendsContainer.innerHTML += `<div>${addUser.email}</div>`;
     }
 
 }

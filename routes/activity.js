@@ -21,12 +21,13 @@ module.exports = app => {
     
     app.post('/api/activity', async (req, res) => {
         const { title, information, time, attendees } = req.body;
-    
+
         let newActivity = new Activity({
             title,
             information,
             time,
             attendees,
+            createdBy: req.session.user
         });
     
         try {

@@ -21,8 +21,27 @@ input {
 }
 
 input {
+    box-sizing: border-box;
     border-bottom: 1px solid var(--greyish);
     margin-bottom: 20px;
+    padding: 20px 30px;
+}
+
+input:focus {
+    border-bottom: 1px solid #FFFFFF;
+}
+
+::placeholder {
+    color: var(--greyish);
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: var(--greyish);
+}
+
+::-ms-input-placeholder {
+    color: var(--greyish);
 }
 
 .button {
@@ -85,11 +104,6 @@ hr {
     border: none;
     border-bottom: 1px dashed #FFFFFF;
     margin: 30px 0px;
-}
-
-input {
-    box-sizing: border-box;
-    padding: 20px 30px;
 }
 
 h1, h2, h3 {
