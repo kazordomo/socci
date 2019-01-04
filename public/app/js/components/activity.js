@@ -20,13 +20,19 @@ class Activity {
         this.activity = await ActivityCtrl.getActivity(id);
         new RenderData(this.DOMElement, this.activity);
         
-        
         this.DOMElement.querySelector('button').addEventListener('click', () => {
-            ActivityCtrl.postComment(Utils.getInputValue(this.DOMElement, 'comment'), id);
+            this.postComment(id);
             this.DOMElement.querySelector('input[name="comment"').value = '';
         });
 
         return true;
+    }
+
+    async postComment (id) {
+        let comment = await ActivityCtrl.postComment(Utils.getInputValue(this.DOMElement, 'comment'), id);        
+        if (comment) {
+            this.DOMElement.querySelector('.comments').innerHTML += `${comment.comment} - ${comment.user}`;
+        }
     }
 
 }

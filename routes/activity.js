@@ -7,8 +7,8 @@ module.exports = app => {
 
     app.get('/api/activity/:id', requiresLogin, async (req, res) => {
         try {
-            const activity = await Activity.find({ _id: req.params.id });
-            res.send(activity[0]);
+            const activity = await Activity.findOne({ _id: req.params.id });
+            res.send(activity);
         } catch (err) {
             res.status(400).json(err);
         }
@@ -85,9 +85,10 @@ module.exports = app => {
     app.post('/api/activity/comment/:id', async (req, res) => {
         try {
             let activity = await Activity.findOne({ _id: req.params.id });
-            activity.comments.push(req.body);
+            let comment = { user: req.session.user.email, comment: req.body.comment };
+            activity.comments.push(comment);
             await activity.save();
-            res.send(activity);
+            res.send(comment);
         } catch (err) {
             res.status(400).json(err);
         }

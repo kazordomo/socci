@@ -51,7 +51,7 @@ class ActivityCtrl {
     static async attendActivity (activityId) {
         try {
             let response = await fetch(`/api/activity/attend/${activityId}`, { 
-                method: 'POST', 
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             });
             let json = await response.json();
@@ -82,6 +82,9 @@ class ActivityCtrl {
                 body: JSON.stringify({id: activityId, comment}),
                 headers: { 'Content-Type': 'application/json' }
             });
+            let json = await response.json();
+
+            return json;
         } catch (err) {
             console.log(err);
         }

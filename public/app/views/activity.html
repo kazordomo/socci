@@ -8,7 +8,11 @@
         <h1>{{ data.title }}</h1>
         <p>{{ data.information }}</p>
         <div class="attendees">{{ array:span:data.attendees:email }}</div>
-        <div class="comments">{{ array:div:data.comments:comment }}</div>
+        <div class="comments">
+            {{ array:span:data.comments:comment }}
+            -
+            {{ array:span:data.comments:user }}
+        </div>
         <input type="text" name="comment" placeholder="Comment" />
         <button class="button success">Add</button>
     </div>
