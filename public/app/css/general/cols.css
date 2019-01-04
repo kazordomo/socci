@@ -1,0 +1,37 @@
+.cols.cols_two {
+    width: 100%;
+}
+
+.col {
+    width: 50%;
+}
+
+.col_a {
+    float: left;
+}
+
+.col_b {
+    float: right;
+}
+
+.wrapper {
+    width: 1024px;
+}
+
+.wrapper_small {
+    width: 500px;
+}
+
+.wrapper,
+.wrapper_small {
+    margin: 0 auto;
+    max-width: 90%;
+}
+
+.row {
+    width: 100%;
+}
+
+.col {
+    float: left;
+}

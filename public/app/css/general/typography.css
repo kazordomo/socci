@@ -1,0 +1,17 @@
+p {
+    font-size: 22px;
+    font-weight: 300;
+}
+
+h1, h2, h3 {
+    color: #FFFFFF;
+    margin: 0;
+}
+
+h1 {
+    font-size: 46px;
+}
+
+h2 {
+    font-size: 34px;
+}

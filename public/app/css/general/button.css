@@ -1,0 +1,51 @@
+button {
+    background-color: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 18px;
+    outline: none;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+
+.button {
+    border-radius: 2px;
+    color: #FFFFFF;
+    cursor: pointer;
+    height: 50px;
+}
+
+.button.success {
+    background-color: var(--mint);
+}
+
+.button.neutral {
+    background-color: var(--orangeish);
+    color: #FFFFFF;
+}
+
+.button.danger {
+    background-color: var(--redish);
+}
+
+.button.back {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.button.back i {
+    color: #FFFFFF;
+    font-size: 30px;
+}
+
+.button.short {
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.button.round {
+    border-radius: 30px;
+}
