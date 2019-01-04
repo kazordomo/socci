@@ -1,7 +1,3 @@
-section#profile {
-    background-color: var(--dark);
-}
-
 section#profile input {
     width: 100%;
 }
@@ -13,8 +9,4 @@ section#profile .col_a {
 
 section#profile .col_b {
     width: 40%;
-}
-
-section#profile .col_b button {
-    width: 100%;
 }

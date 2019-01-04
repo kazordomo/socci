@@ -1,14 +1,6 @@
-section#home {
-    background: rgb(36,42,66);
-    background: linear-gradient(180deg, rgba(36,42,66,1) 0%, rgba(36,42,66,1) 44%, rgba(25,29,46,1) 100%);
-}
-
 section#home .activity {
     border-radius: 2px;
     box-sizing: border-box;
-    /* -webkit-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
-    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75); */
     cursor: pointer;
     float: left;
     margin-bottom: 30px;
@@ -26,15 +18,6 @@ section#home .activity:hover {
     background-color: #3A506B;
 }
 
-section#home .button_group {
-    bottom: 0;
-    position: absolute;
-}
-
-section#home .activity.attending {
-    background-color: pink;
-}
-
 section#home .activity .attendees {
     padding: 30px 0;
 }
@@ -47,12 +30,6 @@ section#home .activity .attendees span {
 
 section#home .activity .attendees span:last-child {
     margin-right: 0;
-}
-
-section#home .activity button {
-    height: 50px;
-    line-height: 50px;
-    width: 100px;
 }
 
 section#home .activity button i {
@@ -73,39 +50,7 @@ section#home .activity span {
     margin-top: 8px;
 }
 
-section#home a {
-    display: block;
-}
-
-section#home a[href="#edit"] {
-    background-color: var(--greenish);
-    border-radius: 2px;
-    bottom: 80px;
-    -webkit-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
-    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
-    color: #FFFFFF;
-    display: block;
-    font-size: 30px;
-    height: 80px;
-    line-height: 80px;
-    left: 0;
-    margin: 0 auto;
-    position: fixed;
-    right: 0;
-    text-align: center;
-    width: 1024px;
-}
-
 @media screen and (max-width: 1024px) {
-
-    section#home a[href="#edit"] {
-        border-radius: 50%;
-        display: block;
-        height: 150px;
-        line-height: 150px;
-        width: 150px;
-    }
 
     section#home .activity {
         float: none;

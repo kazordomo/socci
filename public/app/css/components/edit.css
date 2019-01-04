@@ -1,12 +1,4 @@
-section#edit {
-    background-color: var(--dark);
-}
-
 section#edit input {
-    width: 100%;
-}
-
-section#edit button[type="submit"] {
     width: 100%;
 }
 
