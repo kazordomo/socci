@@ -18,7 +18,6 @@ class ActivityCtrl {
             let json = await response.json();
 
             return json;
-
         } catch (err) {
             console.log(err);
         }

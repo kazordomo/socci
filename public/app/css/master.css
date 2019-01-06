@@ -27,7 +27,7 @@ a {
 }
 
 section {
-    min-height: calc(100vh - 240px);
+    min-height: calc(100vh - 160px);
     padding: 80px 0px;
 }
 

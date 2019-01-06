@@ -21,6 +21,12 @@ class Login {
         this.DOMElement.querySelector('button[data-type="register"]').addEventListener('click', () => {
             this.onRegister();
         });
+        this.DOMElement.addEventListener('keyup', event => {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                this.DOMElement.querySelector('button:not(.inactive)').click();
+            }
+        })
 
         // Change to Register inputs
         changeAuthTypeEl[0].addEventListener('click', () => { 
@@ -70,6 +76,7 @@ class Login {
     }
 
     onRegister () {
+        let nickname = this.DOMElement.querySelector('input[name="nickname"').value;
         let email = this.DOMElement.querySelector('input[name="email"]').value;;
         let password = this.DOMElement.querySelector('input[name="password"]').value;
         let retypePassword = this.DOMElement.querySelector('input[name="retype_password"]').value;
@@ -79,6 +86,7 @@ class Login {
         }
 
         let userData = {
+            nickname,
             email,
             password,
             retypePassword

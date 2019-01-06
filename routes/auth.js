@@ -41,14 +41,14 @@ module.exports = app => {
         let user = await User.findOne({ email: req.body.email });
 
         if(user) {
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 status: 404,
                 message: 'The email provided is already in use.'
             });
         }
-        if(req.body.password !== req.body.retype_password) {
-            res.status(404).json({
+        if(req.body.password !== req.body.retypePassword) {
+            return res.status(404).json({
                 success: false,
                 status: 404,
                 message: 'The passwords does not match.'
@@ -57,12 +57,11 @@ module.exports = app => {
 
         try {
             let newUser = new User();
+            newUser.nickname = req.body.nickname;
             newUser.email = req.body.email;
             newUser.password = newUser.generateHash(req.body.password);
-
             await newUser.save();
-
-            req.session.user = user;
+            req.session.user = newUser;
             res.send(newUser);
         } catch (err) {
             res.status(400).json(err);

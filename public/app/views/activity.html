@@ -3,17 +3,29 @@
     <a href="#home" class="button back">
         <i class="fas fa-chevron-left"></i>
     </a>
-    <div class="wrapper">
-        <div class="time ">{{ data.time }}</div>
-        <h1>{{ data.title }}</h1>
-        <p>{{ data.information }}</p>
-        <div class="attendees">{{ array:span:data.attendees:email }}</div>
-        <div class="comments">
-            {{ array:span:data.comments:comment }}
-            -
-            {{ array:span:data.comments:user }}
+    <div class="content">
+        <div class="wrapper">
+            <div class="info">
+                <div>{{ data.time }}</div>
+                <h1>{{ data.title }}</h1>
+                <p>{{ data.information }}</p>
+            </div>
+            <div class="cols cols_two">
+                <div class="col col_a">
+                    <div class="attendees">{{ array:span:data.attendees:email }}</div>
+                </div>
+                <div class="col col_b">
+                    <div class="comments">
+                        {{ array:span:data.comments:comment }}
+                        -
+                        {{ array:span:data.comments:user }}
+                    </div>
+                </div>
+            </div>
+            <div class="form_group">
+                <input type="text" name="comment" placeholder="Comment" />
+                <button class="button success">Add</button>
+            </div>
         </div>
-        <input type="text" name="comment" placeholder="Comment" />
-        <button class="button success">Add</button>
     </div>
 </section>

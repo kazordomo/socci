@@ -14,6 +14,11 @@ class Home {
     async init () {
         this.activities = await ActivityCtrl.getActivities();
         new RenderData(this.DOMElement, this.activities);
+
+        if (!this.activities.length) {
+            this.DOMElement.querySelector('.wrapper').innerHTML = 'No activites at the moment!';
+        }
+        
         // When the dom is render we can connect the buttons with functions.
         this.eventListenerInit();
         // Animate in.

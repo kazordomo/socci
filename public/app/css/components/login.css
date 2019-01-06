@@ -5,8 +5,8 @@ section#login {
 section#login .slider {
     background-image: url(../../img/city_br2.png);
     background-size: cover;
-    margin-left: -280px;
-    width: 1000px;
+    margin-left: -250px;
+    width: 800px;
     height: 500px;
 }
 
