@@ -12,6 +12,7 @@ class RenderData {
 
     }
 
+    // TODO: implement if / ifelse
     domWithData (DOMElement) {
         if (this.html.includes('@for') && Array.isArray(this.data)) {
             const start = '@for';

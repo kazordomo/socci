@@ -18,7 +18,7 @@ class Home {
         if (!this.activities.length) {
             this.DOMElement.querySelector('.wrapper').innerHTML = 'No activites at the moment!';
         }
-        
+
         // When the dom is render we can connect the buttons with functions.
         this.eventListenerInit();
         // Animate in.
@@ -27,11 +27,23 @@ class Home {
 
     eventListenerInit () {
         for (let activityEl of this.DOMElement.querySelectorAll('.activity')) {
-            let dataId = activityEl.getAttribute('data-id');
+            const user = Utils.getLocal();
+            const dataId = activityEl.getAttribute('data-id');
 
-            activityEl
-                .querySelector('button.success')
-                .addEventListener('click', () => this.onAttend(dataId, activityEl));
+            let isUserAttending = !!this.activities
+                .find(activity => activity._id === dataId).attendees
+                .find(attendee => attendee._id === user._id);
+
+            let buttonSuccess = activityEl.querySelector('button.success');
+            // TODO: find a better way to do this.
+            if (!isUserAttending) {
+                buttonSuccess.addEventListener('click', () => this.onAttend(dataId, activityEl));
+            } else {
+                buttonSuccess.innerHTML = '<i class="fas fa-check"></i>';
+                buttonSuccess.style.opacity = '.65';
+                buttonSuccess.style.cursor = 'initial';
+            }
+
             activityEl
                 .querySelector('button.neutral')
                 .addEventListener('click', () => window.location.href = `#activity/${dataId}`);
