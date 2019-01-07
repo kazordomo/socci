@@ -1,5 +1,6 @@
 import SocialCtrl from '../controllers/social';
 import RenderData from '../renderData';
+import Utils from '../utils';
 
 class Profile {
 
@@ -11,9 +12,11 @@ class Profile {
     }
 
     async init () {
+        const user = Utils.getLocal();
         this.friends = await SocialCtrl.getFriends();
+        this.DOMElement.querySelector('input[name="nickname"]').defaultValue = user.nickname;
         new RenderData(this.DOMElement, this.friends);
-
+        
         let addButton = this.DOMElement.querySelector('button');
         addButton.addEventListener('click', this.onAddFriend.bind(this));
     }

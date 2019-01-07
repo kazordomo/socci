@@ -50,7 +50,13 @@ class Home {
         try {
             if(!activityEl.classList.contains('attending')) {
                 let user = await ActivityCtrl.attendActivity(id);
-                attendeesEl.innerHTML += `, ${user}`
+
+                // TODO: proper error handling...
+                if (user.message) {
+                    return console.log("Already attending.");
+                }
+
+                activityEl.querySelector('.attendees').innerHTML += `, ${user}`
             } else {
                 await ActivityCtrl.declineActivity(user, id);
                 // TODO: Remove the attendee from the DOM.

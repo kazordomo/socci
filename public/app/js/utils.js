@@ -30,8 +30,8 @@ class Utils {
         localStorage.setItem(name, JSON.stringify(object));
     }
 
-    static getLocal (object, name = 'user') {
-        localStorage.getItem(name, JSON.parse(object));
+    static getLocal (name = 'user') {
+        return JSON.parse(localStorage.getItem(name));
     }
 
 }

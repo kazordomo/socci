@@ -7,6 +7,7 @@ let ActivitySchema = new mongoose.Schema({
     attendees: Array,
     // TODO: comments should be its own model
     comments: Array,
+    createdAt: { type: Date, default: Date.now },
     _user: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'

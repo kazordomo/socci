@@ -15,7 +15,14 @@ module.exports = app => {
     });
     
     app.get('/api/activites', requiresLogin, async (req, res) => {
-        const activities = await Activity.find();
+        // TODO: we need to get the user to get the latest data.
+        // TODO: or we could add a middlware that always updated the data.
+        // TODO: check the user we store in localStorage as well.
+        const user = await User.findById(req.session.user._id);
+        const activities = await Activity.find({ '_user': { $in: [
+            ...user.friends
+        ]}}).sort('-createdAt');
+
         res.send(activities);
     });
     
@@ -27,9 +34,9 @@ module.exports = app => {
             information,
             time,
             attendees,
-            createdBy: req.session.user
+            _user: req.session.user._id
         });
-    
+
         try {
             await newActivity.save();
             res.status(200).end();
@@ -64,7 +71,7 @@ module.exports = app => {
             activity.attendees.push(req.session.user);
             await activity.save();
             // TODO: We should send back the nickname
-            res.send({ user: req.session.user.email});
+            res.send({ user: req.session.user.nickname});
         } catch (err) {
             res.status(400).json(err);
         }
@@ -85,7 +92,7 @@ module.exports = app => {
     app.post('/api/activity/comment/:id', async (req, res) => {
         try {
             let activity = await Activity.findOne({ _id: req.params.id });
-            let comment = { user: req.session.user.email, comment: req.body.comment };
+            let comment = { user: req.session.user.nickname, comment: req.body.comment };
             activity.comments.push(comment);
             await activity.save();
             res.send(comment);
