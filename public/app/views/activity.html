@@ -5,23 +5,22 @@
     </a>
     <div class="content">
         <div class="wrapper">
+            <button class="button danger short round">Do not attend</button>
             <div class="info">
                 <div>{{ data.time }}</div>
                 <h1>{{ data.title }}</h1>
                 <p>{{ data.information }}</p>
             </div>
-            <div class="cols cols_two">
-                <div class="col col_a">
-                    <div class="attendees">{{ array:span:data.attendees:nickname }}</div>
-                </div>
-                <div class="col col_b">
-                    <div class="comments">
-                        {{ array:span:data.comments:comment }}
-                        -
-                        {{ array:span:data.comments:user }}
-                    </div>
+            <div class="attendees">{{ array:span:data.attendees:nickname }}</div>
+            <div class="comments">
+                <div class="comment">
+                    {{ array:span:data.comments:comment }}
+                    -
+                    {{ array:span:data.comments:user }}
+                    <i class="fas fa-times-circle"></i>
                 </div>
             </div>
+        </div>
             <div class="form_group">
                 <input type="text" name="comment" placeholder="Comment" />
                 <button class="button success">Add</button>

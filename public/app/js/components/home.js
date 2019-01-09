@@ -7,7 +7,7 @@ class Home {
     constructor() {
         this.DOMElement = document.querySelector('section#home');
         this.activities = [];
-
+        this.NO_ATTENDEES_ELEMENT = '<span class="no-attendees">No attendees yet.</span>';
         this.init();
     }
 
@@ -34,22 +34,16 @@ class Home {
                 .find(activity => activity._id === dataId).attendees
                 .find(attendee => attendee._id === user._id);
 
-            let buttonSuccess = activityEl.querySelector('button.success');
-            // TODO: find a better way to do this.
-            if (!isUserAttending) {
-                buttonSuccess.addEventListener('click', () => this.onAttend(dataId, activityEl));
-            } else {
-                buttonSuccess.innerHTML = '<i class="fas fa-check"></i>';
-                buttonSuccess.style.opacity = '.65';
-                buttonSuccess.style.cursor = 'initial';
-            }
+            this.updateAttendeeButton(isUserAttending);
+
+            activityEl.querySelector('button.success').addEventListener('click', () => this.onAttend(dataId, activityEl));
 
             activityEl
                 .querySelector('button.neutral')
                 .addEventListener('click', () => window.location.href = `#activity/${dataId}`);
 
             if (!activityEl.querySelector('.attendees').innerHTML) {
-                activityEl.querySelector('.attendees').innerHTML = 'No attendees yet.'
+                activityEl.querySelector('.attendees').innerHTML = this.NO_ATTENDEES_ELEMENT;
             }
                 
             // activityEl
@@ -60,19 +54,20 @@ class Home {
 
     async onAttend (id, activityEl) {
         try {
-            if(!activityEl.classList.contains('attending')) {
-                let user = await ActivityCtrl.attendActivity(id);
+            const { user } = await ActivityCtrl.attendActivity(id);
+            const isFirstAttendee = activityEl.querySelector('.no-attendees');
 
-                // TODO: proper error handling...
-                if (user.message) {
-                    return console.log("Already attending.");
-                }
-
-                activityEl.querySelector('.attendees').innerHTML += `, ${user}`
-            } else {
-                await ActivityCtrl.declineActivity(user, id);
-                // TODO: Remove the attendee from the DOM.
+            // TODO: proper error handling...
+            if (user.message) {
+                return console.log("Already attending.");
             }
+            // Remove the text about "no attendees".
+            if (isFirstAttendee) {
+                activityEl.querySelector('.no-attendees').remove();
+            }
+            // Add a comma and a space if not the first attendee
+            activityEl.querySelector('.attendees').innerHTML += `${isFirstAttendee ? '' :', '}${user}`
+            this.updateAttendeeButton(true);
         } catch (err) {
             console.log(err);
         }
@@ -92,6 +87,19 @@ class Home {
 
         return true;
     }
+
+    updateAttendeeButton (isAttending) {
+        let button = this.DOMElement.querySelector('button.success');
+
+        if (isAttending) {
+            button.classList.remove('active');
+            button.innerHTML = '<i class="fas fa-check"></i>';
+        } else {
+            button.classList.add('active');
+            button.innerHTML = '<i class="fas fa-plus-circle"></i>';
+        }
+    }
+
 
 }
 

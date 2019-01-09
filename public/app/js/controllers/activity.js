@@ -1,3 +1,5 @@
+import Utils from '../utils';
+
 class ActivityCtrl {
 
     static async getActivity (id) {
@@ -56,19 +58,21 @@ class ActivityCtrl {
             let json = await response.json();
 
             return json;
-
         } catch (err) {
             console.log(err);
         }
     }
 
-    static async declineActivity (attendee, activityId) {
+    static async declineActivity (activityId) {
+        const user = Utils.getLocal();
         try {
             let response = await fetch(`/api/activity/decline/${activityId}`, { 
                 method: 'POST', 
-                body: JSON.stringify(attendee),
+                body: JSON.stringify({ userId: user._id }),
                 headers: { 'Content-Type': 'application/json' }
             });
+            
+            return response;
         } catch (err) {
             console.log(err);
         }
@@ -87,6 +91,10 @@ class ActivityCtrl {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    static async removeComment () {
+        
     }
 
 }
