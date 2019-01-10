@@ -93,8 +93,18 @@ class ActivityCtrl {
         }
     }
 
-    static async removeComment () {
-        
+    static async deleteComment (commentId, activityId) {
+        try {
+            let response = await fetch(`/api/activity/comment/${activityId}/${commentId}`, { 
+                method: 'DELETE', 
+                headers: { 'Content-Type': 'application/json' }
+            });
+            let json = await response.json();
+
+            return json;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }

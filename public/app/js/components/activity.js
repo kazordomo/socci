@@ -28,23 +28,33 @@ class Activity {
                 .find(attendee => attendee._id === user._id);
 
         if (isUserAttending) {
-            console.log(this.declineButton);
             this.declineButton.addEventListener('click', this.declineActivity.bind(this));
         } else {
             this.declineButton.style.display = 'none';
         }
 
         this.commentButton.addEventListener('click', this.postComment.bind(this, id));
+        this.DOMElement.addEventListener('keyup', event => {
+            if (event.keyCode === 13) {
+                this.commentButton.click();
+            }
+        });
 
         return true;
     }
 
-    async postComment (id) {
-        let comment = await ActivityCtrl.postComment(Utils.getInputValue(this.DOMElement, 'comment'), id);        
+    async postComment (activityId) {
+        let comment = await ActivityCtrl.postComment(Utils.getInputValue(this.DOMElement, 'comment'), activityId);        
         if (comment) {
             this.DOMElement.querySelector('.comments').innerHTML += `${comment.comment} - ${comment.user}`;
         }
         this.DOMElement.querySelector('input[name="comment"').value = '';
+    }
+
+    async deleteComment (commentId, activityId) {
+        let response = await ActivityCtrl.deleteComment(commentId, activityId);
+        // TODO: remove from dom
+        console.log(response);
     }
 
     async declineActivity () {

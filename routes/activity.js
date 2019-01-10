@@ -19,9 +19,12 @@ module.exports = app => {
         // TODO: or we could add a middlware that always updated the data.
         // TODO: check the user we store in localStorage as well.
         const user = await User.findById(req.session.user._id);
-        const activities = await Activity.find({ '_user': { $in: [
-            ...user.friends
-        ]}}).sort('-createdAt');
+        // TODO: use this
+        // const activities = await Activity.find({ '_user': { $in: [
+        //     ...user.friends
+        // ]}}).sort('-createdAt');
+
+        const activities = await Activity.find({});
 
         res.send(activities);
     });
@@ -89,10 +92,14 @@ module.exports = app => {
         }
     });
     
-    app.post('/api/activity/comment/:id', async (req, res) => {
+    app.post('/api/activity/comment/:activityId', async (req, res) => {
         try {
-            let activity = await Activity.findOne({ _id: req.params.id });
-            let comment = { user: req.session.user.nickname, comment: req.body.comment };
+            let activity = await Activity.findOne({ _id: req.params.activityId });
+            let comment = { 
+                _id: activity.comments.length, 
+                user: req.session.user.nickname, 
+                comment: req.body.comment 
+            };
             activity.comments.push(comment);
             await activity.save();
             res.send(comment);
@@ -101,9 +108,13 @@ module.exports = app => {
         }
     });
 
-    app.delete('/api/activity/comment/:id', async (req, res) => {
+    app.delete('/api/activity/comment/:activityId/:id', async (req, res) => {
         try {
-            res.send('deleting comment');
+            let activity = await Activity.findOne({ _id: req.params.activityId });
+            let comment = activity.comments.find(comment => comment.id === req.params.commentId);
+            activity.comments.splice(activity.comments.indexOf(comment), 1);
+            await activity.save();
+            res.send(activity);
         } catch (err) {
             res.status(400).json(err);
         }
