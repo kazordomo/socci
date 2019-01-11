@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 let ActivitySchema = new mongoose.Schema({
-    title: String,
-    information: String,
+    title: {
+        type: String,
+        maxlength: 20
+    },
+    information: {
+        type: String,
+        maxlength: 240
+    },
     time: String,
     attendees: Array,
     comments: Array,

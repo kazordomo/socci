@@ -6,18 +6,13 @@ class Edit {
 
     constructor() {
         this.DOMElement = document.querySelector('section#edit');
-
         this.attendees = [];
-        // Used to give an id to the attendee elements
         this.attendeeId = 1;
-
         this.init();
     }
 
     init () {
-
         this.addAttendee();
-
         this.DOMElement.querySelector('button[type="submit"]').addEventListener('click', event => {
             event.preventDefault();
             this.createEvent();
@@ -26,33 +21,25 @@ class Edit {
         if (!this.attendees.length) {
             this.DOMElement.querySelector('.attendees').innerHTML += 'No attendees added.';
         }
-        
-        return true;
     }
 
-    createEvent ()  {
-
+    async createEvent ()  {
         let activityData = {
             title: Utils.getInputValue(this.DOMElement, 'title'),
             information: Utils.getInputValue(this.DOMElement, 'information'),
             time: Utils.getInputValue(this.DOMElement, 'time'),
             attendees: this.attendees.map(attendee => attendee.name),
         };
-
-        ActivityCtrl.createActivity(activityData);
-
-        return true;
+        await ActivityCtrl.createActivity(activityData);
+        window.location.href = '#home';
     }
     
 
     addAttendee () {
-
         let buttonEl = this.DOMElement.querySelector('form button');
         let newAttendeeEl = this.DOMElement.querySelector('input[name="attendee"]');
         let attendeesEl = this.DOMElement.querySelector('.attendees');
-
         buttonEl.addEventListener('click', event => {
-
             event.preventDefault();
 
             if (!this.attendees.length) {
@@ -66,13 +53,9 @@ class Edit {
             
             newAttendeeEl.value = '';
         });
-
-
-        return true;
     }
 
     createAttendeeEl (id, attendee) {
-
         let spanEl = document.createElement('span');
             spanEl.innerHTML = attendee;
 
@@ -92,7 +75,6 @@ class Edit {
 
             return true;
         });
-
         return spanEl;
     }
 }

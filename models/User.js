@@ -18,7 +18,7 @@ const userSchema = new Schema({
         type: String,
         unique: true,
         trim: true,
-        maxlength: 15
+        maxlength: 12
     },
     friends: [{
         type: mongoose.Schema.Types.ObjectId, 
