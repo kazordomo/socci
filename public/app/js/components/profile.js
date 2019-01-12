@@ -7,7 +7,6 @@ class Profile {
     constructor () {
         this.DOMElement = document.querySelector('section#profile');
         this.friends = [];
-
         this.init();
     }
 
@@ -17,8 +16,10 @@ class Profile {
         this.DOMElement.querySelector('input[name="nickname"]').defaultValue = user.nickname;
         new RenderData(this.DOMElement, this.friends);
         
-        let addButton = this.DOMElement.querySelector('button');
+        let addButton = this.DOMElement.querySelector('.button.success');
+        let changeNameButton = this.DOMElement.querySelector('.button.neutral');
         addButton.addEventListener('click', this.onAddFriend.bind(this));
+        changeNameButton.addEventListener('click', this.onChangeNickname.bind(this));
     }
 
     async onAddFriend () {
@@ -32,6 +33,12 @@ class Profile {
         }
         
         friendsContainer.innerHTML += `<div>${addUser.email}</div>`;
+    }
+
+    onChangeNickname (event) {
+        event.preventDefault();
+        let newName = Utils.getInputValue(this.DOMElement, 'nickname');
+        SocialCtrl.nickname(newName);
     }
 
 }

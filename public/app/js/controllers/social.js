@@ -17,6 +17,15 @@ class SocialCtrl {
 
     }
 
+    static async nickname (newName) {
+        let response = await fetch('/api/social/nickname', { 
+            method: 'POST', 
+            body: JSON.stringify({ nickname: newName }),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        let json = await response.json();
+    }
+
 }
 
 export default SocialCtrl;

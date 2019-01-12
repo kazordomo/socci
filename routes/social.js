@@ -37,7 +37,17 @@ module.exports = app => {
             user.save();
             res.send({ email: addUser.email });
         } catch (err) {
-            console.log(err);
+            res.status(400).json({ success: false, status: 400, message: err });
+        }
+    });
+
+    app.post('/api/social/nickname', async (req, res) => {
+        try {
+            const user = await User.findById(req.session.user._id);
+            user.nickname = req.body.nickname;
+            await user.save();
+            res.send(user);         
+        } catch (err) {
             res.status(400).json({ success: false, status: 400, message: err });
         }
     });
