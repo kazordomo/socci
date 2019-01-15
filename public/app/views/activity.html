@@ -11,13 +11,17 @@
                 <h1>{{ data.title }}</h1>
                 <p>{{ data.information }}</p>
             </div>
-            <div class="attendees">{{ array:span:data.attendees:nickname }}</div>
+            @for(attendees)
+             <div class="attendees">
+                 <div>{{ data.nickname }}</div>
+             </div>
+             @endfor
             <div class="comments">
                 <div class="comment">
-                    {{ array:div:data.comments:comment }}
-                    -
-                    {{ array:span:data.comments:user }}
-                    <i class="fas fa-times-circle"></i>
+                    @for(comments)
+                        <div>{{ data.comment }}</div>
+                        <div>{{ data.user }}</div>
+                    @endfor
                 </div>
             </div>
         </div>

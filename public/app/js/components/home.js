@@ -30,10 +30,12 @@ class Home {
             const user = Utils.getLocal();
             const dataId = activityEl.getAttribute('data-id');
 
-            let isUserAttending = !!this.activities
-                .find(activity => activity._id === dataId).attendees
-                .find(attendee => attendee._id === user._id);
+            // let isUserAttending = !!this.activities
+            //     .find(activity => activity._id === dataId).attendees
+            //     .find(attendee => attendee._id === user._id);
 
+            let isUserAttending = false;
+            
             this.updateAttendeeButton(isUserAttending);
 
             activityEl.querySelector('button.success').addEventListener('click', () => this.onAttend(dataId, activityEl));
@@ -42,9 +44,9 @@ class Home {
                 .querySelector('button.neutral')
                 .addEventListener('click', () => window.location.href = `#activity/${dataId}`);
 
-            if (!activityEl.querySelector('.attendees').innerHTML) {
-                activityEl.querySelector('.attendees').innerHTML = this.NO_ATTENDEES_ELEMENT;
-            }
+            // if (!activityEl.querySelector('.attendees').innerHTML) {
+            //     activityEl.querySelector('.attendees').innerHTML = this.NO_ATTENDEES_ELEMENT;
+            // }
                 
             // activityEl
             //     .querySelector('button.danger')
