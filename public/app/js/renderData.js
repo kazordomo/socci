@@ -28,81 +28,60 @@ class RenderData {
     }
 
     renderLoops () {
-
-        let loops = this.getLoopObjects();
-
-        for (let loopObj of loops) {
-
-            debugger;
-
-            let array = loopObj.prop ? this.data[loopObj.prop] : this.data;
-            if (array) {
-                for (let data of array) {
-                    for (let match of this.getMatches(loopObj.string)) {
-                        this.convertWithData(match, data);
-                    }
-    
-                    if (data !== array[array.length - 1]) {
-                        // If there are still data to output we will append the loopString as an element to the html.
-                        let position = this.html.lastIndexOf('@endfor');
-                        let appendedHtml = [this.html.slice(0, position), loopObj.string, this.html.slice(position)].join('');
-                        this.html = appendedHtml;
-                    }
-    
-                }
-            }
-
-            // this.html = this.html.replace('@for', '');
-            // this.html = this.html.replace('@endfor', '');
-        }
-    }
-
-    getLoopObjects () {
-        let objects = [];
-        // Creating a copy of the html to work with.
-        let htmlCopy = (' ' + this.html).slice(1);
-
         // Reverse the @for indexes to match to the correct @endfor. Also, we need to get the nested loops first.
-        let startIndexes = this.findAllOccur(htmlCopy, this.loopStartStr).reverse();
-        let endIndexes = this.findAllOccur(htmlCopy, this.loopEndStr);
+        let startIndexes = this.findAllOccur(this.html, this.loopStartStr).reverse();
+        let endIndexes = this.findAllOccur(this.html, this.loopEndStr);
+        let templateWithData = '';
 
-        for(let [i, startIndex] of startIndexes.entries()) {
-            let endIndex = endIndexes[i];
+        while (startIndexes.length) {
+            let startIndex = startIndexes[0];
+            let endIndex = endIndexes[0];
 
-            let resultString = htmlCopy.substring(
+            // Get the template betweend startIndex and endIndex.
+            let template = this.html.substring(
                 startIndex,
                 endIndex + this.loopEndStr.length
             );
-            // Get the prop between the brackets - @for(comments) <-
-            let prop = resultString.substring(
-                resultString.indexOf(this.loopStartStr) + 5,
-                resultString.indexOf(')')
+
+            // Get the eventual object property.
+            let prop = template.substring(
+                template.indexOf(this.loopStartStr) + 5,
+                template.indexOf(')')
             );
 
             let forStartEndIndex = prop ? 
                 (this.loopStartStr.length + prop.length + 2) : 
                 (this.loopStartStr.length + 2);
 
-            let forStartString = resultString.substring(
-                resultString.indexOf(this.loopStartStr),
+            let forStartString = template.substring(
+                template.indexOf(this.loopStartStr),
                 forStartEndIndex
             );
 
-            let forEndString = resultString.substring(
-                resultString.indexOf(this.loopEndStr),
-                resultString.indexOf(this.loopEndStr) + this.loopEndStr.length
+            let forEndString = template.substring(
+                template.indexOf(this.loopEndStr),
+                template.indexOf(this.loopEndStr) + this.loopEndStr.length
             );
 
-            htmlCopy = htmlCopy.replace(resultString, '');
+            // Loop through the data.
+            for (let data of this.data) {
+                // Check if we are looking for a property (activities.attendees for instance).
+                let object = prop ? data[prop] : data;
+                // Populate the template with data.
+                templateWithData += this.convertMatches(template, object);
+                templateWithData = templateWithData.replace(forStartString, '');
+                templateWithData = templateWithData.replace(forEndString, '');
+            }
 
-            resultString = resultString.replace(forStartString, '');
-            resultString = resultString.replace(forEndString, '');
-
-            objects.push({ string: resultString, prop: prop ? prop : null });
-
+            // Replace the template with our templateWithData variable.
+            this.html = this.html.replace(template, templateWithData);
+            
+            // Reset template.
+            templateWithData = '';
+            // Rerun to get updated indexes.
+            startIndexes = this.findAllOccur(this.html, this.loopStartStr).reverse();
+            endIndexes = this.findAllOccur(this.html, this.loopEndStr);
         }
-
-        return objects;
     }
 
     findAllOccur (source, find) {
@@ -119,41 +98,47 @@ class RenderData {
         return string.match(this.regExp);
     }
 
-    convertWithData (match, data = this.data) {
-        // Get the property. {{ this.data.test }} -> test.
-        let prop = match.split('.')[1].trim();
-        match = match + '}}';
+    convertMatches (template, data) {
 
-        if (data[prop]) {
+        let isArray = Array.isArray(data);
+
+        // if (isArray && !data.length) return '';
+
+        
+        let convertedTemplate = (' ' + template).slice(1);
+        let matches = this.getMatches(template);
+
+        // TODO: If data is an array, we need to loop through it.
+        
+        // TODO: Loop through matches and replace with data.
+        for (let match of matches) {
+
+            let prop = match.split('.')[1].trim();
             // Add back the }} to be able to match in the html.
-            // Replace the match with the correct propert from this.data.
-            this.html = this.html.replace(match, data[prop]);
-        } else {
-            this.html = this.html.replace(match, '');
-        }
-    }
+            match = match + '}}';
 
-    renderArray (match, data = this.data) {
-        if (!match.includes('array')) return;
+            let replace = obj => {
+                if (obj[prop]) {
+                    // Add back the }} to be able to match in the html.
+                    // Replace the match with the correct propert from this.data.
+                    convertedTemplate = convertedTemplate.replace(match, obj[prop]);
+                } else {
+                    convertedTemplate = convertedTemplate.replace(match, '');                    
+                }
+            }
 
-        // array:values:element:prop
-        let splitted = match.split(':').map(split => split.trim());
-        let values = [];
-        // If length === 4 we know that we have specified a prop in the obj in the arr.
-        if(splitted.length === 4) {
-            values = data[splitted[2].split('.')[1]].map(value => {
-                return `<${splitted[1]}>${value[splitted[3]]}</${splitted[1]}>`;
-            }).join('');
-        } else {
-            values = data[splitted[2].split('.')[1]].map(value => {
-                return `<${splitted[1]}>${value}</${splitted[1]}>`;
-            }).join('');
+            if (isArray) {
+                for (let obj of data) {
+                    replace(obj);
+                }
+            } else {
+                replace(data);
+            }
+
         }
 
-        match = match + '}}';
-        this.html = this.html.replace(match, values);
+        return convertedTemplate;
     }
-
 }
 
 export default RenderData;
