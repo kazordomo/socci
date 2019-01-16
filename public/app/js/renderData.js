@@ -33,65 +33,86 @@ class RenderData {
 
         for (let loopObj of loops) {
 
-            let forString = loopObj.string.substring(
-                loopObj.string.indexOf(this.loopStartStr),
-                loopObj.string.lastIndexOf(')') + 1
-            );
-
-            if (loopObj.prop && !this.data[loopObj.prop]) return;
-
-            loopObj.string = loopObj.string.replace(forString, '');
-            loopObj.string = loopObj.string.replace('@endfor', '');
+            debugger;
 
             let array = loopObj.prop ? this.data[loopObj.prop] : this.data;
-
-            for (let data of array) {
-                for (let match of this.getMatches(loopObj.string)) {
-                    this.convertWithData(match, data);
+            if (array) {
+                for (let data of array) {
+                    for (let match of this.getMatches(loopObj.string)) {
+                        this.convertWithData(match, data);
+                    }
+    
+                    if (data !== array[array.length - 1]) {
+                        // If there are still data to output we will append the loopString as an element to the html.
+                        let position = this.html.lastIndexOf('@endfor');
+                        let appendedHtml = [this.html.slice(0, position), loopObj.string, this.html.slice(position)].join('');
+                        this.html = appendedHtml;
+                    }
+    
                 }
-
-                if (data !== array[array.length - 1]) {
-                    // If there are still data to output we will append the loopString as an element to the html.
-                    let position = this.html.lastIndexOf('@endfor');
-                    let appendedHtml = [this.html.slice(0, position), loopObj.string, this.html.slice(position)].join('');
-                    this.html = appendedHtml;
-                }
-
             }
 
-            this.html = this.html.replace(forString, '');
-            this.html = this.html.replace('@endfor', '');
+            // this.html = this.html.replace('@for', '');
+            // this.html = this.html.replace('@endfor', '');
         }
     }
 
     getLoopObjects () {
         let objects = [];
-        // We create an copy of the html to be able to remove the resultString when done.
-        // This to preven infinite loop.
+        // Creating a copy of the html to work with.
         let htmlCopy = (' ' + this.html).slice(1);
 
-        while ((new RegExp(this.loopStartStr).exec(htmlCopy)) !== null)
-        {
-            let newStart = new RegExp(this.loopStartStr).exec(htmlCopy).index;
-            let newEnd = new RegExp(this.loopEndStr).exec(htmlCopy).index;
+        // Reverse the @for indexes to match to the correct @endfor. Also, we need to get the nested loops first.
+        let startIndexes = this.findAllOccur(htmlCopy, this.loopStartStr).reverse();
+        let endIndexes = this.findAllOccur(htmlCopy, this.loopEndStr);
+
+        for(let [i, startIndex] of startIndexes.entries()) {
+            let endIndex = endIndexes[i];
 
             let resultString = htmlCopy.substring(
-                newStart,
-                newEnd + this.loopEndStr.length
+                startIndex,
+                endIndex + this.loopEndStr.length
             );
-
             // Get the prop between the brackets - @for(comments) <-
             let prop = resultString.substring(
-                resultString.lastIndexOf(this.loopStartStr) + 5,
-                resultString.lastIndexOf(')')
+                resultString.indexOf(this.loopStartStr) + 5,
+                resultString.indexOf(')')
             );
+
+            let forStartEndIndex = prop ? 
+                (this.loopStartStr.length + prop.length + 2) : 
+                (this.loopStartStr.length + 2);
+
+            let forStartString = resultString.substring(
+                resultString.indexOf(this.loopStartStr),
+                forStartEndIndex
+            );
+
+            let forEndString = resultString.substring(
+                resultString.indexOf(this.loopEndStr),
+                resultString.indexOf(this.loopEndStr) + this.loopEndStr.length
+            );
+
+            htmlCopy = htmlCopy.replace(resultString, '');
+
+            resultString = resultString.replace(forStartString, '');
+            resultString = resultString.replace(forEndString, '');
 
             objects.push({ string: resultString, prop: prop ? prop : null });
 
-            htmlCopy = htmlCopy.replace(resultString, '');
         }
 
         return objects;
+    }
+
+    findAllOccur (source, find) {
+        const result = [];
+        for (let i = 0; i < source.length; ++i) {
+            if (source.substring(i, i + find.length) === find) {
+                result.push(i);
+            }
+        }
+        return result;
     }
 
     getMatches (string) {
@@ -102,6 +123,7 @@ class RenderData {
         // Get the property. {{ this.data.test }} -> test.
         let prop = match.split('.')[1].trim();
         match = match + '}}';
+
         if (data[prop]) {
             // Add back the }} to be able to match in the html.
             // Replace the match with the correct propert from this.data.
