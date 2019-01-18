@@ -18,7 +18,7 @@ class RenderData {
         // If we got matches/data outside of an loop
         if (this.getMatches(this.html)) {
             for(let match of this.getMatches(this.html)) {
-                this.convertWithData(match, this.data);
+                this.convertMatches(match, this.data);
             }
         }
         
@@ -28,60 +28,116 @@ class RenderData {
     }
 
     renderLoops () {
-        // Reverse the @for indexes to match to the correct @endfor. Also, we need to get the nested loops first.
-        let startIndexes = this.findAllOccur(this.html, this.loopStartStr).reverse();
-        let endIndexes = this.findAllOccur(this.html, this.loopEndStr);
-        let templateWithData = '';
 
-        while (startIndexes.length) {
-            let startIndex = startIndexes[0];
-            let endIndex = endIndexes[0];
+        let templatesWithData = [];
+        let completedTemplate = '';
+        
+        for (let data of this.data) {
 
-            // Get the template betweend startIndex and endIndex.
-            let template = this.html.substring(
-                startIndex,
-                endIndex + this.loopEndStr.length
+            // Get all indexes - start (@for) and end (@endfor)
+            let startIndexes = this.findAllOccur(this.html, this.loopStartStr).reverse();
+            let endIndexes = this.findAllOccur(this.html, this.loopEndStr);
+
+            let fullTemplate = this.html.substring(
+                startIndexes[startIndexes.length - 1],
+                endIndexes[endIndexes.length - 1] + this.loopEndStr.length
             );
 
-            // Get the eventual object property.
-            let prop = template.substring(
-                template.indexOf(this.loopStartStr) + 5,
-                template.indexOf(')')
-            );
+            // All the templates with data from the current data-loop.
+            let currentDoneTemplates = [];
+            let templateWithData = fullTemplate;
 
-            let forStartEndIndex = prop ? 
-                (this.loopStartStr.length + prop.length + 2) : 
-                (this.loopStartStr.length + 2);
-
-            let forStartString = template.substring(
-                template.indexOf(this.loopStartStr),
-                forStartEndIndex
-            );
-
-            let forEndString = template.substring(
-                template.indexOf(this.loopEndStr),
-                template.indexOf(this.loopEndStr) + this.loopEndStr.length
-            );
-
-            // Loop through the data.
-            for (let data of this.data) {
-                // Check if we are looking for a property (activities.attendees for instance).
-                let object = prop ? data[prop] : data;
-                // Populate the template with data.
-                templateWithData += this.convertMatches(template, object);
-                templateWithData = templateWithData.replace(forStartString, '');
-                templateWithData = templateWithData.replace(forEndString, '');
+            let getProp = template => {
+                return template.substring(
+                    template.indexOf(this.loopStartStr) + 5,
+                    template.indexOf(')')
+                );
             }
 
-            // Replace the template with our templateWithData variable.
-            this.html = this.html.replace(template, templateWithData);
-            
-            // Reset template.
-            templateWithData = '';
-            // Rerun to get updated indexes.
-            startIndexes = this.findAllOccur(this.html, this.loopStartStr).reverse();
-            endIndexes = this.findAllOccur(this.html, this.loopEndStr);
+            while(startIndexes.length) {
+                let startIndex = startIndexes[0];
+                let endIndex = endIndexes[0];
+
+                // Get the current template - needed if nested for loops.
+                let currentTemplate = this.html.substring(
+                    startIndex,
+                    endIndex + this.loopEndStr.length
+                );
+
+                // Get the property in the data - if there is one (@for(prop)) -> data[prop].
+                let prop = getProp(currentTemplate);
+
+                // If a prop is specified we know that we are looking for a property in the array (data).
+                let object = prop ? data[prop] : data;
+
+                currentTemplate = this.convertMatches(currentTemplate, object);
+                currentDoneTemplates.push(currentTemplate);
+                
+                startIndexes.shift();
+                endIndexes.shift();
+            }
+
+            for (let template of currentDoneTemplates.reverse()) {
+                startIndexes = this.findAllOccur(templateWithData, this.loopStartStr);
+                endIndexes = this.findAllOccur(templateWithData, this.loopEndStr).reverse();
+
+                let prop = getProp(template);
+
+                // This is used to get the correct length of the @for(...).
+                let forStartEndIndex = prop ? 
+                    (this.loopStartStr.length + prop.length + 2) : 
+                    (this.loopStartStr.length + 2);
+
+                // Calculate the correct length of the @for() (differs if a prop is specified).
+                let forStartString = template.substring(
+                    template.indexOf(this.loopStartStr),
+                    forStartEndIndex
+                );
+
+                // Get the position where to put the templateWithData.
+                let replaceThis = templateWithData.substring(
+                    startIndexes[0],
+                    endIndexes[0] + this.loopEndStr.length
+                );
+
+                // Remove @for
+                template = template.replace(forStartString, '');
+                // Remove @endfor
+                let templateEndIndexes = this.findAllOccur(template, this.loopEndStr).reverse();
+                template = template.slice(0, templateEndIndexes[0]);
+                
+                templateWithData = templateWithData.replace(replaceThis, template);
+            }
+            templatesWithData.push(templateWithData);
         }
+
+        /*
+            Add all the templates from 
+            templatesWithData together and 
+            then replace in this.html.
+        */
+
+        for (let template of templatesWithData) {
+            completedTemplate += template;
+        }
+
+        // TODO: DRY - this is needed however, in the solution we got right now.
+        let startPositions = this.findAllOccur(this.html, this.loopStartStr).reverse();
+        let endPositions = this.findAllOccur(this.html, this.loopEndStr);
+
+        let replacePosition = this.html.substring(
+            startPositions[startPositions.length - 1],
+            endPositions[endPositions.length - 1] + this.loopEndStr.length
+        );
+
+        this.html = this.html.replace(replacePosition, completedTemplate);
+    }
+
+    getTemplate (startIndex, endIndex) {
+        return this.html.substring(
+            startIndex,
+            endIndex
+        );
     }
 
     findAllOccur (source, find) {
@@ -99,20 +155,12 @@ class RenderData {
     }
 
     convertMatches (template, data) {
-
         let isArray = Array.isArray(data);
-
-        // if (isArray && !data.length) return '';
-
-        
         let convertedTemplate = (' ' + template).slice(1);
         let matches = this.getMatches(template);
-
-        // TODO: If data is an array, we need to loop through it.
         
-        // TODO: Loop through matches and replace with data.
+        // Loop through matches and replace with data.
         for (let match of matches) {
-
             let prop = match.split('.')[1].trim();
             // Add back the }} to be able to match in the html.
             match = match + '}}';
@@ -123,7 +171,7 @@ class RenderData {
                     // Replace the match with the correct propert from this.data.
                     convertedTemplate = convertedTemplate.replace(match, obj[prop]);
                 } else {
-                    convertedTemplate = convertedTemplate.replace(match, '');                    
+                    convertedTemplate = convertedTemplate.replace(match, '');   
                 }
             }
 
@@ -131,10 +179,13 @@ class RenderData {
                 for (let obj of data) {
                     replace(obj);
                 }
+                // If no data is in the array, we will just replace the match with an empty string.
+                if (!data.length) {
+                    convertedTemplate = convertedTemplate.replace(match, '');   
+                }
             } else {
                 replace(data);
             }
-
         }
 
         return convertedTemplate;
