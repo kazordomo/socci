@@ -16,15 +16,15 @@
                  <div>{{ data.nickname }}</div>
              </div>
              @endfor
+             @for(comments)
             <div class="comments">
                 <div class="comment">
-                    @for(comments)
-                        <div>{{ data.comment }}</div>
-                        <div>{{ data.user }}</div>
-                    @endfor
+                        <span>{{ data.comment }}</span> - 
+                        <span>{{ data.user }}</span>
+                    </div>
                 </div>
             </div>
-        </div>
+            @endfor
             <div class="form_group">
                 <input type="text" name="comment" placeholder="Comment" />
                 <button class="button success">Add</button>
