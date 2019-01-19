@@ -1,6 +1,6 @@
 class RenderData {
 
-    // TODO: Refactor.
+    // TODO: Refactor - works for now, but needs to be much more dynamic.
 
     constructor (DOMElement, data) {
 
@@ -32,6 +32,7 @@ class RenderData {
         // Get all indexes - start (@for) and end (@endfor)
         let startIndexes = this.findAllOccur(this.html, this.loopStartStr);
         let endIndexes = this.findAllOccur(this.html, this.loopEndStr);
+        // TODO: This will fail if there is mulutiple loops and one is nested.
         // Check if there is nested for loops - if so, reverse the startIndexes.
         if (startIndexes.reverse()[0] > endIndexes[0]) {
             startIndexes = startIndexes.reverse();
@@ -53,16 +54,14 @@ class RenderData {
 
             // Get the current template - needed if nested for loops.
             let currentTemplate = this.getTemplate(this.html,startIndex,endIndex+this.loopEndStr.length);
-
             // Get the property in the data - if there is one (@for(prop)) -> data[prop].
             let prop = this.getProp(currentTemplate);
-
             // If a prop is specified we know that we are looking for a property in the array (data).
             let object = prop ? data[prop] : data;
 
             currentTemplate = this.convertMatches(currentTemplate, object);
             currentDoneTemplates.push(currentTemplate);
-            
+            // When we are done with the currentTemplate - we remove their indexes from the corresponding arr.
             startIndexes.shift();
             endIndexes.shift();
         }
@@ -72,7 +71,6 @@ class RenderData {
             endIndexes = this.findAllOccur(templateWithData, this.loopEndStr).reverse();
 
             let prop = this.getProp(template);
-
             // This is used to get the correct length of the @for(...).
             let forStartEndIndex = prop ? 
                 (this.loopStartStr.length + prop.length + 2) : 
@@ -80,10 +78,8 @@ class RenderData {
 
             // Calculate the correct length of the @for() (differs if a prop is specified).
             let forStartString = this.getTemplate(template,template.indexOf(this.loopStartStr),forStartEndIndex);
-            
             // Get the position where to put the templateWithData.
             let replaceThis = this.getTemplate(templateWithData,startIndexes[0],endIndexes[0]+this.loopEndStr.length);
-
             // Remove @for
             template = template.replace(forStartString, '');
             // Remove @endfor
@@ -94,8 +90,6 @@ class RenderData {
         this.templatesWithData.push(templateWithData);
     }
     
-
-    // TODO: REFACTOR
     renderLoops () {
         let completedTemplate = '';
         
@@ -115,7 +109,6 @@ class RenderData {
         // TODO: DRY - this is needed however, in the solution we got right now.
         let startPositions = this.findAllOccur(this.html, this.loopStartStr).reverse();
         let endPositions = this.findAllOccur(this.html, this.loopEndStr);
-
         let replacePosition = this.html.substring(
             startPositions[startPositions.length - 1],
             endPositions[endPositions.length - 1] + this.loopEndStr.length
@@ -123,6 +116,8 @@ class RenderData {
 
         this.html = this.html.replace(replacePosition, completedTemplate);
     }
+
+    /* Util Functions */
 
     findAllOccur (source, find) {
         const result = [];
@@ -151,6 +146,13 @@ class RenderData {
     getMatches (string) {
         return string.match(this.regExp);
     }
+
+    insertIntoString(str, index, value) {
+        // Append the str-value to the specified index.
+        return str.substr(0, index) + value + str.substr(index);
+    }
+
+    /* Convert Data Functions */
 
     convertMatchesDirectlyToHtml (match, data = this.data) {
         // Get the property. {{ this.data.test }} -> test.
@@ -196,11 +198,6 @@ class RenderData {
         }
 
         return convertedTemplate;
-    }
-
-    insertIntoString(str, index, value) {
-        // Append the str-value to the specified index.
-        return str.substr(0, index) + value + str.substr(index);
     }
 }
 
