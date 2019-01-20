@@ -34,6 +34,12 @@ class Utils {
         return JSON.parse(localStorage.getItem(name));
     }
 
+    static getIdFromUrl () {
+        let id = window.location.hash.substr(1);
+        id = id.split('/')[1];
+        return id;
+    }
+
 }
 
 export default Utils;

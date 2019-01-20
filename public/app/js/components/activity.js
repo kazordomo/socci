@@ -16,8 +16,7 @@ class Activity {
 
     async init () {
         const user = Utils.getLocal();
-        let id = window.location.hash.substr(1);
-            id = id.split('/')[1];
+        let id = Utils.getIdFromUrl();
 
         this.activity = await ActivityCtrl.getActivity(id);
         new RenderData(this.DOMElement, this.activity);
@@ -40,8 +39,6 @@ class Activity {
                 this.commentButton.click();
             }
         });
-
-        console.log(this.activity);
 
         return true;
     }
