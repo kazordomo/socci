@@ -1,4 +1,5 @@
 import ActivityCtrl from '../controllers/activity';
+import SocialCtrl from '../controllers/social';
 import Utils from '../utils';
 import RenderData from '../renderData';
 
@@ -40,7 +41,34 @@ class Activity {
             }
         });
 
+        console.log(this.activity);
+
         return true;
+    }
+
+    // TODO: add to init.
+    // TODO: if the attendee is already a friend - do not show icon.
+    handleAttendees () {
+        let attendeeEls = Array.from(document.querySelectorAll('.attendees span'));
+        // TODO: add this directly to view when renderData is fixed.
+        let icon = '<i class="fas fa-plus-circle"></i>';
+        for (let el of attendeeEls) {
+            let friend = this.activity.attendees.find(a => a.nickname === el.innerHTML);
+            // Only attendees added to the users friendslist will have email specified.
+            if (friend.email) {
+                icon.addAttendee(friend.email);
+                el.innerHTML += icon;
+            }
+        }
+    }
+
+    async addAttendee (email) {
+        try {
+            await SocialCtrl.add(email);
+            console.log('Friend added!');
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     async postComment (activityId) {

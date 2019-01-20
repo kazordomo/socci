@@ -42,6 +42,8 @@ class Edit {
         buttonEl.addEventListener('click', event => {
             event.preventDefault();
 
+            if (!newAttendeeEl.value) return;
+
             if (!this.attendees.length) {
                 // Remove pre-default text.
                 this.DOMElement.querySelector('.attendees').innerHTML = '<h2>Attendees</h2>';

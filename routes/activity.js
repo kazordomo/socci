@@ -23,20 +23,35 @@ module.exports = app => {
         // const activities = await Activity.find({ '_user': { $in: [
         //     ...user.friends
         // ]}}).sort('-createdAt');
-
+        // const userActivities = await Activity.find({ '_user': req.session.user._id });
         const activities = await Activity.find({});
 
         res.send(activities);
     });
     
     app.post('/api/activity', async (req, res) => {
+        const user = await User.findById(req.session.user._id);
         const { title, information, time, attendees } = req.body;
+
+        let friends = await User.find({ '_id': { $in: [
+            ...user.friends
+        ]}}).sort('email');
+
+        // If the attendee specified is a friend, return the friend obj.
+        objectifiedAttendees = attendees.map(attendee => {
+            let friend = friends.find(friend => friend.nickname.toLowerCase() === attendee.toLowerCase());
+            if(friend) {
+                return friend;
+            } else {
+                return { nickname: attendee }
+            }
+        });
 
         let newActivity = new Activity({
             title,
             information,
             time,
-            attendees,
+            attendees: objectifiedAttendees,
             _user: req.session.user._id
         });
 
