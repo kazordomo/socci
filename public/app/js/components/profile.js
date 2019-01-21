@@ -1,4 +1,5 @@
 import SocialCtrl from '../controllers/social';
+import AuthCtrl from '../controllers/auth';
 import RenderData from '../renderData';
 import Utils from '../utils';
 
@@ -18,8 +19,12 @@ class Profile {
         
         let addButton = this.DOMElement.querySelector('.button.success');
         let changeNameButton = this.DOMElement.querySelector('.button.neutral');
+        let logoutButton = this.DOMElement.querySelector('.button.yellow');
+        let deleteAccButton = this.DOMElement.querySelector('.button.danger');
         addButton.addEventListener('click', this.onAddFriend.bind(this));
         changeNameButton.addEventListener('click', this.onChangeNickname.bind(this));
+        logoutButton.addEventListener('click', AuthCtrl.logout.bind(this));
+        deleteAccButton.addEventListener('click', AuthCtrl.delete.bind(this));
     }
 
     async onAddFriend () {

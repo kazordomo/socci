@@ -48,11 +48,19 @@ class AuthCtrl {
         }
     }
 
-    static async delete (id) {
+    static logout () {
+        try {
+            fetch('/auth/logout');
+            window.location.href = 'http://localhost:3000/';
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    static async delete () {
         try {
             fetch('/auth/user', { 
                 method: 'DELETE',
-                body: JSON.stringify({ id }),
                 headers: { 'Content-Type': 'application/json' }
             });
         } catch(err) {
