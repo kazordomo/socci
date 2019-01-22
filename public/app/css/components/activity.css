@@ -29,13 +29,6 @@ section#activity .form_group {
     width: 1024px;
 }
 
-section#activity input[name="comment"] {
-    width: 80%;
-}
-
-section#activity .button {
-    box-sizing: border-box;
-    float: right;
-    margin-left: 10px;
-    width: calc(20% - 10px);
+section#activity .button.danger {
+    float:right;
 }

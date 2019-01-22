@@ -3,7 +3,6 @@
     <a href="#home" class="button back">
         <i class="fas fa-chevron-left"></i>
     </a>
-    @for
     <div class="content">
         <div class="wrapper">
             <button class="button danger short round">Do not attend</button>
@@ -13,13 +12,24 @@
                 <p>{{ data.information }}</p>
             </div>
             <div class="attendees">
-                {{ data.attendees.<div class="attendee"><span>=!nickname!=</span><span>=!_id!=</span></div> }}
+                {{ 
+                    data.attendees.
+                    <div class="attendee"><span>=!nickname!=</span></div> 
+                }}
              </div>
+             <div class="comments">
+                {{ 
+                    data.comments.
+                    <div class="comment">
+                        <span>=!comment!=</span>
+                        <span>- =!user!=</span>
+                    </div> 
+                }}
+            </div>
             <div class="form_group">
                 <input type="text" name="comment" placeholder="Comment" />
                 <button class="button success">Add</button>
             </div>
         </div>
     </div>
-    @endfor
 </section>

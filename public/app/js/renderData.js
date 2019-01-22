@@ -1,9 +1,6 @@
 class RenderData {
 
-    // TODO: Refactor - works for now, but needs to be much more dynamic.
-
     constructor (DOMElement, data) {
-
         this.html = DOMElement.innerHTML;
         this.data = data;
         this.loopStartStr = '@for';
@@ -11,7 +8,6 @@ class RenderData {
         this.regExp = /\{{([^}}]+)/g;
         this.regExpArrProp = /\=!([^!=]+)/g;
         this.run(DOMElement, this.data);
-
     }
 
     run (DOMElement) {
@@ -19,54 +15,51 @@ class RenderData {
             return document.querySelector('async').remove();
         }
 
-        // if (Array.isArray(this.data)) {
-        //     this.handleLoop();
-        // } else {
-        // }
-        
-        this.replaceAllMatchesWithData();
+        if (Array.isArray(this.data)) {
+            let loopTemplate = this.getTemplate(this.loopStartStr, this.loopEndStr);
+            this.html = this.html.replace(loopTemplate, this.handleLoop(loopTemplate));
+            this.html = this.html.replace(this.loopStartStr, '');
+            this.html = this.html.replace(this.loopEndStr, '');
+        } else {
+            this.html = this.replaceAllMatchesWithData(this.html, this.data);
+        }
 
         // Tell the loader we're done fetching the data.
         document.querySelector('async').remove();
         DOMElement.innerHTML = this.html;
     }
 
-    handleLoop () {
-        let loopTemplate = this.getTemplate(this.loopStartStr, this.loopEndStr);
+    handleLoop (template) {
+        let templateeWithData = '';
 
         for (let data of this.data) {
-            this.replaceAllMatchesWithData();
+            templateeWithData += this.replaceAllMatchesWithData(template, data);
         }
+
+        return templateeWithData;
     }
 
-    replaceMatchWithData (match) {
-        // Get the property. {{ this.data.test }} -> test.
-        let prop = match.split('.')[1].trim();
+    replaceAllMatchesWithData (template, data) {
+        for(let match of this.getMatches(template, this.regExp)) {
+            let prop = this.getProp(match);
 
-        if (Array.isArray(this.data[prop])) {
-            this.replaceLoopMatches(match, prop);
+            if (Array.isArray(data[prop])) {
+                template = template.replace(match + '}}', this.replaceLoopMatches(data, match, prop));
+            } else {
+                let matchData = this.getDataFromMatch(data, prop);
+                template = template.replace(match + '}}', matchData);
+            }
         }
 
-        if (this.data[prop]) {
-            // Add back the }} to be able to match in the html.
-            match = match + '}}';
-            // Replace the match with the correct property from this.data.
-            this.html = this.html.replace(match, this.data[prop]);
-        }
+        return template;
     }
 
-    replaceAllMatchesWithData () {
-        for(let match of this.getMatches(this.html, this.regExp)) {
-            this.replaceMatchWithData(match);
-        }
-    }
-
-    replaceLoopMatches (match, prop) {
+    replaceLoopMatches (data, match, prop) {
         let htmlTemplate = match.split('.')[2].trim();
         let htmlTemplateWithData = '';
         let currentHtmlTemplate = htmlTemplate;
 
-        for (let object of this.data[prop]) {
+        for (let object of data[prop]) {
             for (let arrProp of this.getMatches(htmlTemplate, this.regExpArrProp)) {
                 let replaceArrProp = arrProp + '!=';
                 arrProp = arrProp.slice(2, prop.length + 1);
@@ -76,7 +69,7 @@ class RenderData {
             currentHtmlTemplate = htmlTemplate;
         }
 
-        this.html = this.html.replace(match + '}}', htmlTemplateWithData);
+        return htmlTemplateWithData;
     }
 
     getMatches (string, regEx) {
@@ -89,6 +82,16 @@ class RenderData {
             this.html.indexOf(startIndex) + startIndex.length,
             this.html.indexOf(endIndex)
         );
+    }
+
+    getDataFromMatch (data, prop) {
+        // Get the property. {{ this.data.test }} -> test.
+        if (data[prop]) return data[prop];
+        return false;
+    }
+
+    getProp (match) {
+        return match.split('.')[1].trim();
     }
 
 }
