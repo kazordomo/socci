@@ -3,22 +3,27 @@ const keys = require('./config/keys');
 const users = require('./database/seeds/users');
 const activities = require('./database/seeds/activities');
 
-// Connect to DB.
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true , useCreateIndex: true });
 const db = mongoose.connection;
 
-// Remove old records.
 let removeCollection = collection => {
     db.collection(collection).deleteMany({});
 }
 
-// Seed the database with data.
-let seedEventes = async (col, colString) => {
+let seedCollection = async (col, colString) => {
     removeCollection(colString);
     await Promise.all(col.map(async object => await object.save()));
-    db.close();
-    console.log('Database seeded!');
+    console.log(`${colString} seeded!`);
 }
 
-seedEventes(users, 'users');
-seedEventes(activities, 'activities');
+let seeder = () => {
+    Promise.all([
+        seedCollection(users, 'users'), 
+        seedCollection(activities, 'activities')
+    ]).then(() => {
+        console.log('Everything seeded - closing database.');
+        db.close();
+    }).catch(err => console.log(err));
+}
+
+seeder();
