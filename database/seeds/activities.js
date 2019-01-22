@@ -18,6 +18,10 @@ const seeds = [
             {
                 _id: createObjectId('user1'),
                 nickname: 'User1'
+            },
+            {
+                _id: createObjectId('user5'),
+                nickname: 'User5'
             }
         ],
         comments: [],
