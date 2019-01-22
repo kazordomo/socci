@@ -36,6 +36,7 @@ class Login {
         changeAuthTypeEl[1].addEventListener('click', () => { 
             this.changeAuthType(this.loginElements, this.registerElements);
         });
+        Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
 
         return true;
     }

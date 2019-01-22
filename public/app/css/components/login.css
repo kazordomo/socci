@@ -2,15 +2,6 @@ section#login {
     padding: 0;
 }
 
-section#login .slider {
-    background-image: url(../../img/city_br2.png);
-    background-size: cover;
-    margin-left: -250px;
-    width: 800px;
-    height: 500px;
-}
-
-
 section#login .col {
     box-sizing: border-box;
     height: 100vh;
@@ -25,9 +16,22 @@ section#login .wrapper_small {
     transform: translateY(-50%);
 }
 
+section#login .col_a .logo {
+    transition: opacity 300ms ease-out;
+}
+
+section#login .col_a .wrapper_small h1 {
+    border-bottom: 2px solid var(--mint);
+    display: inline-block;
+    padding: 0px 50px 0px 0px;
+    font-size: 75px;
+    transition: opacity 450ms ease-out;
+}
+
 section#login .col_a .wrapper_small h2 {
     font-weight: 400;
     margin: 10px 0 20px 0;
+    transition: opacity 700ms ease-out;
 }
 
 section#login .col .corner { 
@@ -78,8 +82,19 @@ section#login .col_b .corner div:nth-child(2) {
 }
 
 section#login .col_a {
-    background: var(--mint);
-    background: linear-gradient(180deg, var(--mint) 0%, var(--mint) 44%, rgba(34,145,139,1) 100%);
+    background: url(../../img/login_br_downsized.jpg);
+    background-size: cover;
+    background-repeat: none;
+    position: relative;
+}
+
+section#login .col_a .fade {
+    background-color: rgba(36,42,66,0.55);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 section#login .col_b { 

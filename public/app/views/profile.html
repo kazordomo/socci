@@ -19,12 +19,13 @@
                 </div>
             </div>
         </div>
-        <dv class="friends">
-            @for()
-            <div>{{ data.email }}</div>
+        <div class="friends">
+            @for
+            <div data-id="{{ data.id }}">{{ data.email }}<i class="fas fa-times"></i>
+            </div>
             @endfor
-        </dv>
-        <button class="button danger short">Delete Account</button>
-        <button class="button yellow short">Logout</button>
+        </div>
     </div>
+    <button class="button danger short">Delete Account</button>
+    <button class="button yellow short">Logout</button>
 </section>

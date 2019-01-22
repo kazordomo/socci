@@ -21,10 +21,17 @@ class Profile {
         let changeNameButton = this.DOMElement.querySelector('.button.neutral');
         let logoutButton = this.DOMElement.querySelector('.button.yellow');
         let deleteAccButton = this.DOMElement.querySelector('.button.danger');
+        let deleteFriendEls = this.DOMElement.querySelectorAll('.friends div');
         addButton.addEventListener('click', this.onAddFriend.bind(this));
         changeNameButton.addEventListener('click', this.onChangeNickname.bind(this));
         logoutButton.addEventListener('click', AuthCtrl.logout.bind(this));
         deleteAccButton.addEventListener('click', AuthCtrl.delete.bind(this));
+
+        for (let element of Array.from(deleteFriendEls)) {
+            let id = element.getAttribute('data-id');
+            let deleteIcon = element.querySelector('i');
+            deleteIcon.addEventListener('click', () => this.deleteFriend(id, element));
+        }
     }
 
     async onAddFriend () {
@@ -44,6 +51,11 @@ class Profile {
         event.preventDefault();
         let newName = Utils.getInputValue(this.DOMElement, 'nickname');
         SocialCtrl.nickname(newName);
+    }
+
+    async deleteFriend (id, element) {
+        await SocialCtrl.deleteFriend(id);
+        element.remove();
     }
 
 }

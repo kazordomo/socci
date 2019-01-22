@@ -10,3 +10,14 @@ section#profile .col_a {
 section#profile .col_b {
     width: 40%;
 }
+
+section#profile .friends {
+    display: inline-block;
+    margin: 80px 0;
+}
+
+section#profile .friends i {
+    color: var(--redish);
+    cursor: pointer;
+    margin-left: 20px;
+}

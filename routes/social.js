@@ -12,6 +12,17 @@ module.exports = app => {
         res.send(friends.map(friend => { return { id: friend.id, email: friend.email } }));
     });
 
+    app.delete('/api/social/delete', async (req, res) => {
+        try {
+            const user = await User.findById(req.session.user._id);
+            user.friends.splice(user.friends.indexOf(req.body.id), 1)
+            await user.save();
+            res.send(true);
+        } catch (err) {
+            res.status(400).json({ success: false, status: 400, message: err });
+        }
+    });
+
     app.get('/api/social/add/:user', async (req, res) => {
         try {
             const user = await User.findById(req.session.user._id);

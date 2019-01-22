@@ -6,6 +6,18 @@ class SocialCtrl {
         return json;
     }
 
+    static async deleteFriend (id) {
+        try {
+            let response = fetch('/api/social/delete', { 
+                method: 'DELETE',
+                body: JSON.stringify({ id }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     static async add (email) {
         try {
             let response = await fetch(`/api/social/add/${email}`);
