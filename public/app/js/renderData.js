@@ -19,12 +19,24 @@ class RenderData {
             return document.querySelector('async').remove();
         }
 
-        // If we got matches/data outside of an loop.
+        // if (Array.isArray(this.data)) {
+        //     this.handleLoop();
+        // } else {
+        // }
+        
         this.replaceAllMatchesWithData();
 
         // Tell the loader we're done fetching the data.
         document.querySelector('async').remove();
         DOMElement.innerHTML = this.html;
+    }
+
+    handleLoop () {
+        let loopTemplate = this.getTemplate(this.loopStartStr, this.loopEndStr);
+
+        for (let data of this.data) {
+            this.replaceAllMatchesWithData();
+        }
     }
 
     replaceMatchWithData (match) {
@@ -43,36 +55,42 @@ class RenderData {
         }
     }
 
-    replaceLoopMatches (match, prop) {
-        let htmlEl = match.split('.')[2].trim();
-        let htmlElWithData = '';
-        let currentHtmlElWithData = htmlEl;
-        let arrProps = this.getMatches(htmlEl, this.regExpArrProp);
-
-        for (let arrProp of arrProps) {
-            let replaceArrProp = arrProp + '!=';
-            arrProp = arrProp.slice(2, prop.length + 1);
-
-            for (let object of this.data[prop]) {
-                currentHtmlElWithData = currentHtmlElWithData.replace(replaceArrProp, object[arrProp]);
-            }
-
-            htmlElWithData += currentHtmlElWithData;
-            console.log(htmlElWithData);
-        }
-
-        this.html = this.html.replace(match + '}}', htmlElWithData);
-    }
-
     replaceAllMatchesWithData () {
         for(let match of this.getMatches(this.html, this.regExp)) {
             this.replaceMatchWithData(match);
         }
     }
 
+    replaceLoopMatches (match, prop) {
+        let htmlTemplate = match.split('.')[2].trim();
+        let htmlTemplateWithData = '';
+        let currentHtmlTemplate = htmlTemplate;
+
+        for (let object of this.data[prop]) {
+            for (let arrProp of this.getMatches(htmlTemplate, this.regExpArrProp)) {
+                let replaceArrProp = arrProp + '!=';
+                arrProp = arrProp.slice(2, prop.length + 1);
+                currentHtmlTemplate = currentHtmlTemplate.replace(replaceArrProp, object[arrProp]);
+            }
+            htmlTemplateWithData += currentHtmlTemplate;
+            currentHtmlTemplate = htmlTemplate;
+        }
+
+        this.html = this.html.replace(match + '}}', htmlTemplateWithData);
+    }
+
     getMatches (string, regEx) {
         return string.match(regEx);
     }
+
+    getTemplate (startIndex, endIndex) {
+        if (!startIndex) return false;
+        return this.html.substring(
+            this.html.indexOf(startIndex) + startIndex.length,
+            this.html.indexOf(endIndex)
+        );
+    }
+
 }
 
 export default RenderData;
