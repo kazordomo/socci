@@ -12,7 +12,7 @@ let removeCollection = collection => {
 
 let seedCollection = async (col, colString) => {
     removeCollection(colString);
-    await Promise.all(col.map(async object => await object.save()));
+    await Promise.all(col.map(async object => object.save()));
     console.log(`${colString} seeded!`);
 }
 

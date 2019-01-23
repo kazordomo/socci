@@ -34,9 +34,8 @@ class Home {
             //     .find(activity => activity._id === dataId).attendees
             //     .find(attendee => attendee._id === user._id);
 
-            let isUserAttending = false;
-            
-            this.updateAttendeeButton(isUserAttending);
+
+            // this.updateAttendeeButton(isUserAttending);
 
             activityEl.querySelector('button.success').addEventListener('click', () => this.onAttend(dataId, activityEl));
 

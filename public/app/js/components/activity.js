@@ -16,7 +16,7 @@ class Activity {
 
     async init () {
         const user = Utils.getLocal();
-        let id = Utils.getIdFromUrl();
+        const id = Utils.getIdFromUrl();
 
         this.activity = await ActivityCtrl.getActivity(id);
         new RenderData(this.DOMElement, this.activity);
