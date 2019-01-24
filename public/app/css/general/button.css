@@ -54,5 +54,17 @@ button {
 }
 
 .button.round {
-    border-radius: 30px;
+    border-radius: 50px;
+}
+
+@media screen and (max-width: 1000px) { 
+    .button {
+        font-size: 32px;
+    }
+    
+    .button.short {
+        min-width: 180px;
+        height: 80px;
+        line-height: 80px;
+    }
 }

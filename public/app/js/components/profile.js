@@ -8,13 +8,13 @@ class Profile {
     constructor () {
         this.DOMElement = document.querySelector('section#profile');
         this.friends = [];
+        this.user = Utils.getLocal();
         this.init();
     }
 
     async init () {
-        const user = Utils.getLocal();
         this.friends = await SocialCtrl.getFriends();
-        this.DOMElement.querySelector('input[name="nickname"]').defaultValue = user.nickname;
+        this.DOMElement.querySelector('input[name="nickname"]').defaultValue = this.user.nickname;
         new RenderData(this.DOMElement, this.friends);
         
         let addButton = this.DOMElement.querySelector('.button.success');
@@ -55,6 +55,8 @@ class Profile {
 
     async deleteFriend (id, element) {
         await SocialCtrl.deleteFriend(id);
+        this.user.friends.splice(this.user.friends.indexOf(id), 1);
+        Utils.storeLocal(this.user);
         element.remove();
     }
 

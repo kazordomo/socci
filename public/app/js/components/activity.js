@@ -9,6 +9,7 @@ class Activity {
         this.DOMElement = document.querySelector('section#activity');
         // TODO: This needs to be cached. We have already fetched this data once.
         this.activity = {};
+        this.user = Utils.getLocal();
         this.declineButton = null;
         this.commentButton = null;
         this.init();
@@ -40,31 +41,34 @@ class Activity {
             }
         });
 
-        return true;
+        this.attendeesOnClick();
     }
 
-    // TODO: add to init.
-    // TODO: if the attendee is already a friend - do not show icon.
-    handleAttendees () {
-        let attendeeEls = Array.from(document.querySelectorAll('.attendees span'));
-        // TODO: add this directly to view when renderData is fixed.
-        let icon = '<i class="fas fa-plus-circle"></i>';
-        for (let el of attendeeEls) {
-            let friend = this.activity.attendees.find(a => a.nickname === el.innerHTML);
-            // Only attendees added to the users friendslist will have email specified.
-            if (friend.email) {
-                icon.addAttendee(friend.email);
-                el.innerHTML += icon;
+    attendeesOnClick () {
+        for(let attendee of this.DOMElement.querySelectorAll('.attendee')) {
+            let icon = attendee.querySelector('i');
+            let friendId = attendee.getAttribute('data-id');
+            let isAlreadyFriends = this.user.friends.find(id => id === friendId);
+
+            if (friendId === this.user._id || isAlreadyFriends) {
+                icon.remove();
+            } else {
+                icon.addEventListener('click', () => {
+                    this.addFriend(friendId, icon);
+                });
             }
         }
     }
-
-    async addAttendee (email) {
-        try {
-            await SocialCtrl.add(email);
-            console.log('Friend added!');
-        } catch(err) {
-            console.log(err);
+    
+    async addFriend (id, icon) {
+        let result = await SocialCtrl.add(id);
+        // TODO: result.succes: false or true
+        if (result.id) {
+            this.user.friends.push(result.id);
+            Utils.storeLocal(this.user);
+            icon.remove();
+        } else {
+            console.log(result.message);
         }
     }
 

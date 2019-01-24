@@ -18,9 +18,9 @@ class SocialCtrl {
         }
     }
 
-    static async add (email) {
+    static async add (parameter) {
         try {
-            let response = await fetch(`/api/social/add/${email}`);
+            let response = await fetch(`/api/social/add/${parameter}`);
             let json = await response.json();
             return json;
         } catch (err) {

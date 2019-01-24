@@ -27,6 +27,7 @@ module.exports = app => {
         try {
             const user = await User.findById(req.session.user._id);
             const addUser = await User.findOne({$or: [
+                { _id: req.params.user },
                 { email: req.params.user },
                 { phone: req.params.user }
             ]});
@@ -46,7 +47,7 @@ module.exports = app => {
 
             user.friends.push(addUser);
             user.save();
-            res.send({ email: addUser.email });
+            res.send({ id: addUser._id, email: addUser.email });
         } catch (err) {
             res.status(400).json({ success: false, status: 400, message: err });
         }

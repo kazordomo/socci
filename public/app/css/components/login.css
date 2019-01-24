@@ -88,13 +88,17 @@ section#login .col_a {
     position: relative;
 }
 
-section#login .col_a .fade {
+section#login .fade {
     background-color: rgba(36,42,66,0.55);
     bottom: 0;
     left: 0;
     position: absolute;
     right: 0;
     top: 0;
+}
+
+section#login .col_b .fade {
+    display: none;
 }
 
 section#login .col_b { 
@@ -143,3 +147,50 @@ section#login .social_media i {
 section#login .social_media i:first-child {
     margin-right: 30px;
 } */
+
+@media screen and (max-width: 1000px) { 
+    
+    section#login .col_a {
+        display: none;
+    }
+
+    section#login .col_b {
+        background: url(../../img/login_br_downsized.jpg);
+        background-size: cover;
+        background-repeat: none;
+        background-position: center;
+        float: none;
+        width: 100%;
+    }
+
+    section#login .col_b .wrapper_small {
+        background-color: rgba(36,42,66,0.75);
+        border-radius: 2px;
+        -webkit-box-shadow: -2px 3px 19px 3px rgba(0,0,0,0.75);
+        -moz-box-shadow: -2px 3px 19px 3px rgba(0,0,0,0.75);
+        box-shadow: -2px 3px 19px 3px rgba(0,0,0,0.75);
+        padding: 80px;
+        width: 600px;
+    }
+
+    section#login .col_b .corner {
+        border-radius: 50px;
+        font-size: 28px;
+        line-height: 80px;
+        height: 80px;
+        width: 300px;
+    }
+
+    section#login .col_b .corner div {
+        width: 150px;
+    }
+
+    section#login .col_b .fade {
+        background-color: rgba(36,42,66,0.35);        
+        display: block;
+    }
+
+    section#login .form_group a {
+        font-size: 24px;
+    }
+}
