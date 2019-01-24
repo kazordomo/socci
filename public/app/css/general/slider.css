@@ -1,0 +1,95 @@
+.slider {
+    height: 410px;
+    left: 0;
+    position: relative;
+    transition: left 300ms ease-out;
+}
+
+.slider .button_group {
+    bottom: 30px;
+    position: absolute;
+}
+
+.slider .item_outer {
+    position: absolute;
+    width: 100vw;
+}
+
+.slider .item_inner {
+    background-color: pink;
+    height: 350px;
+    margin: 0 auto;
+    padding: 30px;
+    width: 700px;
+}
+
+.slider .navigators {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100vw;
+    z-index: 2;
+}
+
+.slider .navigator {
+    cursor: pointer;
+    font-size: 42px;
+    position: absolute;
+    width: 50px;
+}
+
+.slider .navigator.prev {
+    left: 50px;
+}
+
+.slider .navigator.next {
+    right: 50px;
+    text-align: center;
+}
+
+.slider .item:nth-child(even) {
+    margin-left: 20px;
+}
+
+.slider .item .attendees {
+    padding: 30px 0;
+}
+
+.slider .item .attendees span {
+    color: #FFFFFF;
+    float: none;
+    margin-right: 10px;
+}
+
+.slider .item .attendees span:last-child {
+    margin-right: 0;
+}
+
+.slider .item button i {
+    font-size: 20px;
+}
+
+.slider .item button.neutral {
+    float: right;
+}
+
+.slider .item button.success {
+    background-color: var(--greenish);
+    cursor: initial;
+}
+
+.slider .item button.success.active {
+    background-color: var(--mint);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.slider .item h2 {
+    display: inline-block;
+}
+
+.slider .item span {
+    color: var(--yellowish);
+    float: right;
+    margin-top: 8px;
+}

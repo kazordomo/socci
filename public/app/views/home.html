@@ -1,22 +1,33 @@
 <async></async>
 <section id="home">
-    <div class="wrapper">
+    <div class="slider">
         @for
-        <div class="activity out" data-id="{{ data._id }}">
-            <h2>{{ data.title}}</h2>
-            <span>{{ data.time}}</span>
-            <div>{{ data.information }}</div>
-            <div class="attendees">
-                {{ 
-                    data.attendees.
-                    <div class="attendee">
-                        <span>=!nickname!=</span>
-                    </div>
-                }}
+        <div class="item_outer" data-id="{{ data._id }}">
+            <div class="navigators">
+                <div class="navigator prev"><i class="fas fa-caret-left"></i></div>
+                <div class="navigator next"><i class="fas fa-caret-right"></i></div>
             </div>
-            <button class="button short success"><i class="fas fa-plus-circle"></i></button>
-            <button class="button short neutral"><i class="fas fa-info-circle"></i></button>
+            <div class="item_inner">
+                <h2>{{ data.title }}</h2>
+                <span>{{ data.time }}</span>
+                <div>{{ data.information }}.</div>
+                <div class="attendees">
+                    {{ 
+                        data.attendees.
+                        <div class="attendee">
+                            <span>=!nickname!=</span>
+                        </div>
+                    }}
+                </div>
+                <div class="button_group">
+                    <button class="button short success"><i class="fas fa-plus-circle"></i></button>
+                    <button class="button short neutral"><i class="fas fa-info-circle"></i></button>
+                </div>
+            </div>
         </div>
         @endfor
+    </div>
+    <div class="wrapper">
+        <div class="activities"></div>
     </div>
 </section>

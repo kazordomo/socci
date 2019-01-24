@@ -1,4 +1,5 @@
 import ActivityCtrl from '../controllers/activity';
+import Slider from '../general/slider';
 import Utils from '../utils';
 import RenderData from '../renderData';
 
@@ -15,15 +16,18 @@ class Home {
     async init () {
         this.activities = await ActivityCtrl.getActivities();
         new RenderData(this.DOMElement, this.activities);
+        new Slider();
 
         if (!this.activities.length) {
             this.DOMElement.querySelector('.wrapper').innerHTML = 'No activites at the moment!';
         }
 
         // When the dom is render we can connect the buttons with functions.
-        this.eventListenerInit();
-        // Animate in.
+        // this.eventListenerInit();
+
+        this.initPreviewActivites();
         Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
+
     }
 
     eventListenerInit () {
@@ -87,6 +91,24 @@ class Home {
         }
     }
 
+    initPreviewActivites () {
+        for (let data of this.activities) {
+            let element = this.createPreviewActivity(data);
+            this.DOMElement.querySelector('.activities').appendChild(element);
+        }
+
+        this.DOMElement.querySelector('.activities .activity').classList.add('active');
+    }
+
+    createPreviewActivity (data) {
+        let newDiv = document.createElement('div');
+        let newH4 = document.createElement('h4');
+        newH4.innerHTML = data.title;
+        newDiv.setAttribute('data-id', data._id);
+        newDiv.appendChild(newH4);
+        newDiv.className = 'activity out';
+        return newDiv;
+    }
 
 }
 
