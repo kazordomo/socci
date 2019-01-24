@@ -16,39 +16,38 @@ class Home {
     async init () {
         this.activities = await ActivityCtrl.getActivities();
         new RenderData(this.DOMElement, this.activities);
-        new Slider();
+        new Slider(this.activities, this.DOMElement);
 
         if (!this.activities.length) {
             this.DOMElement.querySelector('.wrapper').innerHTML = 'No activites at the moment!';
         }
 
         // When the dom is render we can connect the buttons with functions.
-        // this.eventListenerInit();
+        this.eventListenerInit();
 
-        this.initPreviewActivites();
         Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
 
     }
 
     eventListenerInit () {
-        for (let activityEl of this.DOMElement.querySelectorAll('.activity')) {
-            const dataId = activityEl.getAttribute('data-id');
+        for (let sliderItem of this.DOMElement.querySelectorAll('.item_outer')) {
+            const dataId = sliderItem.getAttribute('data-id');
 
             let isUserAttending = !!this.activities
                 .find(activity => activity._id === dataId).attendees
                 .find(attendee => attendee._id === this.user._id);
 
-            activityEl
+                sliderItem
                 .querySelector('button.neutral')
                 .addEventListener('click', () => window.location.href = `#activity/${dataId}`);
 
-            this.updateAttendeeButton(isUserAttending, activityEl);
+            this.updateAttendeeButton(isUserAttending, sliderItem);
         }
     }
 
-    async onAttend (id, activityEl) {
+    async onAttend (id, sliderItem) {
         const { user } = await ActivityCtrl.attendActivity(id);
-        const isFirstAttendee = activityEl.querySelector('.no-attendees');
+        const isFirstAttendee = sliderItem.querySelector('.no-attendees');
 
         // TODO: proper error handling...
         if (user.message) {
@@ -56,21 +55,21 @@ class Home {
         }
         // Remove the text about "no attendees".
         if (isFirstAttendee) {
-            activityEl.querySelector('.no-attendees').remove();
+            sliderItem.querySelector('.no-attendees').remove();
         }
         // Add a comma and a space if not the first attendee
-        activityEl.querySelector('.attendees').innerHTML += `${isFirstAttendee ? '' :', '}${user}`
+        sliderItem.querySelector('.attendees').innerHTML += `${isFirstAttendee ? '' :', '}${user}`
         this.updateAttendeeButton(true);
 
-        activityEl.classList.toggle('attending');
+        sliderItem.classList.toggle('attending');
         return true;
     }
 
-    onDelete (id, activityEl) {
+    onDelete (id, sliderItem) {
         try {
             ActivityCtrl.deleteActivity(id);
             // Remove from the dom. No need to await server when in try/catch.
-            this.DOMElement.querySelector('.wrapper').removeChild(activityEl);
+            this.DOMElement.querySelector('.wrapper').removeChild(sliderItem);
         } catch (err) {
             console.log(err);
         }
@@ -78,8 +77,8 @@ class Home {
         return true;
     }
 
-    updateAttendeeButton (isAttending, activityEl) {
-        let button = activityEl.querySelector('button.success');
+    updateAttendeeButton (isAttending, sliderItem) {
+        let button = sliderItem.querySelector('button.success');
         
         if (isAttending) {
             button.classList.remove('active');
@@ -87,27 +86,8 @@ class Home {
         } else {
             button.classList.add('active');
             button.innerHTML = '<i class="fas fa-plus-circle"></i>';
-            button.addEventListener('click', () => this.onAttend(dataId, activityEl));
+            button.addEventListener('click', () => this.onAttend(dataId, sliderItem));
         }
-    }
-
-    initPreviewActivites () {
-        for (let data of this.activities) {
-            let element = this.createPreviewActivity(data);
-            this.DOMElement.querySelector('.activities').appendChild(element);
-        }
-
-        this.DOMElement.querySelector('.activities .activity').classList.add('active');
-    }
-
-    createPreviewActivity (data) {
-        let newDiv = document.createElement('div');
-        let newH4 = document.createElement('h4');
-        newH4.innerHTML = data.title;
-        newDiv.setAttribute('data-id', data._id);
-        newDiv.appendChild(newH4);
-        newDiv.className = 'activity out';
-        return newDiv;
     }
 
 }

@@ -20,3 +20,7 @@ section#home .activities .activity {
 section#home .activities .activity.active {
     background-color: rgba(0,0,0,0);
 }
+
+section#home .activities .activity h4 {
+    pointer-events: none;
+}

@@ -23,26 +23,37 @@
     width: 700px;
 }
 
-.slider .navigators {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+.navigators {
+    position: fixed;
+    height: 410px;
     width: 100vw;
     z-index: 2;
 }
 
-.slider .navigator {
+.navigator {
     cursor: pointer;
+    display: block;
     font-size: 42px;
+    height: 410px;
     position: absolute;
     width: 50px;
 }
 
-.slider .navigator.prev {
+.navigator.inactive {
+    display: none;
+}
+
+.navigator i {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+.navigator.prev {
     left: 50px;
 }
 
-.slider .navigator.next {
+.navigator.next {
     right: 50px;
     text-align: center;
 }

@@ -1,12 +1,12 @@
 <async></async>
 <section id="home">
+    <div class="navigators">
+        <div class="navigator prev"><i class="fas fa-caret-left"></i></div>
+        <div class="navigator next"><i class="fas fa-caret-right"></i></div>
+    </div>
     <div class="slider">
         @for
         <div class="item_outer" data-id="{{ data._id }}">
-            <div class="navigators">
-                <div class="navigator prev"><i class="fas fa-caret-left"></i></div>
-                <div class="navigator next"><i class="fas fa-caret-right"></i></div>
-            </div>
             <div class="item_inner">
                 <h2>{{ data.title }}</h2>
                 <span>{{ data.time }}</span>
