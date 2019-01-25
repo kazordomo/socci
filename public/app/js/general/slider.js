@@ -19,6 +19,36 @@ class Slider {
         this.initNavigators();
         this.initPreviewActivites();
         this.hideOrShowNav();
+
+        const hammertime = new Hammer(this.DOMElement);
+        hammertime.on('panstart', this.onPanStart.bind(this));
+        hammertime.on('pan', this.onPan.bind(this));
+        hammertime.on('panend', this.onPanEnd.bind(this));
+    }
+
+    onPanStart ({ deltaX }) {
+        this.DOMElement.classList.add('dragging');
+    }
+
+    onPan ({ deltaX }) {
+        this.DOMElement.setAttribute('style', 
+            `width: ${this.width}px; 
+            left: ${this.position + deltaX}px;`
+        );
+    }
+
+    onPanEnd ({ deltaX }) {
+        this.DOMElement.classList.remove('dragging');
+
+        if(deltaX < 200 && deltaX > -200 ) {
+            return this.moveSlider();
+        }
+
+        if (deltaX < 0) {
+            this.navigators.querySelector('.next').click();
+        } else {
+            this.navigators.querySelector('.prev').click();
+        }
     }
 
     // TODO: This needs to be run on window.resize
@@ -88,6 +118,7 @@ class Slider {
     }
 
     // TODO: Should not be here.
+    // ACTIVITIE SPECIFICS SECTION
     updateActivePreview () {
         let activitiesEl = this.DOMParent.querySelector('.activities');
         let currentActive = activitiesEl.querySelector('.activity.active');

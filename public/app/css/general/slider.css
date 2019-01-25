@@ -2,7 +2,11 @@
     height: 410px;
     left: 0;
     position: relative;
-    transition: left 300ms ease-out;
+    transition: left 200ms ease-out;
+}
+
+.slider.dragging {
+    transition: none;
 }
 
 .slider .button_group {
@@ -25,7 +29,6 @@
 
 .navigators {
     position: fixed;
-    height: 410px;
     width: 100vw;
     z-index: 2;
 }
