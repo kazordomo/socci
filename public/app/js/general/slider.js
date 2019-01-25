@@ -44,10 +44,12 @@ class Slider {
             return this.moveSlider();
         }
 
-        if (deltaX < 0) {
+        if (deltaX < 0 && (this.activeItemIndex !== this.itemsOuter.length - 1)) {
             this.navigators.querySelector('.next').click();
-        } else {
+        } else if (deltaX > 0 && (this.activeItemIndex !== 0)) {
             this.navigators.querySelector('.prev').click();
+        } else {
+            this.moveSlider();
         }
     }
 

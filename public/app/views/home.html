@@ -4,13 +4,13 @@
         <div class="navigator prev"><i class="fas fa-caret-left"></i></div>
         <div class="navigator next"><i class="fas fa-caret-right"></i></div>
     </div>
-    <div class="slider">
+    <div class="slider out">
         @for
         <div class="item_outer" data-id="{{ data._id }}">
             <div class="item_inner">
                 <h2>{{ data.title }}</h2>
-                <span>{{ data.time }}</span>
-                <div>{{ data.information }}.</div>
+                <div class="time out"><i class="fas fa-clock"></i>{{ data.time }}</div>
+                <div class="information">{{ data.information }}.</div>
                 <div class="attendees">
                     {{ 
                         data.attendees.
@@ -27,7 +27,7 @@
         </div>
         @endfor
     </div>
-    <div class="wrapper">
+    <div class="wrapper_medium">
         <div class="activities"></div>
     </div>
 </section>

@@ -6,6 +6,7 @@ const activities = require('./database/seeds/activities');
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true , useCreateIndex: true });
 const db = mongoose.connection;
 
+// TODO: Async?
 let removeCollection = collection => {
     db.collection(collection).deleteMany({});
 }
@@ -22,7 +23,8 @@ let seeder = () => {
         seedCollection(activities, 'activities')
     ]).then(() => {
         console.log('Everything seeded - closing database.');
-        db.close();
+        // TODO: DB closes even if not all thins are seeded.
+        // db.close();
     }).catch(err => console.log(err));
 }
 

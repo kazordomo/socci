@@ -22,8 +22,13 @@
     width: 500px;
 }
 
+.wrapper_medium {
+    width: 700px;
+}
+
 .wrapper,
-.wrapper_small {
+.wrapper_small,
+.wrapper_medium {
     margin: 0 auto;
     max-width: 90%;
 }

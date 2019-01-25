@@ -2,7 +2,7 @@
     height: 410px;
     left: 0;
     position: relative;
-    transition: left 200ms ease-out;
+    transition: left 200ms ease-out, opacity 300ms ease-out;
 }
 
 .slider.dragging {
@@ -12,6 +12,7 @@
 .slider .button_group {
     bottom: 30px;
     position: absolute;
+    width: 640px;
 }
 
 .slider .item_outer {
@@ -20,11 +21,56 @@
 }
 
 .slider .item_inner {
-    background-color: pink;
+    /* background-color: var(--greyish); */
+    background-color: rgba(52,208,200,0.1);
+    border-radius: 3px;
     height: 350px;
     margin: 0 auto;
     padding: 30px;
-    width: 700px;
+    position: relative;
+    width: 640px;
+}
+
+.slider .item_inner .button i {
+    font-size: 20px;
+}
+
+.slider .item_inner .button.neutral {
+    float: right;
+}
+
+.slider .item_inner .button.success {
+    background-color: var(--greenish);
+    cursor: initial;
+}
+
+.slider .item_inner .button.success.active {
+    background-color: var(--mint);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.slider .item_inner h2 {
+    display: inline-block;
+}
+
+.slider .item_inner .time {
+    background-color: var(--mint);
+    border-radius: 3px;
+    -webkit-box-shadow: -2px 3px 19px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: -2px 3px 19px 3px rgba(0,0,0,0.75);
+    box-shadow: -2px 3px 19px 3px rgba(0,0,0,0.75);
+    font-size: 32px;
+    padding: 5px 15px;
+    position: absolute;
+    right: -15px;
+    top: -20px;
+    transition: opacity 450ms ease-out;
+}
+
+.slider .item_inner .time i {
+    font-size: 32px;
+    margin-right: 10px;
 }
 
 .navigators {
@@ -61,49 +107,19 @@
     text-align: center;
 }
 
-.slider .item:nth-child(even) {
-    margin-left: 20px;
-}
-
-.slider .item .attendees {
+.slider  .attendees {
     padding: 30px 0;
 }
 
-.slider .item .attendees span {
+.slider  .attendees .attendee {
+    background-color: rgba(0,0,0,0.75);
+    border-radius: 3px;
     color: #FFFFFF;
-    float: none;
-    margin-right: 10px;
-}
-
-.slider .item .attendees span:last-child {
-    margin-right: 0;
-}
-
-.slider .item button i {
-    font-size: 20px;
-}
-
-.slider .item button.neutral {
-    float: right;
-}
-
-.slider .item button.success {
-    background-color: var(--greenish);
-    cursor: initial;
-}
-
-.slider .item button.success.active {
-    background-color: var(--mint);
-    opacity: 1;
-    cursor: pointer;
-}
-
-.slider .item h2 {
     display: inline-block;
+    margin-right: 10px;
+    padding: 4px 12px;
 }
 
-.slider .item span {
-    color: var(--yellowish);
-    float: right;
-    margin-top: 8px;
+.slider .attendees span:last-child {
+    margin-right: 0;
 }
