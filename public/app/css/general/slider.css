@@ -19,23 +19,21 @@
 .slider .button_group {
     bottom: 30px;
     position: absolute;
-    width: 640px;
+    width: 700px;
 }
 
 .slider .item_outer {
+    background-color: var(--greyish);
     position: absolute;
     width: 100vw;
 }
 
 .slider .item_inner {
-    /* background-color: var(--greyish); */
-    background-color: rgba(52,208,200,0.1);
     border-radius: 3px;
     height: 350px;
-    margin: 0 auto;
-    padding: 30px;
+    margin: 30px auto;
     position: relative;
-    width: 640px;
+    width: 700px;
 }
 
 .slider .item_inner .button i {
@@ -71,7 +69,7 @@
     padding: 5px 15px;
     position: absolute;
     right: -15px;
-    top: -20px;
+    top: -60px;
     transition: opacity 450ms ease-out, transform 300ms ease-out;
 }
 

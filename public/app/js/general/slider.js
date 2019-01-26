@@ -87,8 +87,14 @@ class Slider {
 
     positionItems () {
         for (let [i, element] of this.itemsOuter.entries()) {
-            element.setAttribute('style', `left: ${i * element.offsetWidth}px`);
+            element.setAttribute(
+                'style', `left: ${i * element.offsetWidth}px;`
+            );
         }
+    }
+
+    increaseBrColor (rgb, a) {
+        return `rgba(${rgb},${a})`;
     }
 
     initNavigators () {
