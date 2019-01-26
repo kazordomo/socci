@@ -9,6 +9,13 @@
     transition: none;
 }
 
+.counter {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 52px;
+    font-weight: 700;
+    text-align: center;
+}
+
 .slider .button_group {
     bottom: 30px;
     position: absolute;
@@ -65,6 +72,10 @@
     position: absolute;
     right: -15px;
     top: -20px;
+    transition: opacity 450ms ease-out, transform 300ms ease-out;
+}
+
+.slider .item_inner .time.dragging {
     transition: opacity 450ms ease-out;
 }
 
@@ -112,14 +123,12 @@
 }
 
 .slider  .attendees .attendee {
-    background-color: rgba(0,0,0,0.75);
     border-radius: 3px;
-    color: #FFFFFF;
     display: inline-block;
-    margin-right: 10px;
+    font-style: italic;
     padding: 4px 12px;
 }
 
-.slider .attendees span:last-child {
-    margin-right: 0;
+.slider  .attendees .attendee:first-child {
+    padding-left: 0;
 }
