@@ -88,15 +88,6 @@ section#login .col_a {
     position: relative;
 }
 
-section#login .fade {
-    background-color: rgba(36,42,66,0.55);
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
 section#login .col_b .fade {
     display: none;
 }

@@ -23,7 +23,7 @@
 }
 
 .slider .item_outer {
-    background-color: var(--greyish);
+    background-color: #39436b;
     position: absolute;
     width: 100vw;
 }

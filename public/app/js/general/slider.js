@@ -21,6 +21,8 @@ class Slider {
         this.hideOrShowNav();
         this.setCounter();
         this.initHammer();
+
+        window.addEventListener('resize', this.calcSliderWidth.bind(this));
     }
 
     initHammer () {
@@ -61,11 +63,13 @@ class Slider {
 
     // TODO: This needs to be run on window.resize
     calcSliderWidth () {
+        let sliderWidth = 0;
         for (let element of Array.from(this.itemsOuter)) {
-            this.width += element.offsetWidth;
+            sliderWidth += element.offsetWidth;
         }
 
-        this.DOMElement.style.width = `${this.width}px`;
+        this.width = sliderWidth;
+        this.DOMElement.style.width = `${sliderWidth}px`;
     }
 
     moveSlider () {
