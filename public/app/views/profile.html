@@ -6,26 +6,27 @@
     <div class="wrapper">
         <div class="cols cols_two">
             <div class="col col_a">
+                <div class="avatar"></div>
                 <form>
                     <input type="text" name="nickname" maxlength="12" placeholder="Nickname" />
                     <button class="button neutral short round">Change Name</button>
                 </form>
-            </div>
-            <div class="col col_b">
-                <div>
-                    <h2>Friends</h2>
-                    <input type="text" name="user" placeholder="Name or email" />
-                    <button class="button success">Add Friend</button>
-                </div>
+                <button class="button danger short">Delete Account</button>
+                <button class="button yellow short">Logout</button>
             </div>
         </div>
-        <div class="friends">
-            @for
-            <div data-id="{{ data.id }}">{{ data.email }}<i class="fas fa-times"></i>
+        <div class="col col_b">
+            <div>
+                <h2>Friends</h2>
+                <input type="text" name="user" placeholder="Name or email" />
+                <button class="button success">Add Friend</button>
             </div>
-            @endfor
+            <div class="friends">
+                @for
+                <div data-id="{{ data.id }}">{{ data.email }}<i class="fas fa-times"></i>
+                </div>
+                @endfor
+            </div>
         </div>
     </div>
-    <button class="button danger short">Delete Account</button>
-    <button class="button yellow short">Logout</button>
 </section>

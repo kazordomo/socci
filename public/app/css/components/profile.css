@@ -2,6 +2,14 @@ section#profile input {
     width: 100%;
 }
 
+section#profile .avatar {
+    background-color: pink;
+    border-radius: 50%;
+    margin: 0 auto;
+    height: 150px;
+    width: 150px;
+}
+
 section#profile .col_a {
     margin-right: 30px;
     width: calc(60% - 30px);
