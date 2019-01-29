@@ -59,10 +59,11 @@ class AuthCtrl {
 
     static async delete () {
         try {
-            fetch('/auth/user', { 
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
-            });
+            console.log("CLICKED");
+            // fetch('/auth/user', { 
+            //     method: 'DELETE',
+            //     headers: { 'Content-Type': 'application/json' }
+            // });
         } catch(err) {
             console.log(err);
         }

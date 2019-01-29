@@ -1,13 +1,66 @@
-section#profile input {
+section#profile .sidebar {
+    background-color: #39436b;
+    box-shadow: -4px 0px 12px -4px rgba(0,0,0,0.75);
+    height: 100vh;
+    right: 0;
+    top: 0;
+    padding: 50px;
+    position: fixed;
+}
+
+section#profile .restricted {
+    border-bottom: 1px solid var(--redish);
+    box-sizing: border-box;
+    color: var(--redish);
+    font-size: 24px;
+    text-align: center;
+    margin-top: 80px;
+    padding: 5px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+section#profile .restricted i {
+    font-size: 32px;
+    left: 50%;
+    bottom: -30px;
+    transform: translateX(-50%);
+    position: absolute;
+}
+
+section#profile .restricted + div {
+    background-color: rgba(0,0,0,0.35);
+    height: 0px;
+    position: relative;
     width: 100%;
 }
 
-section#profile .avatar {
-    background-color: pink;
-    border-radius: 50%;
+section#profile .restricted.active + div {
+    height: 140px;
+}
+
+section#profile .restricted.active i {
+    transform: rotate(180deg) translateX(50%);
+}
+
+section#profile .restricted + div .button {
+    bottom: 40px;
     margin: 0 auto;
-    height: 150px;
-    width: 150px;
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    transform: translateX(-50%);
+}
+
+section#profile .restricted.active + div .button {
+    opacity: 1;
+    pointer-events: all;
+}
+
+section#profile input {
+    width: 100%;
 }
 
 section#profile .col_a {
@@ -20,11 +73,17 @@ section#profile .col_b {
 }
 
 section#profile .friends {
-    display: inline-block;
     margin: 80px 0;
 }
 
-section#profile .friends i {
+section#profile p {
+    display: flex;
+    font-size: 22px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+section#profile .friends p i {
     color: var(--redish);
     cursor: pointer;
     margin-left: 20px;

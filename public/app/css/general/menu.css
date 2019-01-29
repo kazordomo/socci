@@ -4,13 +4,14 @@ nav {
     padding: 0px 80px;
 }
 
-nav a {
-    color: #FFFFFF;
+nav .button {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 !important;
 }
 
-nav .icons a:last-child {
-    border-bottom: 1px solid var(--mint);
-    padding: 0 2px 2px 2px;
+nav a {
+    color: #FFFFFF;
 }
 
 nav h2 {
@@ -25,8 +26,10 @@ nav .icons a {
     margin-right: 30px;
 }
 
-nav .icons a:last-child {
-    margin-right: 0;
+nav .icons a:nth-child(2) {
+    border-bottom: 1px solid var(--mint);
+    margin-right: 50px;
+    padding: 0 2px 2px 2px;
 }
 
 nav .icons a i {
