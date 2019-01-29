@@ -32,7 +32,7 @@ class Slider {
         hammertime.on('panend', this.onPanEnd.bind(this));
     }
 
-    onPanStart ({ deltaX }) {
+    onPanStart () {
         this.DOMElement.classList.add('dragging');
     }
 
@@ -61,7 +61,6 @@ class Slider {
         }
     }
 
-    // TODO: This needs to be run on window.resize
     calcSliderWidth () {
         let sliderWidth = 0;
         for (let element of Array.from(this.itemsOuter)) {
@@ -94,11 +93,10 @@ class Slider {
             element.setAttribute(
                 'style', `left: ${i * element.offsetWidth}px;`
             );
+            this.initParallax(element);
         }
-    }
 
-    increaseBrColor (rgb, a) {
-        return `rgba(${rgb},${a})`;
+        this.itemsOuter[0].querySelector('.time').setAttribute('style', 'transform: none');
     }
 
     initNavigators () {
@@ -147,23 +145,15 @@ class Slider {
         let item = this.itemsOuter[this.activeItemIndex].querySelector('.time');
         if (isMoving) {
             item.classList.add('dragging');
-            item.setAttribute('style', `transform: translate(${deltaX / 20}px, ${deltaX / 50}px);`);
+            item.setAttribute('style', `transform: translate(${deltaX / 15}px, ${deltaX / 40}px);`);
         } else {
             item.classList.remove('dragging');
             item.setAttribute('style', `transform: none;`);
         }
     }
 
-    fadeOutOnDrag (deltaX) {
-        return;
-        // TODO: fade out current and fade in next/prev
-        // let activities = this.DOMParent.querySelectorAll('.activities .activity');
-        // let current = this.DOMParent.querySelector('.activity.active');
-        // let next = activities[this.activeItemIndex + 1];
-        // // let prev = activities[this.activeItemIndex - 1];
-
-        // current.setAttribute('style', `background-color: rgba(0,0,0,${1 - (deltaX / 100)})`);
-        // next.setAttribute('style', `background-color: rgba(0,0,0,${0 + (deltaX / 1000)})`);
+    initParallax (item) {
+        item.querySelector('.time').setAttribute('style', 'transform: translate(-50px, 50px)');
     }
 
     // TODO: Should not be here.

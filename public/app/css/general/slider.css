@@ -17,7 +17,7 @@
 }
 
 .slider .button_group {
-    bottom: 30px;
+    bottom: 0px;
     position: absolute;
     width: 700px;
 }
@@ -70,7 +70,7 @@
     position: absolute;
     right: -15px;
     top: -60px;
-    transition: opacity 450ms ease-out, transform 300ms ease-out;
+    transition: opacity 450ms ease-out, transform 450ms ease-out;
 }
 
 .slider .item_inner .time.dragging {
@@ -89,16 +89,23 @@
 }
 
 .navigator {
+    background-color: rgba(232,91,32,0.15);
     cursor: pointer;
     display: block;
     font-size: 42px;
     height: 410px;
+    padding: 0px 50px;
     position: absolute;
-    width: 50px;
+    transition: 150ms background-color ease-out, 150ms opacity ease-out;
+}
+
+.navigator:hover {
+    background-color: rgba(232,91,32,1);
 }
 
 .navigator.inactive {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .navigator i {
@@ -108,11 +115,16 @@
 }
 
 .navigator.prev {
-    left: 50px;
+    left: 0px;
+}
+
+.navigator.prev i {
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .navigator.next {
-    right: 50px;
+    right: 0px;
     text-align: center;
 }
 
