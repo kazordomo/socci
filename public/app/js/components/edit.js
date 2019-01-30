@@ -12,11 +12,9 @@ class Edit {
     }
 
     init () {
-        // this.addAttendee();
         this.DOMElement.querySelector('form button').addEventListener('click', event => {
             event.preventDefault();
             this.addAttendee();
-
         });
         this.DOMElement.querySelector('button[type="submit"]').addEventListener('click', event => {
             event.preventDefault();

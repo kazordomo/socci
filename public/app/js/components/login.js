@@ -1,26 +1,24 @@
 import AuthCtrl from '../controllers/auth';
-import { animateIn, animateOut } from '../utils';
+import { animateIn, animateOut, getInputValue } from '../utils';
 
 class Login {
 
     constructor() {
         this.DOMElement = document.querySelector('section#login');
-        this.loginElements = this.DOMElement.querySelectorAll('[data-type="login"]');
-        this.registerElements = this.DOMElement.querySelectorAll('[data-type="register"]');
-        
+        this.activeState = 'login';
+        this.changeAuthTypeEl = this.DOMElement.querySelector('.form_group a');
         this.init();
     }
 
     init() {
+        this.DOMElement
+            .querySelector('button[data-type="login"]')
+            .addEventListener('click', () => this.onLogin());
 
-        let changeAuthTypeEl = this.DOMElement.querySelectorAll('a[data-type]');
-
-        this.DOMElement.querySelector('button[data-type="login"]').addEventListener('click', () => {
-            this.onLogin();
-        });
-        this.DOMElement.querySelector('button[data-type="register"]').addEventListener('click', () => {
-            this.onRegister();
-        });
+        this.DOMElement
+            .querySelector('button[data-type="register"]')
+            .addEventListener('click', () => this.onRegister());
+            
         this.DOMElement.addEventListener('keyup', event => {
             event.preventDefault();
             if (event.keyCode === 13) {
@@ -28,17 +26,8 @@ class Login {
             }
         })
 
-        // Change to Register inputs
-        changeAuthTypeEl[0].addEventListener('click', () => { 
-            this.changeAuthType(this.registerElements, this.loginElements);
-        });
-        // CHange to Login inputs
-        changeAuthTypeEl[1].addEventListener('click', () => { 
-            this.changeAuthType(this.loginElements, this.registerElements);
-        });
+        this.changeAuthTypeEl.addEventListener('click', this.changeAuthType.bind(this));
         animateIn(this.DOMElement.querySelectorAll('.out'));
-
-        return true;
     }
 
     successAnimation (cb) {
@@ -54,37 +43,27 @@ class Login {
         setTimeout(() => {
              animateOut(elements);
              setTimeout(() => cb(), elements.length * 75);
-        }, 300)
-        
-
+        }, 300);
     }
 
     onLogin () {
         // TODO: proper error handling
-        let email = this.DOMElement.querySelector('input[name="email"]').value;;
-        let password = this.DOMElement.querySelector('input[name="password"]').value;
+        let email = getInputValue(this.DOMElement, 'email');
+        let password = getInputValue(this.DOMElement, 'password');
 
-        if(!email || !password) {
-            return;
-        }
+        if (!email || !password) return;
 
-        let userData = {
-            email: this.DOMElement.querySelector('input[name="email"]').value,
-            password: this.DOMElement.querySelector('input[name="password"]').value,
-        }
-
+        let userData = { email, password };
         this.successAnimation(() => AuthCtrl.login(userData));
     }
 
     onRegister () {
-        let nickname = this.DOMElement.querySelector('input[name="nickname"').value;
-        let email = this.DOMElement.querySelector('input[name="email"]').value;;
-        let password = this.DOMElement.querySelector('input[name="password"]').value;
-        let retypePassword = this.DOMElement.querySelector('input[name="retype_password"]').value;
+        let nickname = getInputValue(this.DOMElement, 'nickname');
+        let email = getInputValue(this.DOMElement, 'email');
+        let password = getInputValue(this.DOMElement, 'password')
+        let retypePassword = getInputValue(this.DOMElement, 'retype_password');
 
-        if (!email || !password || !retypePassword) {
-            return;
-        }
+        if (!email || !password || !retypePassword) return;
 
         let userData = {
             nickname,
@@ -92,19 +71,26 @@ class Login {
             password,
             retypePassword
         }
-
         this.successAnimation(() => AuthCtrl.register(userData));
-        return true;
     }
 
-    changeAuthType (activeAlements, inactiveElements) {
-        for(let element of activeAlements) {
-            element.classList.remove('inactive');
+    updateChanteAuthText () {
+        return (this.activeState === 'login') ? "I'm already a member." : "I'm not a member yet.";
+    }
+
+    changeAuthType () {
+        let elements = Array.from(this.DOMElement.querySelectorAll('[data-type]'));
+
+        for(let element of elements) {
+            if (element.getAttribute('data-type') === this.activeState) {
+                element.classList.add('inactive');
+            } else {
+                element.classList.remove('inactive');
+            }
         }
-        for(let element of inactiveElements) {
-            element.classList.add('inactive');
-        }
-        return true;
+        
+        this.activeState = (this.activeState === 'login') ? 'register' : 'login';
+        this.changeAuthTypeEl.innerHTML = this.updateChanteAuthText();
     }
 
 }

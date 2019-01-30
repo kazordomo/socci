@@ -87,7 +87,7 @@ class RenderData {
     getDataFromMatch (data, prop) {
         // Get the property. {{ this.data.test }} -> test.
         if (data[prop]) return data[prop];
-        return false;
+        return '';
     }
 
     getProp (match) {
