@@ -8,13 +8,13 @@
 }
 
 #hamburger div {
-    width: 35px;
-    height: 5px;
     background-color: #FFFFFF;
+    height: 5px;
     margin: 6px 0;
     opacity: 1;
     transform: none;
     transition: transform 300ms ease-out;
+    width: 35px;
 }
 
 #hamburger.active div:first-child {
