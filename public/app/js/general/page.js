@@ -3,6 +3,7 @@ import Home from '../components/home';
 import Edit from '../components/edit';
 import Profile from '../components/profile';
 import Activity from '../components/activity';
+import Menu from './menu';
 import Loader from './loader';
 
 class Page {
@@ -27,6 +28,7 @@ class Page {
                 break;
             case 'home':
                 new Home();
+                new Menu();
                 break;
             case 'edit':
                 new Edit();
