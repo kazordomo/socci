@@ -9,6 +9,7 @@ class Profile {
         this.DOMElement = document.querySelector('section#profile');
         this.friends = [];
         this.user = Utils.getLocal();
+        this.isRestrictedOpen = false;
         this.init();
     }
 
@@ -21,11 +22,14 @@ class Profile {
         let changeNameButton = this.DOMElement.querySelector('.button.neutral');
         let deleteAccButton = this.DOMElement.querySelector('.button.danger');
         let deleteFriendEls = this.DOMElement.querySelectorAll('.friends div');
-        let restrictedEl = this.DOMElement.querySelector('.restricted');
+        let openRestricted = this.DOMElement.querySelector('.restricted');
+        let closeRestricted = this.DOMElement.querySelector('.restricted_area i.close');
+        let restrictedEl = this.DOMElement.querySelector('.restricted_area');
         addButton.addEventListener('click', this.onAddFriend.bind(this));
         changeNameButton.addEventListener('click', this.onChangeNickname.bind(this));
         deleteAccButton.addEventListener('click', AuthCtrl.delete.bind(this));
-        restrictedEl.addEventListener('click', () => this.handleRestricted(restrictedEl));
+        openRestricted.addEventListener('click', () => this.handleRestricted(restrictedEl));
+        closeRestricted.addEventListener('click', () => this.handleRestricted(restrictedEl));
 
         for (let element of Array.from(deleteFriendEls)) {
             let id = element.getAttribute('data-id');
@@ -54,10 +58,12 @@ class Profile {
     }
 
     handleRestricted (element) {
-        if (!element.classList.contains('active')) {
+        if (!this.isRestrictedOpen) {
             element.classList.add('active');
+            this.isRestrictedOpen = true;
         } else {
             element.classList.remove('active')
+            this.isRestrictedOpen = false;
         }
     }
 

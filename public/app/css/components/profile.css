@@ -4,8 +4,43 @@ section#profile .sidebar {
     height: 100vh;
     right: 0;
     top: 0;
+    padding: 80px;
+    position: fixed;
+}
+
+section#profile .restricted_area {
+    background-color: var(--redish);
+    box-sizing: border-box;
+    color: #000000;
+    height: 100vh;
     padding: 50px;
     position: fixed;
+    top: -100vh;
+    transition: 600ms top cubic-bezier(.16,.03,.15,1.16);
+    width: 100%;
+    z-index: 3;
+}
+
+section#profile .restricted_area.active {
+    top: 0;
+}
+
+section#profile .restricted_area h1 {
+    color: #000000;
+    text-align: center;
+}
+
+section#profile .restricted_area h1 i {
+    color: #000000;
+    font-size: 50px;
+    margin-left: 20px;
+}
+
+section#profile .restricted_area .button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 section#profile .restricted {
@@ -29,34 +64,8 @@ section#profile .restricted i {
     position: absolute;
 }
 
-section#profile .restricted + div {
-    background-color: rgba(0,0,0,0.35);
-    height: 0px;
-    position: relative;
-    width: 100%;
-}
-
-section#profile .restricted.active + div {
-    height: 140px;
-}
-
 section#profile .restricted.active i {
     transform: rotate(180deg) translateX(50%);
-}
-
-section#profile .restricted + div .button {
-    bottom: 40px;
-    margin: 0 auto;
-    left: 50%;
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-    transform: translateX(-50%);
-}
-
-section#profile .restricted.active + div .button {
-    opacity: 1;
-    pointer-events: all;
 }
 
 section#profile input {

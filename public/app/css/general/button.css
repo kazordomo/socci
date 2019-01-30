@@ -29,15 +29,27 @@ button {
     background-color: var(--redish);
 }
 
+.button.danger.dark { 
+    background-color: #000000;
+}
+
 .button.yellow {
     background-color: var(--yellowish);
     color: #000000;
 }
 
-.button.back {
+.button.back,
+.close {
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 42px;
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 50px;
+    left: 50px;
+}
+
+.close.dark {
+    color: #000000;
 }
 
 .button.back i {
