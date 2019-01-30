@@ -1,4 +1,4 @@
-import Utils from '../utils';
+import { getLocal } from '../utils';
 
 class ActivityCtrl {
 
@@ -64,7 +64,7 @@ class ActivityCtrl {
     }
 
     static async declineActivity (activityId) {
-        const user = Utils.getLocal();
+        const user = getLocal();
         try {
             let response = await fetch(`/api/activity/decline/${activityId}`, { 
                 method: 'POST', 

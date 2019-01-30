@@ -1,4 +1,4 @@
-import Utils from '../utils';
+import { storeLocal } from '../utils';
 
 class AuthCtrl {
 
@@ -21,7 +21,7 @@ class AuthCtrl {
             });
             let json = await response.json();
             if(response.status === 200) {
-                Utils.storeLocal(json);
+                storeLocal(json);
                 window.location.href = 'http://localhost:3000/#home';
             }
         } catch(err) {
@@ -39,7 +39,7 @@ class AuthCtrl {
             });
             let json = await response.json();
             if(response.status === 200) {
-                Utils.storeLocal(json);
+                storeLocal(json);
                 window.location.href = 'http://localhost:3000/#home';
             }
 

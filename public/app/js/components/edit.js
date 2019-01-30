@@ -1,6 +1,6 @@
 // This class will both be used to add new and edit existing event.
 import ActivityCtrl from '../controllers/activity';
-import Utils from '../utils';
+import { getInputValue } from '../utils';
 
 class Edit {
 
@@ -30,9 +30,9 @@ class Edit {
 
     async createEvent ()  {
         let activityData = {
-            title: Utils.getInputValue(this.DOMElement, 'title'),
-            information: Utils.getInputValue(this.DOMElement, 'information'),
-            time: Utils.getInputValue(this.DOMElement, 'time'),
+            title: getInputValue(this.DOMElement, 'title'),
+            information: getInputValue(this.DOMElement, 'information'),
+            time: getInputValue(this.DOMElement, 'time'),
             attendees: this.attendees.map(attendee => attendee.name),
         };
         await ActivityCtrl.createActivity(activityData);

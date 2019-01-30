@@ -1,14 +1,14 @@
 import SocialCtrl from '../controllers/social';
 import AuthCtrl from '../controllers/auth';
 import RenderData from '../renderData';
-import Utils from '../utils';
+import { getLocal, storeLocal, getInputValue } from '../utils';
 
 class Profile {
 
     constructor () {
         this.DOMElement = document.querySelector('section#profile');
         this.friends = [];
-        this.user = Utils.getLocal();
+        this.user = getLocal();
         this.isRestrictedOpen = false;
         this.init();
     }
@@ -55,7 +55,7 @@ class Profile {
 
     onChangeNickname (event) {
         event.preventDefault();
-        let newName = Utils.getInputValue(this.DOMElement, 'nickname');
+        let newName = getInputValue(this.DOMElement, 'nickname');
         SocialCtrl.nickname(newName);
     }
 
@@ -72,7 +72,7 @@ class Profile {
     async deleteFriend (id, element) {
         await SocialCtrl.deleteFriend(id);
         this.user.friends.splice(this.user.friends.indexOf(id), 1);
-        Utils.storeLocal(this.user);
+        storeLocal(this.user);
         element.remove();
     }
 

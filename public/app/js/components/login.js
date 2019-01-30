@@ -1,5 +1,5 @@
 import AuthCtrl from '../controllers/auth';
-import Utils from '../utils';
+import { animateIn, animateOut } from '../utils';
 
 class Login {
 
@@ -36,7 +36,7 @@ class Login {
         changeAuthTypeEl[1].addEventListener('click', () => { 
             this.changeAuthType(this.loginElements, this.registerElements);
         });
-        Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
+        animateIn(this.DOMElement.querySelectorAll('.out'));
 
         return true;
     }
@@ -52,7 +52,7 @@ class Login {
         this.DOMElement.querySelector('.col_b').style.marginLeft = '-50%';
 
         setTimeout(() => {
-             Utils.animateOut(elements);
+             animateOut(elements);
              setTimeout(() => cb(), elements.length * 75);
         }, 300)
         

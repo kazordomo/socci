@@ -1,45 +1,22 @@
-class Utils {
-
-    static animateIn (elements) {
-        let delay = 75;
-
-        for (let element of elements) {
-            setTimeout(() => element.classList.remove('out'), delay);
-            delay += 75;
-        }
-
-        return true;
+export const animateIn = elements => {
+    let delay = 75;
+    for (let element of elements) {
+        setTimeout(() => element.classList.remove('out'), delay);
+        delay += 75;
     }
-
-    static animateOut (elements) {
-        let delay = 75;
-
-        for (let element of elements) {
-            setTimeout(() => element.classList.add('out'), delay);
-            delay += 75;
-        }
-
-        return true;
-    }
-
-    static getInputValue (DOMElement, name) {
-        return DOMElement.querySelector(`input[name="${name}"]`).value;
-    }
-
-    static storeLocal (object, name = 'user') {
-        localStorage.setItem(name, JSON.stringify(object));
-    }
-
-    static getLocal (name = 'user') {
-        return JSON.parse(localStorage.getItem(name));
-    }
-
-    static getIdFromUrl () {
-        let id = window.location.hash.substr(1);
-        id = id.split('/')[1];
-        return id;
-    }
-
 }
-
-export default Utils;
+export const animateOut = elements => {
+    let delay = 75;
+    for (let element of elements) {
+        setTimeout(() => element.classList.remove('out'), delay);
+        delay += 75;
+    }
+}
+export const getLocal = (name = 'user') => JSON.parse(localStorage.getItem(name));
+export const storeLocal = (object, name ='user') => localStorage.setItem(name, JSON.stringify(object));
+export const getInputValue = (element, name) => element.querySelector(`input[name="${name}"]`).value;
+export const getIdFromUrl = () => {
+    let id = window.location.hash.substr(1);
+    id = id.split('/')[1];
+    return id;
+}

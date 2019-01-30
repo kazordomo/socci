@@ -1,6 +1,6 @@
 import ActivityCtrl from '../controllers/activity';
 import SocialCtrl from '../controllers/social';
-import Utils from '../utils';
+import { getLocal, storeLocal, getIdFromUrl, getInputValue } from '../utils';
 import RenderData from '../renderData';
 
 class Activity {
@@ -9,15 +9,15 @@ class Activity {
         this.DOMElement = document.querySelector('section#activity');
         // TODO: This needs to be cached. We have already fetched this data once.
         this.activity = {};
-        this.user = Utils.getLocal();
+        this.user = getLocal();
         this.declineButton = null;
         this.commentButton = null;
         this.init();
     }
 
     async init () {
-        const user = Utils.getLocal();
-        const id = Utils.getIdFromUrl();
+        const user = getLocal();
+        const id = getIdFromUrl();
 
         this.activity = await ActivityCtrl.getActivity(id);
         new RenderData(this.DOMElement, this.activity);
@@ -65,7 +65,7 @@ class Activity {
         // TODO: result.succes: false or true
         if (result.id) {
             this.user.friends.push(result.id);
-            Utils.storeLocal(this.user);
+            storeLocal(this.user);
             icon.remove();
         } else {
             console.log(result.message);
@@ -73,7 +73,7 @@ class Activity {
     }
 
     async postComment (activityId) {
-        let comment = await ActivityCtrl.postComment(Utils.getInputValue(this.DOMElement, 'comment'), activityId);        
+        let comment = await ActivityCtrl.postComment(getInputValue(this.DOMElement, 'comment'), activityId);        
         if (comment) {
             this.DOMElement.querySelector('.comments').innerHTML += `${comment.comment} - ${comment.user}`;
         }

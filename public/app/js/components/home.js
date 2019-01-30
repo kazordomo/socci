@@ -1,7 +1,7 @@
 import ActivityCtrl from '../controllers/activity';
 import Slider from '../general/slider';
-import Utils from '../utils';
 import RenderData from '../renderData';
+import { animateIn, getLocal } from '../utils';
 
 class Home {
 
@@ -9,7 +9,7 @@ class Home {
         this.DOMElement = document.querySelector('section#home');
         this.activities = [];
         this.NO_ATTENDEES_ELEMENT = '<span class="no-attendees">No attendees yet.</span>';
-        this.user = Utils.getLocal();
+        this.user = getLocal();
         this.init();
     }
 
@@ -25,7 +25,7 @@ class Home {
         // When the dom is render we can connect the buttons with functions.
         this.eventListenerInit();
 
-        Utils.animateIn(this.DOMElement.querySelectorAll('.out'));
+        animateIn(this.DOMElement.querySelectorAll('.out'));
 
     }
 
