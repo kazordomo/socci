@@ -1,19 +1,5 @@
 section#activity {
-    background: var(--mint);
-    background: linear-gradient(180deg, var(--mint) 0%, var(--mint) 44%, rgba(34,145,139,1) 100%);
     position: relative;
-}
-
-section#activity .content {
-    background: var(--dark);
-    background: linear-gradient(180deg, var(--dark) 0%, var(--dark) 44%, rgba(25,29,46,1) 100%);
-    border-radius: 4px;
-    box-shadow: -1px 4px 53px -4px rgba(0,0,0,1);
-    position: absolute;
-    top: 80px;
-    bottom: 80px;
-    right: 80px;
-    left: 80px;
 }
 
 section#activity .wrapper {
@@ -29,10 +15,15 @@ section#activity .form_group {
     width: 1024px;
 }
 
-section#activity .button.danger {
-    float:right;
+section#activity .time {
+    background-color: var(--mint);
+    border-radius: 3px;
+    font-size: 32px;
+    float: right;
+    padding: 5px 15px;
 }
 
-section#activity .attendee i {
-    cursor: pointer;
+section#activity .time i {
+    font-size: 32px;
+    margin-right: 10px;
 }

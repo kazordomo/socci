@@ -49,7 +49,7 @@ module.exports = app => {
 
         let newActivity = new Activity({
             title,
-            information,
+            information: information ? information : '',
             time,
             attendees: objectifiedAttendees,
             _user: req.session.user._id

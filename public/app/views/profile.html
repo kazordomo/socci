@@ -10,8 +10,18 @@
     </a>
     <div class="wrapper_small">
         <form>
-            <input type="text" name="nickname" maxlength="12" placeholder="Nickname" />
-            <button class="button neutral short round">Change Nickname</button>
+            <div class="form_group">
+                <i class="fas fa-user-alt"></i>
+                <input type="text" name="nickname" maxlength="12" placeholder="Nickname" />
+            </div>
+            <div class="form_group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="email@email.com" required />
+            </div>
+            <div class="form_group">
+                <i class="fas fa-phone"></i>
+                <input type="tel" name="phone" placeholder="00011122233" />
+            </div>
         </form>
         <div class="restricted">
             Dangerous Area

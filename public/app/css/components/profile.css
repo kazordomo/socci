@@ -44,9 +44,9 @@ section#profile .restricted_area .button {
 }
 
 section#profile .restricted {
-    border-bottom: 1px solid var(--redish);
     box-sizing: border-box;
     color: var(--redish);
+    cursor: pointer;
     font-size: 24px;
     text-align: center;
     margin-top: 80px;
@@ -59,7 +59,7 @@ section#profile .restricted {
 section#profile .restricted i {
     font-size: 32px;
     left: 50%;
-    bottom: -30px;
+    bottom: -20px;
     transform: translateX(-50%);
     position: absolute;
 }
@@ -68,8 +68,29 @@ section#profile .restricted.active i {
     transform: rotate(180deg) translateX(50%);
 }
 
-section#profile input {
+section#profile form .form_group {
+    margin-top: 30px;
     width: 100%;
+}
+
+section#profile form .form_group:first-child {
+    margin-top: 0;
+}
+
+section#profile form .form_group {
+    align-items: baseline;
+    border-bottom: 1px solid #FFFFFF;
+    display: flex;
+    flex-direction: row;
+}
+
+section#profile form .form_group input {
+    border-bottom: none;
+    margin: 0;
+}
+
+section#profile form .form_group i {
+    font-size: 32px;
 }
 
 section#profile .col_a {

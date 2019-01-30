@@ -13,20 +13,22 @@ class Profile {
         this.init();
     }
 
+    // TODO: REFACTOR
+    // TODO: On lost focus / every 3s - run save function for the input values.
+
     async init () {
         this.friends = await SocialCtrl.getFriends();
         this.DOMElement.querySelector('input[name="nickname"]').defaultValue = this.user.nickname;
+        this.DOMElement.querySelector('input[name="email"]').defaultValue = this.user.email;
         new RenderData(this.DOMElement, this.friends);
         
         let addButton = this.DOMElement.querySelector('.button.success');
-        let changeNameButton = this.DOMElement.querySelector('.button.neutral');
         let deleteAccButton = this.DOMElement.querySelector('.button.danger');
         let deleteFriendEls = this.DOMElement.querySelectorAll('.friends div');
         let openRestricted = this.DOMElement.querySelector('.restricted');
         let closeRestricted = this.DOMElement.querySelector('.restricted_area i.close');
         let restrictedEl = this.DOMElement.querySelector('.restricted_area');
         addButton.addEventListener('click', this.onAddFriend.bind(this));
-        changeNameButton.addEventListener('click', this.onChangeNickname.bind(this));
         deleteAccButton.addEventListener('click', AuthCtrl.delete.bind(this));
         openRestricted.addEventListener('click', () => this.handleRestricted(restrictedEl));
         closeRestricted.addEventListener('click', () => this.handleRestricted(restrictedEl));

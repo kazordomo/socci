@@ -4,7 +4,6 @@ input {
     color: #FFFFFF;
     font-size: 18px;
     outline: none;
-    text-transform: uppercase;
     transition: border 150ms ease-in-out;
     width: 100%;
 }

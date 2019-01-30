@@ -3,36 +3,34 @@
     <a href="#home" class="button back">
         <i class="fas fa-chevron-left"></i>
     </a>
-    <div class="content">
-        <div class="wrapper">
-            <button class="button danger short round">Do not attend</button>
-            <div class="info">
-                <div>{{ data.time }}</div>
-                <h1>{{ data.title }}</h1>
-                <p>{{ data.information }}</p>
+    <div class="wrapper">
+        <button class="button danger short round">Do not attend</button>
+        <div class="info">
+            <div class="time"><i class="fas fa-clock"></i>{{ data.time }}</div>
+            <h1>{{ data.title }}</h1>
+            <p>{{ data.information }}</p>
+        </div>
+        <div class="attendees">
+            {{ 
+                data.attendees.
+                <div data-id="=!_id!=" class="attendee">
+                    <span>=!nickname!=</span>
+                    <i class="fas fa-plus"></i>
+                </div> 
+            }}
             </div>
-            <div class="attendees">
-                {{ 
-                    data.attendees.
-                    <div data-id="=!_id!=" class="attendee">
-                        <span>=!nickname!=</span>
-                        <i class="fas fa-plus"></i>
-                    </div> 
-                }}
-             </div>
-             <div class="comments">
-                {{ 
-                    data.comments.
-                    <div class="comment">
-                        <span>=!comment!=</span>
-                        <span>- =!user!=</span>
-                    </div> 
-                }}
-            </div>
-            <div class="form_group">
-                <input type="text" name="comment" placeholder="Comment" />
-                <button class="button success">Add</button>
-            </div>
+            <div class="comments">
+            {{ 
+                data.comments.
+                <div class="comment">
+                    <span>=!comment!=</span>
+                    <span>- =!user!=</span>
+                </div> 
+            }}
+        </div>
+        <div class="form_group">
+            <input type="text" name="comment" placeholder="Comment" />
+            <button class="button success">Add</button>
         </div>
     </div>
 </section>
