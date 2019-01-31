@@ -8,7 +8,6 @@ class Home {
     constructor() {
         this.DOMElement = document.querySelector('section#home');
         this.activities = [];
-        this.NO_ATTENDEES_ELEMENT = '<span class="no-attendees">No attendees yet.</span>';
         this.user = getLocal();
         this.init();
     }
@@ -22,14 +21,13 @@ class Home {
             this.DOMElement.querySelector('.wrapper').innerHTML = 'No activites at the moment!';
         }
 
-        // When the dom is render we can connect the buttons with functions.
-        this.eventListenerInit();
-
+        // When the dom is rendered we can connect the buttons with functions.
+        this.sliderItemsOnClick();
         animateIn(this.DOMElement.querySelectorAll('.out'));
 
     }
 
-    eventListenerInit () {
+    sliderItemsOnClick () {
         for (let sliderItem of this.DOMElement.querySelectorAll('.item_outer')) {
             const dataId = sliderItem.getAttribute('data-id');
 
@@ -37,7 +35,7 @@ class Home {
                 .find(activity => activity._id === dataId).attendees
                 .find(attendee => attendee._id === this.user._id);
 
-                sliderItem
+            sliderItem
                 .querySelector('button.neutral')
                 .addEventListener('click', () => window.location.href = `#activity/${dataId}`);
 
@@ -47,25 +45,14 @@ class Home {
 
     async onAttend (id, sliderItem) {
         const { user } = await ActivityCtrl.attendActivity(id);
-        const isFirstAttendee = sliderItem.querySelector('.no-attendees');
-
-        // TODO: proper error handling...
-        if (user.message) {
-            return console.log("Already attending.");
-        }
-        // Remove the text about "no attendees".
-        if (isFirstAttendee) {
-            sliderItem.querySelector('.no-attendees').remove();
-        }
-        // Add a comma and a space if not the first attendee
-        sliderItem.querySelector('.attendees').innerHTML += `${isFirstAttendee ? '' :', '}${user}`
+        // TODO: Proper error handling.
+        if (user.message) return console.log("Already attending.");
         this.updateAttendeeButton(true);
-
         sliderItem.classList.toggle('attending');
-        return true;
     }
 
     onDelete (id, sliderItem) {
+        // TODO: Proper error handling.
         try {
             ActivityCtrl.deleteActivity(id);
             // Remove from the dom. No need to await server when in try/catch.
@@ -73,8 +60,6 @@ class Home {
         } catch (err) {
             console.log(err);
         }
-
-        return true;
     }
 
     updateAttendeeButton (isAttending, sliderItem) {

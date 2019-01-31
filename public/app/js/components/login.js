@@ -13,18 +13,17 @@ class Login {
     init() {
         this.DOMElement
             .querySelector('button[data-type="login"]')
-            .addEventListener('click', () => this.onLogin());
+            .addEventListener('click', this.onLogin.bind(this));
 
         this.DOMElement
             .querySelector('button[data-type="register"]')
-            .addEventListener('click', () => this.onRegister());
+            .addEventListener('click', this.onRegister.bind(this));
             
         this.DOMElement.addEventListener('keyup', event => {
-            event.preventDefault();
             if (event.keyCode === 13) {
                 this.DOMElement.querySelector('button:not(.inactive)').click();
             }
-        })
+        });
 
         this.changeAuthTypeEl.addEventListener('click', this.changeAuthType.bind(this));
         animateIn(this.DOMElement.querySelectorAll('.out'));
@@ -74,7 +73,7 @@ class Login {
         this.successAnimation(() => AuthCtrl.register(userData));
     }
 
-    updateChanteAuthText () {
+    updateChangeAuthText () {
         return (this.activeState === 'login') ? "I'm already a member." : "I'm not a member yet.";
     }
 
@@ -90,7 +89,7 @@ class Login {
         }
         
         this.activeState = (this.activeState === 'login') ? 'register' : 'login';
-        this.changeAuthTypeEl.innerHTML = this.updateChanteAuthText();
+        this.changeAuthTypeEl.innerHTML = this.updateChangeAuthText();
     }
 
 }
