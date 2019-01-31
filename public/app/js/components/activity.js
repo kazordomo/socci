@@ -10,8 +10,6 @@ class Activity {
         // TODO: This needs to be cached. We have already fetched this data once.
         this.activity = {};
         this.user = getLocal();
-        this.declineButton = null;
-        this.commentButton = null;
         this.init();
     }
 
@@ -21,25 +19,20 @@ class Activity {
 
         this.activity = await ActivityCtrl.getActivity(id);
         new RenderData(this.DOMElement, this.activity);
-        // Because the dom is rerendered, putting this in the constructor would get lost.
-        this.declineButton = this.DOMElement.querySelector('.button.danger');
-        this.commentButton = this.DOMElement.querySelector('.button.success');
 
-        let isUserAttending = !!this.activity.attendees
-                .find(attendee => attendee._id === user._id);
+        // Because the dom is rerendered, putting this in the constructor would get lost.
+        let declineButton = this.DOMElement.querySelector('.button.danger');
+        let commentButton = this.DOMElement.querySelector('.button.success');
+        let isUserAttending = !!this.activity.attendees.find(attendee => attendee._id === user._id);
 
         if (isUserAttending) {
-            this.declineButton.addEventListener('click', this.declineActivity.bind(this));
+            declineButton.addEventListener('click', this.declineActivity.bind(this));
         } else {
-            this.declineButton.style.display = 'none';
+            declineButton.style.display = 'none';
         }
 
-        this.commentButton.addEventListener('click', this.postComment.bind(this, id));
-        this.DOMElement.addEventListener('keyup', event => {
-            if (event.keyCode === 13) {
-                this.commentButton.click();
-            }
-        });
+        commentButton.addEventListener('click', this.postComment.bind(this, id));
+        this.DOMElement.addEventListener('keyup', event => (event.keyCode === 13) && commentButton.click());
 
         this.attendeesOnClick();
     }
@@ -53,16 +46,14 @@ class Activity {
             if (friendId === this.user._id || isAlreadyFriends) {
                 icon.remove();
             } else {
-                icon.addEventListener('click', () => {
-                    this.addFriend(friendId, icon);
-                });
+                icon.addEventListener('click', () => this.addFriend(friendId, icon));
             }
         }
     }
     
     async addFriend (id, icon) {
         let result = await SocialCtrl.add(id);
-        // TODO: result.succes: false or true
+        // TODO: result.succes: false or true = Proper error handling.
         if (result.id) {
             this.user.friends.push(result.id);
             storeLocal(this.user);
@@ -88,10 +79,8 @@ class Activity {
 
     async declineActivity () {
         let response = await ActivityCtrl.declineActivity(this.activity._id);
-        if (response.status !== 200) {
-            return console.log('error');
-        }
-        this.declineButton.style.display = 'none';
+        if (response.status !== 200) return console.log('error');
+        this.DOMElement.querySelector('.button.danger').style.display = 'none';
     }
 
 }
