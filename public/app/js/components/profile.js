@@ -9,7 +9,6 @@ class Profile {
         this.DOMElement = document.querySelector('section#profile');
         this.friends = [];
         this.user = getLocal();
-        this.isRestrictedOpen = false;
         this.init();
     }
 
@@ -21,36 +20,31 @@ class Profile {
         this.DOMElement.querySelector('input[name="nickname"]').defaultValue = this.user.nickname;
         this.DOMElement.querySelector('input[name="email"]').defaultValue = this.user.email;
         new RenderData(this.DOMElement, this.friends);
-        
-        let addButton = this.DOMElement.querySelector('.button.success');
-        let deleteAccButton = this.DOMElement.querySelector('.button.danger');
-        let deleteFriendEls = this.DOMElement.querySelectorAll('.friends div');
-        let openRestricted = this.DOMElement.querySelector('.restricted');
-        let closeRestricted = this.DOMElement.querySelector('.restricted_area i.close');
-        let restrictedEl = this.DOMElement.querySelector('.restricted_area');
-        addButton.addEventListener('click', this.onAddFriend.bind(this));
-        deleteAccButton.addEventListener('click', AuthCtrl.delete.bind(this));
-        openRestricted.addEventListener('click', () => this.handleRestricted(restrictedEl));
-        closeRestricted.addEventListener('click', () => this.handleRestricted(restrictedEl));
 
-        for (let element of Array.from(deleteFriendEls)) {
+        this.eventListenersInit();
+
+        for (let element of Array.from(this.DOMElement.querySelectorAll('.friends div'))) {
             let id = element.getAttribute('data-id');
-            let deleteIcon = element.querySelector('i');
-            deleteIcon.addEventListener('click', () => this.deleteFriend(id, element));
+            element.querySelector('i')
+                .addEventListener('click', () => this.deleteFriend(id, element));
         }
     }
 
-    async onAddFriend () {
-        let friendsContainer = this.DOMElement.querySelector('.friends');
-        let addUserInput = this.DOMElement.querySelector('input[name="user"]');
-        let addUser = await SocialCtrl.add(addUserInput.value);
+    eventListenersInit () {
+        let restrictedAreaEl = this.DOMElement.querySelector('.restricted_area');
 
-        if (!addUser.email) {
-            friendsContainer.innerHTML += addUser.message;
-            return;
-        }
-        
-        friendsContainer.innerHTML += `<div>${addUser.email}</div>`;
+        this.DOMElement
+            .querySelector('.button.success')
+            .addEventListener('click', this.onAddFriend.bind(this));
+        this.DOMElement
+            .querySelector('.button.danger')
+            .addEventListener('click', AuthCtrl.delete.bind(this));
+        this.DOMElement
+            .querySelector('.restricted')
+            .addEventListener('click', () => restrictedAreaEl.classList.add('active'));
+        this.DOMElement
+            .querySelector('.restricted_area i.close')
+            .addEventListener('click', () => restrictedAreaEl.classList.remove('active'));
     }
 
     onChangeNickname (event) {
@@ -59,14 +53,16 @@ class Profile {
         SocialCtrl.nickname(newName);
     }
 
-    handleRestricted (element) {
-        if (!this.isRestrictedOpen) {
-            element.classList.add('active');
-            this.isRestrictedOpen = true;
-        } else {
-            element.classList.remove('active')
-            this.isRestrictedOpen = false;
+    async onAddFriend () {
+        let friendsContainer = this.DOMElement.querySelector('.friends');
+        let addUserInput = this.DOMElement.querySelector('input[name="user"]');
+        let addUser = await SocialCtrl.add(addUserInput.value);
+
+        if (!addUser.email) {
+            return friendsContainer.innerHTML += addUser.message;
         }
+        
+        friendsContainer.innerHTML += `<div>${addUser.email}</div>`;
     }
 
     async deleteFriend (id, element) {

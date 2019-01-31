@@ -1,7 +1,7 @@
 section#profile .sidebar {
     background-color: #39436b;
     box-shadow: -4px 0px 12px -4px rgba(0,0,0,0.75);
-    height: 100vh;
+    height: calc(100vh - 160px);
     right: 0;
     top: 0;
     padding: 80px;
