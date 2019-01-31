@@ -1,5 +1,5 @@
 // TODO: handle the error
-function requiresLogin (req, res, next) {
+function requiresLoginMw (req, res, next) {
 
     if (req.session && req.session.user._id) {
         return next();
@@ -12,5 +12,5 @@ function requiresLogin (req, res, next) {
 }
 
 module.exports = {
-    requiresLogin,
+    requiresLoginMw,
 }

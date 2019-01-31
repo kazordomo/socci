@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 const Activity = mongoose.model('activity');
 const User = mongoose.model('user');
-const { requiresLogin } = require('../middlewares/auth');
+const path = require('path');
+const { requiresLoginMw } = require('../middlewares/auth');
+const { flatCache, cacheMw } = require('../middlewares/cache');
+const cache = flatCache.load('activitiesCache', path.resolve('./caches'));
 
 module.exports = app => {
 
-    app.get('/api/activity/:id', requiresLogin, async (req, res) => {
+    app.get('/api/activity/:id', requiresLoginMw, async (req, res) => {
         try {
             const activity = await Activity.findOne({ _id: req.params.id });
             res.send(activity);
@@ -14,18 +17,20 @@ module.exports = app => {
         }
     });
     
-    app.get('/api/activites', requiresLogin, async (req, res) => {
-        // TODO: we need to get the user to get the latest data.
-        // TODO: or we could add a middlware that always updated the data.
-        // TODO: check the user we store in localStorage as well.
-        const user = await User.findById(req.session.user._id);
-        // TODO: use this
-        // const activities = await Activity.find({ '_user': { $in: [
-        //     ...user.friends
-        // ]}}).sort('-createdAt');
-        // const userActivities = await Activity.find({ '_user': req.session.user._id });
-        const activities = await Activity.find({});
+    // TODO: use this in production - get all relevant activities.
+    // app.get('/api/activites', requiresLoginMw, cacheMw(cache), async (req, res) => {
+    //     const user = await User.findById(req.session.user._id);
+    //     const activities = await Activity.find({ '_user': { $in: [
+    //         ...user.friends
+    //     ]}}).sort('-createdAt');
+    //     // Use this to send the users created activities as well. rse.send({ userAc..., activities })
+    //     const userActivities = await Activity.find({ '_user': req.session.user._id });
+    //     res.send(activities);
+    // });
 
+    // TODO: use this to get ALL activities.
+    app.get('/api/activites', requiresLoginMw, cacheMw(cache), async (req, res) => {
+        const activities = await Activity.find({});
         res.send(activities);
     });
     
