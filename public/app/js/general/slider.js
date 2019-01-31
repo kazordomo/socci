@@ -17,7 +17,7 @@ class Slider {
         this.calcSliderWidth();
         this.positionItems();
         this.initNavigators();
-        this.initPreviewActivites();
+        this.initPreviewItems();
         this.hideOrShowNav();
         this.setCounter();
         this.initHammer();
@@ -156,39 +156,37 @@ class Slider {
         item.querySelector('.time').setAttribute('style', 'transform: translate(-50px, 50px)');
     }
 
-    // TODO: Should not be here.
-    // ACTIVITIE SPECIFICS SECTION
     updateActivePreview () {
-        let activitiesEl = this.DOMParent.querySelector('.activities');
-        let currentActive = activitiesEl.querySelector('.activity.active');
-        let nextActive = Array.from(activitiesEl.querySelectorAll('.activity')).find(activity => {
+        let activitiesEl = this.DOMParent.querySelector('.items_preview');
+        let currentActive = activitiesEl.querySelector('.item_preview.active');
+        let nextActive = Array.from(activitiesEl.querySelectorAll('.item_preview')).find(activity => {
             return activity.getAttribute('data-id') == this.getActiveItemId();
         });
         currentActive.classList.remove('active');
         nextActive.classList.add('active');
     }
 
-    initPreviewActivites () {
+    initPreviewItems () {
         for (let data of this.data) {
-            let element = this.createPreviewActivity(data);
-            this.DOMParent.querySelector('.activities').appendChild(element);
+            let element = this.createPreviewItem(data);
+            this.DOMParent.querySelector('.items_preview').appendChild(element);
         }
 
-        this.DOMParent.querySelector('.activities .activity').classList.add('active');
+        this.DOMParent.querySelector('.items_preview .item_preview').classList.add('active');
     }
 
-    createPreviewActivity (data) {
+    createPreviewItem (data) {
         let newDiv = document.createElement('div');
         let newH4 = document.createElement('h4');
         newH4.innerHTML = data.title;
         newDiv.setAttribute('data-id', data._id);
         newDiv.appendChild(newH4);
-        newDiv.className = 'activity out';
-        newDiv.addEventListener('click', this.previewActivityOnClick.bind(this));
+        newDiv.className = 'item_preview out';
+        newDiv.addEventListener('click', this.previewItemOnClick.bind(this));
         return newDiv;
     }
 
-    previewActivityOnClick ({ srcElement }) {
+    previewItemOnClick ({ srcElement }) {
         let clickedItem = Array.from(this.itemsOuter).find(item => {
             return item.getAttribute('data-id') === srcElement.getAttribute('data-id');
         });
