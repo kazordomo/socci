@@ -12,18 +12,19 @@ class Edit {
     }
 
     init () {
-        this.DOMElement.querySelector('form button').addEventListener('click', event => {
-            event.preventDefault();
-            this.addAttendee();
+        this.DOMElement
+            .querySelector('form button')
+            .addEventListener('click', event => {
+                event.preventDefault();
+                this.addAttendee();
         });
-        this.DOMElement.querySelector('button[type="submit"]').addEventListener('click', event => {
-            event.preventDefault();
-            this.createEvent();
+        this.DOMElement
+            .querySelector('button[type="submit"]')
+            .addEventListener('click', event => {
+                event.preventDefault();
+                this.createEvent();
         });
-
-        if (!this.attendees.length) {
-            this.DOMElement.querySelector('.attendees').innerHTML += 'No attendees added.';
-        }
+        if (!this.attendees.length) this.handleNoAttendees();
     }
 
     async createEvent ()  {
@@ -33,6 +34,7 @@ class Edit {
             time: getInputValue(this.DOMElement, 'time'),
             attendees: this.attendees.map(attendee => attendee.name),
         };
+        // TODO: Proper error handling.
         await ActivityCtrl.createActivity(activityData);
         window.location.href = '#home';
     }
@@ -40,8 +42,8 @@ class Edit {
 
     addAttendee () {
         let newAttendeeEl = this.DOMElement.querySelector('input[name="attendee"]');
-        let attendeesEl = this.DOMElement.querySelector('.attendees');
 
+        // TODO: "No name added"
         if (!newAttendeeEl.value) return;
         if (!this.attendees.length) {
             // Remove pre-default text.
@@ -49,22 +51,21 @@ class Edit {
         }
 
         this.attendees.push({id: this.attendeeId, name: newAttendeeEl.value});
-        attendeesEl.appendChild(this.createAttendeeEl(this.attendeeId, newAttendeeEl.value));
+        this.DOMElement
+            .querySelector('.attendees')
+            .appendChild(this.createAttendeeEl(this.attendeeId, newAttendeeEl.value));
         this.attendeeId++;
         newAttendeeEl.value = '';
     }
 
     removeAttende (id, element) {
-        // Remove from dom
         this.DOMElement.querySelector('.attendees').removeChild(element);
         // Get the elements index in the attendee list
         let targetIndex = 
             this.attendees.indexOf(this.attendees.find(attendee => attendee.id === id));
         // Remove from list
         this.attendees.splice(targetIndex, 1);
-        if (!this.attendees.length) {
-            this.DOMElement.querySelector('.attendees').innerHTML += 'No attendees added.';
-        }
+        if (!this.attendees.length) this.handleNoAttendees();
     }
 
     createAttendeeEl (id, attendee) {
@@ -72,6 +73,10 @@ class Edit {
             spanEl.innerHTML = attendee;
             spanEl.addEventListener('click', () => this.removeAttende(id, spanEl));
         return spanEl;
+    }
+
+    handleNoAttendees () {
+        return this.DOMElement.querySelector('.attendees').innerHTML += 'No attendees added.';
     }
 }
 
