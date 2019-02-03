@@ -37,8 +37,14 @@ class Profile {
             .querySelector('.button.success')
             .addEventListener('click', this.onAddFriend.bind(this));
         this.DOMElement
+            .querySelector('.button.neutral')
+            .addEventListener('click', this.updateUserInfo.bind(this));
+        this.DOMElement
             .querySelector('.button.danger')
             .addEventListener('click', AuthCtrl.delete.bind(this));
+        this.DOMElement
+            .querySelector('button.yellow')
+            .addEventListener('click', this.onChangePassword.bind(this));
         this.DOMElement
             .querySelector('.restricted')
             .addEventListener('click', () => restrictedAreaEl.classList.add('active'));
@@ -47,10 +53,20 @@ class Profile {
             .addEventListener('click', () => restrictedAreaEl.classList.remove('active'));
     }
 
-    onChangeNickname (event) {
-        event.preventDefault();
-        let newName = getInputValue(this.DOMElement, 'nickname');
-        SocialCtrl.nickname(newName);
+    updateUserInfo () {
+        SocialCtrl.update(this.getUserInputValues());
+    }
+
+    getUserInputValues () {
+        return {
+            nickname: getInputValue(this.DOMElement, 'nickname'),
+            email: getInputValue(this.DOMElement, 'email'),
+            phone: getInputValue(this.DOMElement, 'phone')
+        };
+    }
+
+    onChangePassword () {
+        alert('OPEN POPUP!');
     }
 
     async onAddFriend () {
@@ -71,7 +87,6 @@ class Profile {
         storeLocal(this.user);
         element.remove();
     }
-
 }
 
 export default Profile;

@@ -53,10 +53,12 @@ module.exports = app => {
         }
     });
 
-    app.post('/api/social/nickname', async (req, res) => {
+    app.post('/api/social/update', async (req, res) => {
         try {
             const user = await User.findById(req.session.user._id);
-            user.nickname = req.body.nickname;
+            user.nickname = req.body.nickname ? req.body.nickname : user.nickname;
+            user.email = req.body.email ? req.body.email : user.email;
+            user.phone = req.body.phone ? req.body.phone : user.phone;
             await user.save();
             res.send(user);         
         } catch (err) {

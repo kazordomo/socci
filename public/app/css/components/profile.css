@@ -68,28 +68,29 @@ section#profile .restricted.active i {
     transform: rotate(180deg) translateX(50%);
 }
 
-section#profile form .form_group {
+section#profile .form_group,
+section#profile .button {
     margin-top: 30px;
-    width: 100%;
 }
 
-section#profile form .form_group:first-child {
+section#profile .form_group:first-child {
     margin-top: 0;
 }
 
-section#profile form .form_group {
+section#profile .form_group {
     align-items: baseline;
     border-bottom: 1px solid #FFFFFF;
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 
-section#profile form .form_group input {
+section#profile .form_group input {
     border-bottom: none;
     margin: 0;
 }
 
-section#profile form .form_group i {
+section#profile .form_group i {
     font-size: 32px;
 }
 

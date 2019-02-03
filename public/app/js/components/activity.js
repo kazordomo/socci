@@ -7,7 +7,6 @@ class Activity {
 
     constructor () {
         this.DOMElement = document.querySelector('section#activity');
-        // TODO: This needs to be cached. We have already fetched this data once.
         this.activity = {};
         this.user = getLocal();
         this.init();
@@ -20,7 +19,6 @@ class Activity {
         this.activity = await ActivityCtrl.getActivity(id);
         new RenderData(this.DOMElement, this.activity);
 
-        // Because the dom is rerendered, putting this in the constructor would get lost.
         let declineButton = this.DOMElement.querySelector('.button.danger');
         let commentButton = this.DOMElement.querySelector('.button.success');
         let isUserAttending = !!this.activity.attendees.find(attendee => attendee._id === user._id);

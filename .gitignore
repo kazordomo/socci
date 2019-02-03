@@ -1,4 +1,4 @@
 node_modules
 docs
 config/keys.js
-cache/*
+caches/*

@@ -29,10 +29,10 @@ class SocialCtrl {
 
     }
 
-    static async nickname (newName) {
-        let response = await fetch('/api/social/nickname', { 
+    static async update (obj) {
+        let response = await fetch('/api/social/update', { 
             method: 'POST', 
-            body: JSON.stringify({ nickname: newName }),
+            body: JSON.stringify(obj),
             headers: { 'Content-Type': 'application/json' }
         });
         let json = await response.json();
